@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: Aegisub 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-16 18:52-0700\n"
-"PO-Revision-Date: 2012-10-01 03:01-0000\n"
-"Last-Translator: Ricardo Constantino <wiiaboo@gmail.com>\n"
-"Language-Team: Leinad4Mind & RiCON <wiiaboo@gmail.com>\n"
+"PO-Revision-Date: 2012-10-06 12:49-0000\n"
+"Last-Translator: Daniel Mota <1060446@isep.ipp.pt> & Ricardo Constantino <wiiaboo@gmail.com>\n"
+"Language-Team: Leinad4Mind <1060446@isep.ipp.pt> & RiCON <wiiaboo@gmail.com>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,7 +127,7 @@ msgstr "Ajustar tempos"
 
 #: ../src/dialog_shift_times.cpp:112
 msgid "&Time: "
-msgstr "Tempo:"
+msgstr "&Tempo:"
 
 #: ../src/dialog_shift_times.cpp:113
 msgid "Shift by time"
@@ -135,7 +135,7 @@ msgstr "Ajustar por tempo"
 
 #: ../src/dialog_shift_times.cpp:116
 msgid "&Frames: "
-msgstr "Frames:"
+msgstr "&Frames:"
 
 #: ../src/dialog_shift_times.cpp:117
 msgid "Shift by frames"
@@ -223,7 +223,7 @@ msgstr "deslocação"
 
 #: ../src/export_fixstyle.cpp:49
 msgid "Fix Styles"
-msgstr "Corrigir estilos"
+msgstr "Corrigir Estilos"
 
 #: ../src/export_fixstyle.cpp:49
 msgid ""
@@ -235,31 +235,31 @@ msgstr ""
 
 #: ../src/audio_karaoke.cpp:79
 msgid "Discard all uncommitted splits"
-msgstr "Descartar todas as separações e sair do modo de separação"
+msgstr "Descartar todas as divisões por aplicar"
 
 #: ../src/audio_karaoke.cpp:83
 msgid "Commit splits"
-msgstr "Aceitar"
+msgstr "Aplicar Divisões"
 
 #: ../src/audio_karaoke.cpp:211
 msgid "Karaoke tag"
-msgstr "Tag de Karaoke"
+msgstr "Expressão de Karaoke"
 
 #: ../src/audio_karaoke.cpp:214
 msgid "Change karaoke tag to \\k"
-msgstr "Mudar tags de karaoke para \\k"
+msgstr "Mudar expressão de karaoke para \\k"
 
 #: ../src/audio_karaoke.cpp:215
 msgid "Change karaoke tag to \\kf"
-msgstr "Mudar tags de karaoke para \\kf"
+msgstr "Mudar expressão de karaoke para \\kf"
 
 #: ../src/audio_karaoke.cpp:216
 msgid "Change karaoke tag to \\ko"
-msgstr "Mudar tags de karaoke para \\ko"
+msgstr "Mudar expressão de karaoke para \\ko"
 
 #: ../src/audio_karaoke.cpp:312
 msgid "karaoke split"
-msgstr "Tag de Karaoke"
+msgstr "Divisão de Karaoke"
 
 #: ../src/timeedit_ctrl.cpp:215 ../src/dialog_style_manager.cpp:101
 #: ../src/subs_edit_ctrl.cpp:754
@@ -306,7 +306,7 @@ msgstr "posicionamento"
 
 #: ../src/font_file_lister_fontconfig.cpp:75
 msgid "Updating font cache\n"
-msgstr "Copiar tipos de letra para o ficheiro...\n"
+msgstr "A actualizar a cache dos tipos de letra...\n"
 
 #: ../src/subtitle_format_ebu3264.cpp:426
 #, c-format
@@ -607,11 +607,11 @@ msgstr "Linha seguinte"
 
 #: ../src/dialog_styling_assistant.cpp:97 ../src/dialog_translation.cpp:120
 msgid "Play video"
-msgstr "Tocar vídeo"
+msgstr "Reproduzir vídeo"
 
 #: ../src/dialog_styling_assistant.cpp:98 ../src/dialog_translation.cpp:121
 msgid "Play audio"
-msgstr "Tocar áudio"
+msgstr "Reproduzir áudio"
 
 #: ../src/dialog_styling_assistant.cpp:99
 msgid "Click on list"
@@ -631,11 +631,11 @@ msgstr "Acções"
 
 #: ../src/dialog_styling_assistant.cpp:116 ../src/dialog_translation.cpp:135
 msgid "Play &Audio"
-msgstr "Toc&ar Áudio"
+msgstr "Reproduzir &Áudio"
 
 #: ../src/dialog_styling_assistant.cpp:120 ../src/dialog_translation.cpp:140
 msgid "Play &Video"
-msgstr "Tocar &Vídeo"
+msgstr "Reproduzir &Vídeo"
 
 #: ../src/dialog_styling_assistant.cpp:181
 msgid "styling assistant"
@@ -1163,7 +1163,7 @@ msgstr "Saltar vídeo para o fim"
 
 #: ../src/command/video.cpp:564
 msgid "Jumps the video to the end frame of current subtitle"
-msgstr "Salta o vídeo para o frame final da legenda actual"
+msgstr "Salta o vídeo para a frame do tempo de saída da legenda actual"
 
 #: ../src/command/video.cpp:576
 msgid "Jump Video to &Start"
@@ -1175,7 +1175,7 @@ msgstr "Saltar vídeo para o início"
 
 #: ../src/command/video.cpp:578
 msgid "Jumps the video to the start frame of current subtitle"
-msgstr "Salta o vídeo para o frame de início da legenda actual"
+msgstr "Salta o vídeo para a frame do tempo de entrada da legenda actual"
 
 #: ../src/command/video.cpp:590
 msgid "&Open Video..."
@@ -1207,28 +1207,28 @@ msgstr "Usar Vídeo Exemplo"
 
 #: ../src/command/video.cpp:611
 msgid "Opens a video clip with solid color"
-msgstr "Abre um clip de vídeo de cor sólida"
+msgstr "Abre um clipe de vídeo de cor sólida"
 
 #: ../src/command/video.cpp:624 ../src/command/video.cpp:625
 #: ../src/command/video.cpp:626
 msgid "Toggle autoscroll of video"
-msgstr "Alternar auto-actualização do vídeo"
+msgstr "Activar/Desactivar auto-actualização do vídeo"
 
 #: ../src/command/video.cpp:641 ../src/command/video.cpp:642
 msgid "Play"
-msgstr "Tocar"
+msgstr "Reproduzir"
 
 #: ../src/command/video.cpp:643
 msgid "Play video starting on this position"
-msgstr "Tocar vídeo a partir desta posição"
+msgstr "Reproduzir vídeo a partir desta posição"
 
 #: ../src/command/video.cpp:653 ../src/command/video.cpp:654
 msgid "Play line"
-msgstr "Tocar linha"
+msgstr "Reproduzir linha"
 
 #: ../src/command/video.cpp:655
 msgid "Play current line"
-msgstr "Tocar linha actual"
+msgstr "Reproduzir linha actual"
 
 #: ../src/command/video.cpp:665
 msgid "Show &Overscan Mask"
@@ -2053,11 +2053,11 @@ msgstr "Configurar o Aegisub"
 #: ../src/command/app.cpp:251 ../src/command/app.cpp:252
 #: ../src/command/app.cpp:253
 msgid "Toggle global hotkey overrides"
-msgstr "Alternar estilo de visualização das expressões"
+msgstr "Activar/Desactivar atalhos de teclado globais"
 
 #: ../src/command/app.cpp:269
 msgid "Toggle the main toolbar"
-msgstr "Esconde/mostra a barra de ferramentas"
+msgstr "Esconder/Mostrar a barra de ferramentas"
 
 #: ../src/command/app.cpp:274
 msgid "Hide Toolbar"
@@ -2661,30 +2661,27 @@ msgstr "Guardar clip de áudio"
 
 #: ../src/command/audio.cpp:234 ../src/command/audio.cpp:235
 msgid "Play current audio selection"
-msgstr "Tocar linha actual"
+msgstr "Reproduzir linha actual"
 
 #: ../src/command/audio.cpp:236
 msgid "Play the current audio selection, ignoring changes made while playing"
-msgstr ""
-"Tocar o áudio da selecção actual, ignorar alterações efectuadas aquando da "
-"reprodução"
+msgstr "Reproduz o áudio da selecção actual, ignorando alterações efectuadas aquando da reprodução"
 
 #: ../src/command/audio.cpp:247 ../src/command/audio.cpp:248
 msgid "Play audio selection"
-msgstr "Ir para a selecção"
+msgstr "Reproduzir áudio seleccionado"
 
 #: ../src/command/audio.cpp:249
 msgid "Play audio until the end of the selection is reached"
-msgstr "Tocar áudio até que o final da selecção seja alcançado"
+msgstr "Reproduz o áudio até que o final da selecção seja alcançado"
 
 #: ../src/command/audio.cpp:260 ../src/command/audio.cpp:261
 msgid "Play audio selection or stop"
-msgstr "Tocar áudio seleccionado ou parar"
+msgstr "Reproduzir áudio seleccionado ou parar"
 
 #: ../src/command/audio.cpp:262
 msgid "Play selection or stop playback if it's already playing"
-msgstr ""
-"Tocar selecção ou parar a reprodução caso o audio já esteja a ser reproduzido"
+msgstr "Reproduz selecção ou pára a reprodução caso o áudio já esteja a ser reproduzido"
 
 #: ../src/command/audio.cpp:277 ../src/command/audio.cpp:278
 msgid "Stop playing"
@@ -2697,27 +2694,27 @@ msgstr "Parar"
 #: ../src/command/audio.cpp:294 ../src/command/audio.cpp:295
 #: ../src/command/audio.cpp:296
 msgid "Play 500 ms before selection"
-msgstr "Tocar 500 ms antes da selecção"
+msgstr "Reproduzir 500 ms antes da selecção"
 
 #: ../src/command/audio.cpp:308 ../src/command/audio.cpp:309
 #: ../src/command/audio.cpp:310
 msgid "Play 500 ms after selection"
-msgstr "Tocar 500 ms após a selecção"
+msgstr "Reproduzir 500 ms após a selecção"
 
 #: ../src/command/audio.cpp:322 ../src/command/audio.cpp:323
 #: ../src/command/audio.cpp:324
 msgid "Play last 500 ms of selection"
-msgstr "Tocar os últimos 500 ms da selecção"
+msgstr "Reproduzir os últimos 500 ms da selecção"
 
 #: ../src/command/audio.cpp:336 ../src/command/audio.cpp:337
 #: ../src/command/audio.cpp:338
 msgid "Play first 500 ms of selection"
-msgstr "Tocar os primeiros 500 ms da selecção"
+msgstr "Reproduzir os primeiros 500 ms da selecção"
 
 #: ../src/command/audio.cpp:352 ../src/command/audio.cpp:353
 #: ../src/command/audio.cpp:354
 msgid "Play from selection start to end of file"
-msgstr "Tocar do início da selecção até ao fim do ficheiro"
+msgstr "Reproduz do início da selecção até ao fim do ficheiro"
 
 #: ../src/command/audio.cpp:366 ../src/command/audio.cpp:367
 msgid "Commit"
@@ -2750,7 +2747,7 @@ msgstr ""
 
 #: ../src/command/audio.cpp:418 ../src/command/audio.cpp:419
 msgid "Commit and stay on current line"
-msgstr "Tocar linha actual"
+msgstr "Aplicar e ficar na linha presente"
 
 #: ../src/command/audio.cpp:420
 msgid "Commit any pending audio timing changes and stay on the current line"
@@ -2806,7 +2803,7 @@ msgstr "Ligar controlos de volume e zoom vertical"
 #: ../src/command/audio.cpp:557 ../src/command/audio.cpp:558
 #: ../src/command/audio.cpp:559
 msgid "Toggle karaoke mode"
-msgstr "Activa/desactiva modo de karaoke"
+msgstr "Activa/Desactiva modo de karaoke"
 
 #: ../src/command/help.cpp:61
 msgid "&Bug Tracker..."
@@ -2876,7 +2873,7 @@ msgstr "Tipografia Visual (Typesetting)"
 
 #: ../src/command/help.cpp:136
 msgid "Open the manual page for Visual Typesetting"
-msgstr "Abrir a página do manual para Tipografia Visual"
+msgstr "Abre a página do manual para Tipografia Visual"
 
 #: ../src/command/help.cpp:146
 msgid "&Website"
@@ -3378,15 +3375,15 @@ msgstr "Áudio"
 
 #: ../src/preferences.cpp:128
 msgid "Default mouse wheel to zoom"
-msgstr "Padrão da roda do rato para zoom"
+msgstr "Activar a roda do rato para zoom"
 
 #: ../src/preferences.cpp:129
 msgid "Lock scroll on cursor"
-msgstr "Fixar ecrã ao cursor"
+msgstr "Acompanhar cursor na onda de áudio"
 
 #: ../src/preferences.cpp:130
 msgid "Snap markers by default"
-msgstr "Ajustar a marcas por defeito"
+msgstr "Ajuste automático do cursor aos marcadores de entrada/saída ou keyframes próximos"
 
 #: ../src/preferences.cpp:131
 msgid "Auto-focus on mouse over"
@@ -3394,11 +3391,11 @@ msgstr "Auto-focar ao passar o rato por cima"
 
 #: ../src/preferences.cpp:132
 msgid "Play audio when stepping in video"
-msgstr "Tocar áudio quando se andar no vídeo"
+msgstr "Reproduzir áudio quando se andar no vídeo"
 
 #: ../src/preferences.cpp:133
 msgid "Left-click-drag moves end marker"
-msgstr "Arraste de clique esquerdo move a marca de final"
+msgstr "Arraste do clique esquerdo move o marcador de saída"
 
 #: ../src/preferences.cpp:134
 msgid "Default timing length (ms)"
@@ -3414,7 +3411,7 @@ msgstr "Tempo de saída padrão"
 
 #: ../src/preferences.cpp:138
 msgid "Marker drag-start sensitivity (px)"
-msgstr "Sensibilidade de arraste de marca de início (px)"
+msgstr "Sensibilidade de arraste do marcador de entrada (px)"
 
 #: ../src/preferences.cpp:139
 msgid "Line boundary thickness (px)"
@@ -3422,7 +3419,7 @@ msgstr "Grossura das linhas de limites (px)"
 
 #: ../src/preferences.cpp:140
 msgid "Maximum snap distance (px)"
-msgstr "Distância máxima para colagem do cursor (px)"
+msgstr "Distância máxima para ajuste automático do cursor (px)"
 
 #: ../src/preferences.cpp:142
 msgid "Don't show"
@@ -4533,11 +4530,11 @@ msgstr "Usado nas linhas:"
 
 #: ../src/font_file_lister.cpp:155
 msgid "Parsing file\n"
-msgstr "Escrevendo ficheiro\n"
+msgstr "A verificar o ficheiro\n"
 
 #: ../src/font_file_lister.cpp:170
 msgid "Searching for font files\n"
-msgstr "Anexar tipos de letra ao ficheiro...\n"
+msgstr "À procura dos tipos de letra no sistema...\n"
 
 #: ../src/font_file_lister.cpp:172
 msgid ""
