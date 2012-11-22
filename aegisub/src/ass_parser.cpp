@@ -66,15 +66,15 @@ void AssParser::ParseAttachmentLine(wxString const& data) {
 }
 
 void AssParser::ParseScriptInfoLine(wxString const& data) {
-	// If the first nonblank line isn't a header pretend it starts with [Script Info]
-	if (target->Line.empty())
-		target->Line.push_back(*new AssEntry("[Script Info]", "[Script Info]"));
-
 	if (data.StartsWith(";")) {
 		// Skip stupid comments added by other programs
 		// Of course, we'll add our own in place later... ;)
 		return;
 	}
+
+	// If the first nonblank line isn't a header pretend it starts with [Script Info]
+	if (target->Line.empty())
+		target->Line.push_back(*new AssEntry("[Script Info]", "[Script Info]"));
 
 	if (data.StartsWith("ScriptType:")) {
 		wxString versionString = data.Mid(11).Trim(true).Trim(false).Lower();
