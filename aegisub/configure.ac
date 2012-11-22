@@ -168,7 +168,6 @@ AS_IF([test x$enable_compiler_flags != xno], [
   AC_CXX_FLAG([-pipe])
   AC_CXX_FLAG([-g])
   AC_CXX_FLAG([-std=c++11])
-  AC_CXX_FLAG([-stdlib=libc++])
   AC_LD_FLAG([-stdlib=libc++])
 
   # -O* messes with debugging.
