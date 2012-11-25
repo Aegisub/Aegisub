@@ -75,6 +75,10 @@ void AssParser::ParseScriptInfoLine(wxString const& data) {
 		return;
 	}
 
+	// If the first nonblank line isn't a header pretend it starts with [Script Info]
+	if (target->Line.empty())
+		target->Line.push_back(*new AssEntry("[Script Info]", "[Script Info]"));
+
 	if (data.StartsWith("ScriptType:")) {
 		wxString versionString = data.Mid(11).Trim(true).Trim(false).Lower();
 		int trueVersion;
