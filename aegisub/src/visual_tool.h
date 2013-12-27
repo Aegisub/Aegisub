@@ -108,6 +108,8 @@ protected:
 	Vector2D video_pos; ///< Top-left corner of the video in the display area
 	Vector2D video_res; ///< Video resolution
 
+	float scaleFactor;
+
 	agi::signal::Connection file_changed_connection;
 	int commit_id = -1; ///< Last used commit id for coalescing
 
@@ -142,6 +144,7 @@ public:
 	virtual void OnMouseEvent(wxMouseEvent &event)=0;
 	virtual void Draw()=0;
 	virtual void SetDisplayArea(int x, int y, int w, int h);
+	virtual void SetScaleFactor(float f);
 	virtual void SetToolbar(wxToolBar *) { }
 	virtual ~VisualToolBase() { }
 };

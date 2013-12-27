@@ -151,6 +151,10 @@ void VisualToolBase::SetDisplayArea(int x, int y, int w, int h) {
 	OnCoordinateSystemsChanged();
 }
 
+void VisualToolBase::SetScaleFactor(float f){
+	scaleFactor = f;
+}
+
 Vector2D VisualToolBase::ToScriptCoords(Vector2D point) const {
 	return (point - video_pos) * script_res / video_res;
 }
@@ -173,7 +177,7 @@ void VisualTool<FeatureType>::OnMouseEvent(wxMouseEvent &event) {
 	ctrl_down = event.CmdDown();
 	alt_down = event.AltDown();
 
-	mouse_pos = event.GetPosition();
+	mouse_pos = event.GetPosition() * scaleFactor;
 
 	if (event.Leaving()) {
 		mouse_pos = Vector2D();

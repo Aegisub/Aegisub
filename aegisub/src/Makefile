@@ -16,7 +16,7 @@ LIBS += $(LIBS_FONTCONFIG) $(LIBS_FFTW3) $(LIBS_UCHARDET) $(LIBS_BOOST)
 LIBS += $(LIBS_ICU) $(LIBS_LUA)
 
 ifeq (yes, $(BUILD_DARWIN))
-SRC += osx_utils.mm
+SRC += osx_utils.mm osx_retina_helper.mm
 endif
 
 ###############

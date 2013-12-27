@@ -44,6 +44,7 @@
 #include "include/aegisub/menu.h"
 #include "options.h"
 #include "spline_curve.h"
+#include "retina_helper.h"
 #include "subs_controller.h"
 #include "threaded_frame_source.h"
 #include "utils.h"
@@ -123,6 +124,10 @@ VideoDisplay::VideoDisplay(
 	Bind(wxEVT_MOUSEWHEEL, &VideoDisplay::OnMouseWheel, this);
 
 	SetCursor(wxNullCursor);
+
+	retinaHelper = agi::util::make_unique<RetinaHelper>(this);
+	retinaHelper->setViewWantsBestResolutionOpenGLSurface(true);
+	scaleFactor = retinaHelper->getBackingScaleFactor();
 
 	c->videoDisplay = this;
 
@@ -272,7 +277,7 @@ void VideoDisplay::PositionVideo() {
 	if (!con->videoController->IsLoaded() || !IsShownOnScreen()) return;
 
 	viewport_left = 0;
-	viewport_bottom = GetClientSize().GetHeight() - videoSize.GetHeight();
+	viewport_bottom = GetClientSize().GetHeight() * scaleFactor - videoSize.GetHeight();
 	viewport_top = 0;
 	viewport_width = videoSize.GetWidth();
 	viewport_height = videoSize.GetHeight();
@@ -306,6 +311,8 @@ void VideoDisplay::PositionVideo() {
 }
 
 void VideoDisplay::UpdateSize() {
+	scaleFactor = retinaHelper->getBackingScaleFactor();
+
 	if (!con->videoController->IsLoaded() || !IsShownOnScreen()) return;
 
 	videoSize.Set(con->videoController->GetWidth(), con->videoController->GetHeight());
@@ -320,12 +327,13 @@ void VideoDisplay::UpdateSize() {
 
 		wxSize cs = GetClientSize();
 		wxSize oldSize = top->GetSize();
-		top->SetSize(top->GetSize() + videoSize - cs);
+		top->SetSize(top->GetSize() + videoSize * (1.0f / scaleFactor) - cs);
 		SetClientSize(cs + top->GetSize() - oldSize);
 	}
 	else {
-		SetMinClientSize(videoSize);
-		SetMaxClientSize(videoSize);
+		auto scaledSize = wxSize(videoSize.GetWidth() / scaleFactor, videoSize.GetHeight() / scaleFactor);
+		SetMinClientSize(scaledSize);
+		SetMaxClientSize(scaledSize);
 
 		GetGrandParent()->Layout();
 	}
@@ -334,10 +342,15 @@ void VideoDisplay::UpdateSize() {
 }
 
 void VideoDisplay::OnSizeEvent(wxSizeEvent &event) {
+	scaleFactor = retinaHelper->getBackingScaleFactor();
+	
+	if(tool)
+		tool->SetScaleFactor(scaleFactor);
+	
 	if (freeSize) {
 		videoSize = GetClientSize();
 		PositionVideo();
-		zoomValue = double(viewport_height) / con->videoController->GetHeight();
+		zoomValue = double(viewport_height) / con->videoController->GetHeight() * scaleFactor;
 		zoomBox->ChangeValue(wxString::Format("%g%%", zoomValue * 100.));
 	}
 	else {
@@ -412,6 +425,8 @@ void VideoDisplay::SetTool(std::unique_ptr<VisualToolBase> new_tool) {
 
 	tool = std::move(new_tool);
 	tool->SetToolbar(toolBar);
+
+	tool->SetScaleFactor(scaleFactor);
 
 	// Update size as the new typesetting tool may have changed the subtoolbar size
 	if (!freeSize)

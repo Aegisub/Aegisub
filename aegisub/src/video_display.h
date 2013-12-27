@@ -51,6 +51,8 @@ class wxTextCtrl;
 class wxToolBar;
 struct VideoFrame;
 
+class RetinaHelper;
+
 namespace agi {
 	struct Context;
 	class OptionValue;
@@ -82,6 +84,8 @@ class VideoDisplay : public wxGLCanvas {
 	int viewport_top = 0;
 	/// The height of the video in screen pixels
 	int viewport_height = 0;
+
+	float scaleFactor;
 
 	/// The current zoom level, where 1.0 = 100%
 	double zoomValue;
@@ -137,6 +141,8 @@ class VideoDisplay : public wxGLCanvas {
 	void OnContextMenu(wxContextMenuEvent&);
 
 	void OnSubtitlesSave();
+
+	std::unique_ptr<RetinaHelper> retinaHelper;
 
 public:
 	/// @brief Constructor
