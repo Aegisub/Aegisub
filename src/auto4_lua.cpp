@@ -233,7 +233,7 @@ namespace {
 		lua_pop(L, 1);
 		if (c) {
 			c->videoController->LoadKeyframes(path);
-			if (c->videoController->OverKeyFramesLoaded()) {
+			if (c->videoController->OverKeyFramesLoaded() && (c->videoController->GetKeyFramesName() == path)) {
 				lua_pushboolean(L, true);
 				return 1;
 			}
@@ -261,7 +261,7 @@ namespace {
 		lua_pop(L, 1);
 		if (c && c->videoController->IsLoaded()) {
 			c->videoController->LoadTimecodes(path);
-			if (c->videoController->OverTimecodesLoaded()) {
+			if (c->videoController->OverTimecodesLoaded() && (c->videoController->GetTimecodesName() == path)) {
 				lua_pushboolean(L, true);
 				return 1;
 			}
@@ -289,7 +289,7 @@ namespace {
 		lua_pop(L, 1);
 		if (c) {
 			c->videoController->SetVideo(path);
-			if (c->videoController->IsLoaded()) {
+			if (c->videoController->IsLoaded() && (c->videoController->GetVideoName() == path)) {
 				lua_pushboolean(L, true);
 				return 1;
 			}
@@ -317,7 +317,7 @@ namespace {
 		lua_pop(L, 1);
 		if (c) {
 			c->audioController->OpenAudio(path);
-			if (c->audioController->IsAudioOpen()) {
+			if (c->audioController->IsAudioOpen() && (c->audioController->GetAudioURL() == path)) {
 				lua_pushboolean(L, true);
 				return 1;
 			}
