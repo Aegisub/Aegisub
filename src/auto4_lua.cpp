@@ -48,6 +48,7 @@
 #include "selection_controller.h"
 #include "subs_controller.h"
 #include "video_context.h"
+#include "audio_controller.h"
 #include "utils.h"
 
 #include <libaegisub/access.h>
@@ -205,11 +206,133 @@ namespace {
 		}
 	}
 
+	int active_frame(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (c && c->videoController->IsLoaded())
+			push_value(L, c->videoController->GetFrameN());
+		else
+			lua_pushnil(L);
+		return 1;
+	}
+
 	int get_keyframes(lua_State *L)
 	{
 		const agi::Context *c = get_context(L);
 		if (c)
 			push_value(L, c->videoController->GetKeyFrames());
+		else
+			lua_pushnil(L);
+		return 1;
+	}
+
+	int load_keyframes(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		std::string path = check_string(L, 1);
+		lua_pop(L, 1);
+		if (c) {
+			c->videoController->LoadKeyframes(path);
+			if (c->videoController->OverKeyFramesLoaded() && (c->videoController->GetKeyFramesName() == path)) {
+				lua_pushboolean(L, true);
+				return 1;
+			}
+		}
+		lua_pushnil(L);
+		return 1;
+	}
+
+	int close_keyframes(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (c && c->videoController->OverKeyFramesLoaded()) {
+			c->videoController->CloseKeyframes();
+			lua_pushboolean(L, true);
+		}
+		else
+			lua_pushnil(L);
+		return 1;
+	}
+
+	int load_timecodes(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		std::string path = check_string(L, 1);
+		lua_pop(L, 1);
+		if (c && c->videoController->IsLoaded()) {
+			c->videoController->LoadTimecodes(path);
+			if (c->videoController->OverTimecodesLoaded() && (c->videoController->GetTimecodesName() == path)) {
+				lua_pushboolean(L, true);
+				return 1;
+			}
+		}
+		lua_pushnil(L);
+		return 1;
+	}
+
+	int close_timecodes(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (c && c->videoController->OverTimecodesLoaded()) {
+			c->videoController->CloseTimecodes();
+			lua_pushboolean(L, true);
+		}
+		else
+			lua_pushnil(L);
+		return 1;
+	}
+
+	int load_video(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		std::string path = check_string(L, 1);
+		lua_pop(L, 1);
+		if (c) {
+			c->videoController->SetVideo(path);
+			if (c->videoController->IsLoaded() && (c->videoController->GetVideoName() == path)) {
+				lua_pushboolean(L, true);
+				return 1;
+			}
+		}
+		lua_pushnil(L);
+		return 1;
+	}
+
+	int close_video(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (c && c->videoController->IsLoaded()) {
+			c->videoController->SetVideo("");
+			lua_pushboolean(L, true);
+		}
+		else
+			lua_pushnil(L);
+		return 1;
+	}
+
+	int load_audio(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		std::string path = check_string(L, 1);
+		lua_pop(L, 1);
+		if (c) {
+			c->audioController->OpenAudio(path);
+			if (c->audioController->IsAudioOpen() && (c->audioController->GetAudioURL() == path)) {
+				lua_pushboolean(L, true);
+				return 1;
+			}
+		}
+		lua_pushnil(L);
+		return 1;
+	}
+
+	int close_audio(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (c && c->audioController->IsAudioOpen()) {
+			c->audioController->CloseAudio();
+			lua_pushboolean(L, true);
+		}
 		else
 			lua_pushnil(L);
 		return 1;
@@ -418,7 +541,7 @@ namespace {
 
 		// make "aegisub" table
 		lua_pushstring(L, "aegisub");
-		lua_createtable(L, 0, 12);
+		lua_createtable(L, 0, 21);
 
 		set_field<LuaCommand::LuaRegister>(L, "register_macro");
 		set_field<LuaExportFilter::LuaRegister>(L, "register_filter");
@@ -426,7 +549,16 @@ namespace {
 		set_field<frame_from_ms>(L, "frame_from_ms");
 		set_field<ms_from_frame>(L, "ms_from_frame");
 		set_field<video_size>(L, "video_size");
+		set_field<active_frame>(L, "active_frame");
 		set_field<get_keyframes>(L, "keyframes");
+		set_field<load_keyframes>(L, "load_keyframes");
+		set_field<close_keyframes>(L, "close_keyframes");
+		set_field<load_timecodes>(L, "load_timecodes");
+		set_field<close_timecodes>(L, "close_timecodes");
+		set_field<load_video>(L, "load_video");
+		set_field<close_video>(L, "close_video");
+		set_field<load_audio>(L, "load_audio");
+		set_field<close_audio>(L, "close_audio");
 		set_field<decode_path>(L, "decode_path");
 		set_field<cancel_script>(L, "cancel");
 		set_field(L, "lua_automation_version", 4);
