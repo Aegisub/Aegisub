@@ -254,6 +254,34 @@ namespace {
 		return 1;
 	}
 
+	int load_timecodes(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		std::string path = check_string(L, 1);
+		lua_pop(L, 1);
+		if (c && c->videoController->IsLoaded()) {
+			c->videoController->LoadTimecodes(path);
+			if (c->videoController->OverTimecodesLoaded()) {
+				lua_pushboolean(L, true);
+				return 1;
+			}
+		}
+		lua_pushnil(L);
+		return 1;
+	}
+
+	int close_timecodes(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (c && c->videoController->OverTimecodesLoaded()) {
+			c->videoController->CloseTimecodes();
+			lua_pushboolean(L, true);
+		}
+		else
+			lua_pushnil(L);
+		return 1;
+	}
+
 	int load_video(lua_State *L)
 	{
 		const agi::Context *c = get_context(L);
@@ -513,7 +541,7 @@ namespace {
 
 		// make "aegisub" table
 		lua_pushstring(L, "aegisub");
-		lua_createtable(L, 0, 19);
+		lua_createtable(L, 0, 21);
 
 		set_field<LuaCommand::LuaRegister>(L, "register_macro");
 		set_field<LuaExportFilter::LuaRegister>(L, "register_filter");
@@ -525,6 +553,8 @@ namespace {
 		set_field<get_keyframes>(L, "keyframes");
 		set_field<load_keyframes>(L, "load_keyframes");
 		set_field<close_keyframes>(L, "close_keyframes");
+		set_field<load_timecodes>(L, "load_timecodes");
+		set_field<close_timecodes>(L, "close_timecodes");
 		set_field<load_video>(L, "load_video");
 		set_field<close_video>(L, "close_video");
 		set_field<load_audio>(L, "load_audio");
