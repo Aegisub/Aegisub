@@ -247,6 +247,7 @@ void Interface_Colours(wxTreebook *book, Preferences *parent) {
 
 	auto syntax = p->PageSizer(_("Syntax Highlighting"));
 	p->OptionAdd(syntax, _("Normal"), "Colour/Subtitle/Syntax/Normal");
+	p->OptionAdd(syntax, _("Normal Background"), "Colour/Subtitle/Syntax/Background/Normal");
 	p->OptionAdd(syntax, _("Brackets"), "Colour/Subtitle/Syntax/Brackets");
 	p->OptionAdd(syntax, _("Slashes and Parentheses"), "Colour/Subtitle/Syntax/Slashes");
 	p->OptionAdd(syntax, _("Tags"), "Colour/Subtitle/Syntax/Tags");
