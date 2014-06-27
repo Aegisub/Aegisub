@@ -211,6 +211,8 @@ void SubsTextEditCtrl::SetSyntaxStyle(int id, wxFont &font, std::string const& n
 	const agi::OptionValue *background = OPT_GET("Colour/Subtitle/Syntax/Background/" + name);
 	if (background->GetType() == agi::OptionType::Color)
 		StyleSetBackground(id, to_wx(background->GetColor()));
+	else
+		StyleSetBackground(id, StyleGetBackground(wxSTC_STYLE_DEFAULT));
 }
 
 void SubsTextEditCtrl::SetStyles() {
@@ -222,6 +224,7 @@ void SubsTextEditCtrl::SetStyles() {
 
 	namespace ss = agi::ass::SyntaxStyle;
 	SetSyntaxStyle(ss::NORMAL, font, "Normal");
+	SetSyntaxStyle(wxSTC_STYLE_DEFAULT, font, "Normal");
 	SetSyntaxStyle(ss::COMMENT, font, "Comment");
 	SetSyntaxStyle(ss::DRAWING, font, "Drawing");
 	SetSyntaxStyle(ss::OVERRIDE, font, "Brackets");
@@ -232,6 +235,8 @@ void SubsTextEditCtrl::SetStyles() {
 	SetSyntaxStyle(ss::LINE_BREAK, font, "Line Break");
 	SetSyntaxStyle(ss::KARAOKE_TEMPLATE, font, "Karaoke Template");
 	SetSyntaxStyle(ss::KARAOKE_VARIABLE, font, "Karaoke Variable");
+
+	SetCaretForeground(StyleGetForeground(ss::NORMAL));
 
 	// Misspelling indicator
 	IndicatorSetStyle(0,wxSTC_INDIC_SQUIGGLE);
