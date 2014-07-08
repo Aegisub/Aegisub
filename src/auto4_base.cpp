@@ -69,14 +69,14 @@ namespace Automation4 {
 		double spacing = style->spacing * 64;
 
 #ifdef WIN32
-		// This is almost copypasta from TextSub
+		// This is almost copypaste from TextSub
 		HDC thedc = CreateCompatibleDC(0);
 		if (!thedc) return false;
 		SetMapMode(thedc, MM_TEXT);
 
 		LOGFONTW lf;
 		ZeroMemory(&lf, sizeof(lf));
-		lf.lfHeight = (LONG)fontsize;
+		lf.lfHeight = fontsize;
 		lf.lfWeight = style->bold ? FW_BOLD : FW_NORMAL;
 		lf.lfItalic = style->italic;
 		lf.lfUnderline = style->underline;
@@ -94,7 +94,7 @@ namespace Automation4 {
 
 		std::wstring wtext(agi::charset::ConvertW(text));
 		SIZE sz;
-		if (spacing != 0 ) {
+		if (spacing != 0) {
 			width = 0;
 			for (auto c : wtext) {
 				GetTextExtentPoint32(thedc, &c, 1, &sz);
@@ -103,7 +103,7 @@ namespace Automation4 {
 			}
 		}
 		else {
-			GetTextExtentPoint32(thedc, &wtext[0], (int)wtext.size(), &sz);
+			GetTextExtentPoint32(thedc, wtext.data(), wtext.size(), &sz);
 			width = sz.cx;
 			height = sz.cy;
 		}
@@ -128,7 +128,7 @@ namespace Automation4 {
 		// USING wxTheFontList SEEMS TO CAUSE BAD LEAKS!
 		//wxFont *thefont = wxTheFontList->FindOrCreateFont(
 		wxFont thefont(
-			(int)fontsize,
+			fontsize,
 			wxFONTFAMILY_DEFAULT,
 			style->italic ? wxFONTSTYLE_ITALIC : wxFONTSTYLE_NORMAL,
 			style->bold ? wxFONTWEIGHT_BOLD : wxFONTWEIGHT_NORMAL,
@@ -138,23 +138,23 @@ namespace Automation4 {
 		thedc.SetFont(thefont);
 
 		wxString wtext(to_wx(text));
+		wxCoord lwidth, lheight, ldescent, lextlead;
+		double scaling;
 		if (spacing) {
 			// If there's inter-character spacing, kerning info must not be used, so calculate width per character
 			// NOTE: Is kerning actually done either way?!
 			for (auto const& wc : wtext) {
-				int a, b, c, d;
-				thedc.GetTextExtent(wc, &a, &b, &c, &d);
-				double scaling = fontsize / (double)(b > 0 ? b : 1); // semi-workaround for missing OS/2 table data for scaling
-				width += (a + spacing)*scaling;
-				height = b > height ? b*scaling : height;
-				descent = c > descent ? c*scaling : descent;
-				extlead = d > extlead ? d*scaling : extlead;
+				thedc.GetTextExtent(wc, &lwidth, &lheight, &ldescent, &lextlead);
+				scaling = fontsize / static_cast<double>(std::max(lheight, 1)); // semi-workaround for missing OS/2 table data for scaling
+				width += (lwidth + spacing)*scaling;
+				if(lheight > height) height = lheight*scaling;
+				if(ldescent > descent) descent = ldescent*scaling;
+				if(lextlead > extlead) extlead = lextlead*scaling;
 			}
 		} else {
 			// If the inter-character spacing should be zero, kerning info can (and must) be used, so calculate everything in one go
-			wxCoord lwidth, lheight, ldescent, lextlead;
 			thedc.GetTextExtent(wtext, &lwidth, &lheight, &ldescent, &lextlead);
-			double scaling = fontsize / (double)(lheight > 0 ? lheight : 1); // semi-workaround for missing OS/2 table data for scaling
+			scaling = fontsize / static_cast<double>(std::max(lheight, 1)); // semi-workaround for missing OS/2 table data for scaling
 			width = lwidth*scaling; height = lheight*scaling; descent = ldescent*scaling; extlead = lextlead*scaling;
 		}
 #endif
@@ -209,7 +209,7 @@ namespace Automation4 {
 		agi::dispatch::Main().Sync([=] {
 			wxDialog w; // container dialog box
 			w.SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY);
-			w.Create(bsr->GetParentWindow(), -1, to_wx(bsr->GetTitle()));
+			w.Create(bsr->GetParentWindow(), wxID_ANY, to_wx(bsr->GetTitle()));
 			auto s = new wxBoxSizer(wxHORIZONTAL); // sizer for putting contents in
 			wxWindow *ww = config_dialog->CreateWindow(&w); // generate actual dialog contents
 			s->Add(ww, 0, wxALL, 5); // add contents to dialog
@@ -238,10 +238,12 @@ namespace Automation4 {
 	void BackgroundScriptRunner::Run(std::function<void (ProgressSink*)> task)
 	{
 		int prio = OPT_GET("Automation/Thread Priority")->GetInt();
-		if (prio == 0) prio = 50; // normal
-		else if (prio == 1) prio = 30; // below normal
-		else if (prio == 2) prio = 10; // lowest
-		else prio = 50; // fallback normal
+		switch(prio){
+			case 2: prio = 10; break; // lowest
+			case 1: prio = 30; break; // below normal
+			case 0: // normal
+			default: prio = 50; // fallback normal
+		}
 
 		impl->Run([&](agi::ProgressSink *ps) {
 			ProgressSink aps(ps, this);

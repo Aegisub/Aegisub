@@ -26,24 +26,18 @@ eyedropper_cursor CURSOR "../bitmaps/windows/eyedropper.cur"
 #include "../../build/git_version.h"
 #include <Winver.h>
 
-#ifdef _DEBUG
-    #ifdef _WIN64
-        #define AGI_RC_FILENAME "aegisub64d"
-    #else
-        #define AGI_RC_FILENAME "aegisub32d"
-    #endif
+#ifdef _WIN64
+	#define ARCH_TYPE "64"
 #else
-    #ifdef _WIN64
-        #define AGI_RC_FILENAME "aegisub64"
-    #else
-        #define AGI_RC_FILENAME "aegisub32"
-    #endif
+	#define ARCH_TYPE "32"
 #endif
 
 #ifdef _DEBUG
-    #define AGI_RC_FLAG_DEBUG VS_FF_DEBUG
+	#define AGI_RC_FILENAME "aegisub" ARCH_TYPE "d"
+	#define AGI_RC_FLAG_DEBUG VS_FF_DEBUG
 #else
-    #define AGI_RC_FLAG_DEBUG 0
+	#define AGI_RC_FILENAME "aegisub" ARCH_TYPE
+	#define AGI_RC_FLAG_DEBUG 0
 #endif
 
 #ifdef TAGGED_RELEASE
