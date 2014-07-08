@@ -1,5 +1,5 @@
 ﻿--[[
- Copyright (c) 2005-2006, Niels Martin Hansen, Rodrigo Braz Monteiro
+ Copyright (c) 2005-2010, Niels Martin Hansen, Rodrigo Braz Monteiro
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,4 +27,25 @@
  POSSIBILITY OF SUCH DAMAGE.
 ]]
 
-include "utils-auto4.lua"
+_G.util = require 'aegisub.util'
+
+_G.table.copy = _G.util.copy
+_G.copy_line = _G.util.copy
+_G.table.copy_deep = _G.util.deep_copy
+_G.ass_color = _G.util.ass_color
+_G.ass_alpha = _G.util.ass_alpha
+_G.ass_style_color = _G.util.ass_style_color
+_G.extract_color = _G.util.extract_color
+_G.alpha_from_style = _G.util.alpha_from_style
+_G.color_from_style = _G.util.color_from_style
+_G.HSV_to_RGB = _G.util.HSV_to_RGB
+_G.HSL_to_RGB = _G.util.HSL_to_RGB
+_G.clamp = _G.util.clamp
+_G.interpolate = _G.util.interpolate
+_G.interpolate_color = _G.util.interpolate_color
+_G.interpolate_alpha = _G.util.interpolate_alpha
+_G.string.headtail = _G.util.headtail
+_G.string.trim = _G.util.trim
+_G.string.words = _G.util.words
+
+return _G.util

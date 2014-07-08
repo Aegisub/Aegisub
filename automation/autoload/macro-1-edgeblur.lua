@@ -10,7 +10,7 @@ script_version = "1"
 
 
 function add_edgeblur(subtitles, selected_lines, active_line)
-	for z, i in ipairs(selected_lines) do
+	for _, i in ipairs(selected_lines) do
 		local l = subtitles[i]
 		l.text = "{\\be1}" .. l.text
 		subtitles[i] = l
