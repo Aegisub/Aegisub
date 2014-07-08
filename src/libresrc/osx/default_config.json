@@ -13,6 +13,7 @@
 		"Hotkey Migrations" : [{"string": "placeholder since empty arrays aren't supported"}],
 		"Language" : "",
 		"Maximized" : false,
+		"Window Position" : [{"int" : 0}, {"int" : 0}, {"int" : 0}, {"int" : 0}],
 		"Save Charset" : "UTF-8",
 		"Save UI State" : true,
 		"Show Toolbar" : true,

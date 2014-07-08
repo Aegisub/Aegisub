@@ -59,6 +59,7 @@ class FrameMain : public wxFrame {
 
 	void OnKeyDown(wxKeyEvent &event);
 	void OnMouseWheel(wxMouseEvent &evt);
+	void OnMove(wxMoveEvent &evt);
 
 	void OnStatusClear(wxTimerEvent &event);
 	void OnCloseWindow (wxCloseEvent &event);
