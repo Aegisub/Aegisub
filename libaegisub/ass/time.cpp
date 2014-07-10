@@ -60,18 +60,21 @@ Time::Time(std::string const& text) {
 }
 
 std::string Time::GetAssFormatted(bool msPrecision) const {
-	std::string ret(10 + msPrecision, ':');
-	ret[0] = '0' + GetTimeHours();
-	ret[2] = '0' + (time % (60 * 60 * 1000)) / (60 * 1000 * 10);
-	ret[3] = '0' + (time % (10 * 60 * 1000)) / (60 * 1000);
-	ret[5] = '0' + (time % (60 * 1000)) / (1000 * 10);
-	ret[6] = '0' + (time % (10 * 1000)) / 1000;
-	ret[7] = '.';
-	ret[8] = '0' + (time % 1000) / 100;
-	ret[9] = '0' + (time % 100) / 10;
-	if (msPrecision)
-		ret[10] = '0' + time % 10;
-	return ret;
+	const char ass_timestamp_c[] = {
+		'0' + GetTimeHours(),
+		':',
+		'0' + time % (60 * 60 * 1000) / (60 * 1000 * 10),
+		'0' + time % (10 * 60 * 1000) / (60 * 1000),
+		':',
+		'0' + time % (60 * 1000) / (1000 * 10),
+		'0' + time % (10 * 1000) / 1000,
+		'.',
+		'0' + time % 1000 / 100,
+		'0' + time % 100 / 10,
+		msPrecision ? '0' + time % 10 : '\0',
+		'\0'
+	};
+	return ass_timestamp_c;
 }
 
 int Time::GetTimeHours() const { return time / 3600000; }

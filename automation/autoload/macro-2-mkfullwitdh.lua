@@ -41,7 +41,7 @@ lookup = {
 }
 
 function make_fullwidth(subtitles, selected_lines, active_line)
-	for z, i in ipairs(selected_lines) do
+	for _, i in ipairs(selected_lines) do
 		local l = subtitles[i]
 		
 		aegisub.debug.out(string.format('Processing line %d: "%s"\n', i, l.text))

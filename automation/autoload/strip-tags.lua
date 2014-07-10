@@ -22,7 +22,7 @@ script_version = "1"
 function strip_tags(subs, sel)
     for _, i in ipairs(sel) do
         local line = subs[i]
-        line.text = line.text:gsub("{[^}]+}", "")
+        line.text = line.text:gsub("{[^}]*}", "")
         subs[i] = line
     end
     aegisub.set_undo_point(tr"strip tags")

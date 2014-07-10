@@ -40,11 +40,10 @@ function cleantags_subs(subtitles)
 	local linescleaned = 0
 	for i = 1, #subtitles do
 		aegisub.progress.set(i * 100 / #subtitles)
-		if subtitles[i].class == "dialogue" and not subtitles[i].comment and subtitles[i].text ~= "" then
-			ntext = cleantags(subtitles[i].text)
-			local nline = subtitles[i]
-			nline.text = ntext
-			subtitles[i] = nline
+		local line = subtitles[i]
+		if line.class == "dialogue" and not line.comment and line.text ~= "" then
+			line.text = cleantags(line.text)
+			subtitles[i] = line
 			linescleaned = linescleaned + 1
 			aegisub.progress.task(linescleaned .. " lines cleaned")
 		end
