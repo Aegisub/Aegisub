@@ -130,10 +130,12 @@ class HotkeyModelCategory final : public HotkeyModelItem {
 	std::list<HotkeyModelCombo> children;
 	wxDataViewModel *model;
 	wxString name;
+	wxString internal_name; // non-translated name to avoid reverse lookup in translated category names list and getting a duplicate
 	wxDataViewItemArray visible_items;
 public:
 	HotkeyModelCategory(wxDataViewModel *model, wxString const& name)
 	: model(model)
+	, internal_name(name)
 	, name(wxGetTranslation(name))
 	{
 	}
@@ -193,10 +195,11 @@ public:
 	bool IsContainer() const override { return true; }
 	bool SetValue(wxVariant const&, unsigned int) override { return false; }
 	void GetValue(wxVariant &variant, unsigned int col) const override {
-		if (col == 1)
-			variant << wxDataViewIconText(name);
-		else
-			variant = name;
+		switch (col) {
+			case 1:  variant << wxDataViewIconText(name); break;
+			case 2:  variant = internal_name; break;
+			default: variant = name;
+		}
 	}
 
 	unsigned int GetChildren(wxDataViewItemArray &out) const override {
@@ -301,7 +304,7 @@ wxDataViewItem HotkeyDataViewModel::New(wxDataViewItem item) {
 
 	HotkeyModelCategory *ctx = static_cast<HotkeyModelCategory*>(item.GetID());
 	wxVariant name;
-	ctx->GetValue(name, 0);
+	ctx->GetValue(name, 2);
 	return ctx->AddChild(Combo(from_wx(name.GetString()), "", ""));
 }
 
