@@ -19,6 +19,7 @@ LIB := $(LIB)
 # PLATFORM SETTINGS
 ###################
 BUILD_DARWIN  = @build_darwin@
+BUILD_LINUX   = @build_linux@
 
 #######
 # FLAGS

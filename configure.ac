@@ -42,6 +42,7 @@ AS_CASE([$host],
 AC_AGI_MDCPUCFG($host)
 
 AC_SUBST(build_darwin)
+AC_SUBST(build_linux)
 
 ########################
 # Configurable variables
