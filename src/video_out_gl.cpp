@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <utility>
+#include <boost/config/suffix.hpp>
 
 #include <libaegisub/log.h>
 
