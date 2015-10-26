@@ -126,7 +126,14 @@ AC_SUBST([BUILD_DATE])
 # Check for pthreads and setup variables / compiler
 ###################################################
 AS_IF([test x$build_darwin != xyes], [
-  ACX_PTHREAD([], [AC_MSG_FAILURE([You must have working pthreads.])])
+  AX_PTHREAD([], [AC_MSG_FAILURE([You must have working pthreads.])])
+  AS_IF([test x$build_linux = xyes], [
+    AS_IF([test "x$PTHREAD_LIBS" = "x"], [PTHREAD_LIBS="-lpthread"])
+    LDFLAGS="-pthread $LDFLAGS"
+  ])
+  LIBS="$PTHREAD_LIBS $LIBS"
+  CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+  CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
   CC="$PTHREAD_CC"
 ])
 
