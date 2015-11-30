@@ -1,1 +1,1 @@
-require 'busted.runner'({ batch = true })
+require 'busted.runner'({ standalone = false, batch = true })
