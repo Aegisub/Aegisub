@@ -318,7 +318,8 @@ bool AegisubApp::OnInit() {
 		// Get parameter subs
 		StartupLog("Parse command line");
 		auto const& args = argv.GetArguments();
-		OpenFiles(wxArrayStringsAdapter(args.size() - 1, &args[1]));
+		if (args.size() > 1)
+			OpenFiles(wxArrayStringsAdapter(args.size() - 1, &args[1]));
 	}
 	catch (agi::Exception const& e) {
 		wxMessageBox(to_wx(e.GetMessage()), "Fatal error while initializing");
