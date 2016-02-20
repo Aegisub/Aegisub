@@ -151,7 +151,7 @@ DialogStyleEditor::DialogStyleEditor(wxWindow *parent, AssStyle *style, agi::Con
 
 	auto num_text_ctrl = [&](double *value, double min, double max, double step) -> wxSpinCtrlDouble * {
 		auto scd = new wxSpinCtrlDouble(this, -1, "", wxDefaultPosition,
-			wxSize(75, -1), wxSP_ARROW_KEYS, min, max, *value, step);
+			wxSize(150, -1), wxSP_ARROW_KEYS, min, max, *value, step);
 		scd->SetValidator(DoubleSpinValidator(value));
 		scd->Bind(wxEVT_SPINCTRLDOUBLE, [=](wxSpinDoubleEvent &evt) {
 			evt.Skip();
@@ -199,7 +199,7 @@ DialogStyleEditor::DialogStyleEditor(wxWindow *parent, AssStyle *style, agi::Con
 	};
 	for (int i = 0; i < 3; i++)
 		margin[i] = new wxSpinCtrl(this, -1, std::to_wstring(style->Margin[i]),
-		                           wxDefaultPosition, wxSize(60, -1),
+		                           wxDefaultPosition, wxSize(120, -1),
 		                           wxSP_ARROW_KEYS, 0, 9999, style->Margin[i]);
 
 	Alignment = new wxRadioBox(this, -1, _("Alignment"), wxDefaultPosition, wxDefaultSize, 9, alignValues, 3, wxRA_SPECIFY_COLS);

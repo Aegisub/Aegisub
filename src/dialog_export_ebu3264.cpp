@@ -129,7 +129,7 @@ int ShowEbuExportConfigurationDialog(wxWindow *owner, EbuExportSettings &s) {
 		_("Skip lines that are too long")
 	};
 
-	wxSpinCtrl *max_line_length_ctrl = new wxSpinCtrl(&d, -1, wxString(), wxDefaultPosition, wxSize(65, -1));
+	wxSpinCtrl *max_line_length_ctrl = new wxSpinCtrl(&d, -1, wxString(), wxDefaultPosition, wxSize(130, -1));
 	wxComboBox *wrap_mode_ctrl = new wxComboBox(&d, -1, wrap_modes[0], wxDefaultPosition, wxDefaultSize, 4, wrap_modes, wxCB_DROPDOWN | wxCB_READONLY);
 	wxCheckBox *translate_alignments_check = new wxCheckBox(&d, -1, _("Translate alignments"));
 

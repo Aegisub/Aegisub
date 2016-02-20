@@ -108,8 +108,8 @@ DialogProperties::DialogProperties(agi::Context *c)
 	TopSizer->Add(TopSizerGrid,1,wxALL | wxEXPAND,0);
 
 	// Resolution box
-	ResX = new wxTextCtrl(&d,-1,"",wxDefaultPosition,wxSize(50,20),0,IntValidator(c->ass->GetScriptInfoAsInt("PlayResX")));
-	ResY = new wxTextCtrl(&d,-1,"",wxDefaultPosition,wxSize(50,20),0,IntValidator(c->ass->GetScriptInfoAsInt("PlayResY")));
+	ResX = new wxTextCtrl(&d,-1,"",wxDefaultPosition,wxSize(50,-1),0,IntValidator(c->ass->GetScriptInfoAsInt("PlayResX")));
+	ResY = new wxTextCtrl(&d,-1,"",wxDefaultPosition,wxSize(50,-1),0,IntValidator(c->ass->GetScriptInfoAsInt("PlayResY")));
 
 	wxButton *FromVideo = new wxButton(&d,-1,_("From &video"));
 	if (!c->project->VideoProvider())
@@ -173,7 +173,7 @@ DialogProperties::DialogProperties(agi::Context *c)
 }
 
 void DialogProperties::AddProperty(wxSizer *sizer, wxString const& label, std::string const& property) {
-	wxTextCtrl *ctrl = new wxTextCtrl(&d, -1, to_wx(c->ass->GetScriptInfo(property)), wxDefaultPosition, wxSize(200, 20));
+	wxTextCtrl *ctrl = new wxTextCtrl(&d, -1, to_wx(c->ass->GetScriptInfo(property)), wxDefaultPosition, wxSize(200, -1));
 	sizer->Add(new wxStaticText(&d, -1, label), wxSizerFlags().Center().Left());
 	sizer->Add(ctrl, wxSizerFlags(1).Expand());
 	properties.push_back({property, ctrl});

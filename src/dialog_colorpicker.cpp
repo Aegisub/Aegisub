@@ -557,7 +557,7 @@ DialogColorPicker::DialogColorPicker(wxWindow *parent, agi::Color initial_color,
 	wxString modes[] = { _("RGB/R"), _("RGB/G"), _("RGB/B"), _("HSL/L"), _("HSV/H") };
 	colorspace_choice = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 5, modes);
 
-	wxSize colorinput_size = GetTextExtent(" &H10117B& ");
+	wxSize colorinput_size = GetTextExtent(" [&H10117B&] ");
 	colorinput_size.SetHeight(-1);
 	wxSize colorinput_labelsize(40, -1);
 

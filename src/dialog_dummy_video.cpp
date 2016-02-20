@@ -78,13 +78,13 @@ static ResolutionShortcut resolutions[] = {
 };
 
 wxSpinCtrl *spin_ctrl(wxWindow *parent, int min, int max, int *value) {
-	auto ctrl = new wxSpinCtrl(parent, -1, "", wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, min, max, *value);
+	auto ctrl = new wxSpinCtrl(parent, -1, "", wxDefaultPosition, wxSize(100, -1), wxSP_ARROW_KEYS, min, max, *value);
 	ctrl->SetValidator(wxGenericValidator(value));
 	return ctrl;
 }
 
 wxControl *spin_ctrl(wxWindow *parent, double min, double max, double *value) {
-	return new wxTextCtrl(parent, -1, "", wxDefaultPosition, wxSize(50, -1), 0, DoubleValidator(value, min, max));
+	return new wxTextCtrl(parent, -1, "", wxDefaultPosition, wxSize(100, -1), 0, DoubleValidator(value, min, max));
 }
 
 wxComboBox *resolution_shortcuts(wxWindow *parent, int width, int height) {
