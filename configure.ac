@@ -435,7 +435,7 @@ AC_CHECK_PROGS([LUA], [lua luajit lua5.3 lua-5.3 lua5.2 lua-5.2 lua5.1 lua-5.1])
 
 # If the user doesn't have an installed copy of Lua, just use the one built
 # as part of building LuaJIT
-AS_IF([test -z $LUA], [LUA="$srcdir/vendor/luajit/src/host/minilua"])
+AS_IF([test -z $LUA], [LUA='$(TOP)vendor/luajit/src/host/minilua'])
 
 ######################################################
 # Debugging support
