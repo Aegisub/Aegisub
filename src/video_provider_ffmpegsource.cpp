@@ -235,7 +235,7 @@ void FFmpegSourceVideoProvider::LoadVideo(agi::fs::path const& filename, std::st
 	else
 		DAR = double(Width) / Height;
 
-	CS = TempFrame->ColorSpace;
+	int VideoCS = CS = TempFrame->ColorSpace;
 	CR = TempFrame->ColorRange;
 
 	if (CS == FFMS_CS_UNSPECIFIED)
@@ -244,9 +244,13 @@ void FFmpegSourceVideoProvider::LoadVideo(agi::fs::path const& filename, std::st
 
 #if FFMS_VERSION >= ((2 << 24) | (17 << 16) | (1 << 8) | 0)
 	if (CS != FFMS_CS_RGB && CS != FFMS_CS_BT470BG && ColorSpace != colormatrix && (colormatrix == "TV.601" || OPT_GET("Video/Force BT.601")->GetBool())) {
-		if (FFMS_SetInputFormatV(VideoSource, FFMS_CS_BT470BG, CR, FFMS_GetPixFmt(""), &ErrInfo))
-			throw VideoOpenError(std::string("Failed to set input format: ") + ErrInfo.Buffer);
+		CS = FFMS_CS_BT470BG;
 		ColorSpace = colormatrix_description(FFMS_CS_BT470BG, CR);
+	}
+
+	if (CS != VideoCS) {
+		if (FFMS_SetInputFormatV(VideoSource, CS, CR, FFMS_GetPixFmt(""), &ErrInfo))
+			throw VideoOpenError(std::string("Failed to set input format: ") + ErrInfo.Buffer);
 	}
 #endif
 
