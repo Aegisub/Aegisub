@@ -120,7 +120,10 @@ void ShowAboutDialog(wxWindow *parent) {
 		"    FFTW - Copyright (c) Matteo Frigo, Massachusetts Institute of Technology;\n"
 #endif
 		+ _("\nSee the help file for full credits.\n")
-		+ fmt_tl("Built by %s on %s.", GetAegisubBuildCredit(), GetAegisubBuildTime());
+#ifdef BUILD_CREDIT
+		+ fmt_tl("Built by %s on %s.", GetAegisubBuildCredit(), GetAegisubBuildTime())
+#endif
+		;
 
 	// Replace copyright symbol
 	wxChar copySymbol = 0xA9;

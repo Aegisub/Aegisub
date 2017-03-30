@@ -55,17 +55,16 @@ const char *GetAegisubShortVersionString() {
 	return BUILD_GIT_VERSION_STRING DEBUG_SUFFIX;
 }
 
+#ifdef BUILD_CREDIT
 const char *GetAegisubBuildTime() {
 	return __DATE__ " " __TIME__;
 }
 
 const char *GetAegisubBuildCredit() {
-#ifdef BUILD_CREDIT
 	return BUILD_CREDIT;
-#else
 	return "";
-#endif
 }
+#endif
 
 bool GetIsOfficialRelease() {
 	return false;
