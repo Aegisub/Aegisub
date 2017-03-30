@@ -11,10 +11,10 @@ src_PCH := $(d)agi_pre.h
 src_INSTALLNAME := $(AEGISUB_COMMAND)
 
 src_OBJ := \
-	$(subst .cpp,.o,$(wildcard $(d)command/*.cpp)) \
-	$(subst .cpp,.o,$(wildcard $(d)dialog_*.cpp)) \
-	$(subst .cpp,.o,$(wildcard $(d)subtitle_format*.cpp)) \
-	$(subst .cpp,.o,$(wildcard $(d)visual_tool*.cpp)) \
+	$(subst .cpp,.o,$(sort $(wildcard $(d)command/*.cpp))) \
+	$(subst .cpp,.o,$(sort $(wildcard $(d)dialog_*.cpp))) \
+	$(subst .cpp,.o,$(sort $(wildcard $(d)subtitle_format*.cpp))) \
+	$(subst .cpp,.o,$(sort $(wildcard $(d)visual_tool*.cpp))) \
 	$(d)MatroskaParser.o \
 	$(d)aegisublocale.o \
 	$(d)ass_attachment.o \
@@ -118,7 +118,7 @@ src_OBJ := \
 
 ifeq (yes, $(BUILD_DARWIN))
 src_OBJ += $(d)font_file_lister_coretext.o
-src_OBJ += $(subst .mm,.o,$(wildcard $(d)osx/*.mm))
+src_OBJ += $(subst .mm,.o,$(sort $(wildcard $(d)osx/*.mm)))
 $(d)font_file_lister_coretext.o_FLAGS := -fobjc-arc
 else
 src_OBJ += $(d)font_file_lister_fontconfig.o

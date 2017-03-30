@@ -1,10 +1,10 @@
 include $(dir $(lastword $(MAKEFILE_LIST)))../header.mk
 
 DATA_AUTOMATION := \
-	$(wildcard $(d)autoload/*) \
-	$(wildcard $(d)demos/*) \
-	$(wildcard $(d)include/*.lua) \
-	$(wildcard $(d)include/aegisub/*)
+	$(sort $(wildcard $(d)autoload/*)) \
+	$(sort $(wildcard $(d)demos/*)) \
+	$(sort $(wildcard $(d)include/*.lua)) \
+	$(sort $(wildcard $(d)include/aegisub/*))
 
 DATA_AUTOMATION_REL := $(subst $(d),,$(DATA_AUTOMATION))
 DATA_AUTOMATION_INSTALLED = $(addprefix $(DESTDIR)$(P_DATA)/automation/, $(DATA_AUTOMATION_REL))
