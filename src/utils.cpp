@@ -44,6 +44,7 @@
 #include <boost/filesystem/path.hpp>
 #include <map>
 #include <unicode/locid.h>
+#include <unicode/unistr.h>
 #include <wx/clipbrd.h>
 #include <wx/filedlg.h>
 #include <wx/stdpaths.h>
