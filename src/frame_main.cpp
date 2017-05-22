@@ -119,8 +119,12 @@ FrameMain::FrameMain()
 	context->parent = this;
 	context->frame = this;
 
-	StartupLog("Apply saved Maximized state");
-	if (OPT_GET("App/Maximized")->GetBool()) Maximize(true);
+	StartupLog("Apply saved position and maximized state");
+	auto r = OPT_GET("App/Window Position")->GetListInt();
+	if ((r.size() == 4) && (r[2] > 0) && (r[3] > 0))
+		SetSize(r[0], r[1], r[2], r[3]);
+	if (OPT_GET("App/Maximized")->GetBool())
+		Maximize(true);
 
 	StartupLog("Initialize toolbar");
 	wxSystemOptions::SetOption("msw.remap", 0);
@@ -307,6 +311,7 @@ BEGIN_EVENT_TABLE(FrameMain, wxFrame)
 	EVT_CLOSE(FrameMain::OnCloseWindow)
 	EVT_CHAR_HOOK(FrameMain::OnKeyDown)
 	EVT_MOUSEWHEEL(FrameMain::OnMouseWheel)
+	EVT_MOVE(FrameMain::OnMove)
 END_EVENT_TABLE()
 
 void FrameMain::OnCloseWindow(wxCloseEvent &event) {
@@ -351,4 +356,11 @@ void FrameMain::OnKeyDown(wxKeyEvent &event) {
 
 void FrameMain::OnMouseWheel(wxMouseEvent &evt) {
 	ForwardMouseWheelEvent(this, evt);
+}
+
+void FrameMain::OnMove(wxMoveEvent &evt) {
+	if (!IsMaximized()) {
+		auto r = GetRect();
+		OPT_SET("App/Window Position")->SetListInt({r.GetLeft(), r.GetTop(), r.GetWidth(), r.GetHeight()});
+	}
 }
