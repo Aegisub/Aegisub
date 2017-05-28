@@ -30,3 +30,13 @@ Returns: 4 values, all numbers.
   4. External leading of text in pixels.
 
 ---
+
+Getting the audio waveform selection position and duration
+
+function aegisub.get_audio_selection()
+
+Returns: 2 values, all numbers.
+  1. Position of the selection, in milliseconds.
+  2. End of the selection, in milliseconds.
+
+---

@@ -40,6 +40,8 @@
 #include "ass_style.h"
 #include "async_video_provider.h"
 #include "auto4_lua_factory.h"
+#include "audio_controller.h"
+#include "audio_timing.h"
 #include "command/command.h"
 #include "compat.h"
 #include "include/aegisub/context.h"
@@ -255,6 +257,19 @@ namespace {
 		return 4;
 	}
 
+	int lua_get_audio_selection(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (!c || !c->audioController || !c->audioController->GetTimingController()) {
+			lua_pushnil(L);
+			return 1;
+		}
+		const TimeRange range = c->audioController->GetTimingController()->GetActiveLineRange();
+		push_value(L, range.begin());
+		push_value(L, range.end());
+		return 2;
+	}
+
 	int project_properties(lua_State *L)
 	{
 		const agi::Context *c = get_context(L);
@@ -457,6 +472,7 @@ namespace {
 		set_field<get_file_name>(L, "file_name");
 		set_field<get_translation>(L, "gettext");
 		set_field<project_properties>(L, "project_properties");
+		set_field<lua_get_audio_selection>(L, "get_audio_selection");
 
 		// store aegisub table to globals
 		lua_settable(L, LUA_GLOBALSINDEX);
