@@ -419,7 +419,7 @@ class AutomationMenu final : public wxMenu {
 		WorkItem *FindOrMakeSubitem(std::string const &name) {
 			auto sub = std::find_if(subitems.begin(), subitems.end(), [&](WorkItem const &item) { return item.displayname == name; });
 			if (sub != subitems.end()) return &*sub;
-			
+
 			subitems.emplace_back(name);
 			return &subitems.back();
 		}
@@ -529,8 +529,13 @@ namespace menu {
 			}
 		}
 
+#ifdef __WXMAC__
 		menu->Bind(wxEVT_MENU_OPEN, &CommandManager::OnMenuOpen, &menu->cm);
 		menu->Bind(wxEVT_MENU, &CommandManager::OnMenuClick, &menu->cm);
+#else
+		window->Bind(wxEVT_MENU_OPEN, &CommandManager::OnMenuOpen, &menu->cm);
+		window->Bind(wxEVT_MENU, &CommandManager::OnMenuClick, &menu->cm);
+#endif
 
 #ifdef __WXMAC__
 		bind_events(menu.get());
