@@ -755,6 +755,7 @@ static void combine_lines(agi::Context *c, void (*combiner)(AssDialogue *, AssDi
 	auto sel = c->selectionController->GetSortedSelection();
 
 	AssDialogue *first = sel[0];
+	combiner(first, nullptr);
 	for (size_t i = 1; i < sel.size(); ++i) {
 		combiner(first, sel[i]);
 		first->End = std::max(first->End, sel[i]->End);
@@ -767,11 +768,15 @@ static void combine_lines(agi::Context *c, void (*combiner)(AssDialogue *, AssDi
 }
 
 static void combine_karaoke(AssDialogue *first, AssDialogue *second) {
-	first->Text = first->Text.get() + "{\\k" + std::to_string((second->Start - first->End) / 10) + "}" + second->Text.get();
+	if (second)
+		first->Text = first->Text.get() + "{\\k" + std::to_string((second->End - second->Start) / 10) + "}" + second->Text.get();
+	else
+		first->Text = "{\\k" + std::to_string((first->End - first->Start) / 10) + "}" + first->Text.get();
 }
 
 static void combine_concat(AssDialogue *first, AssDialogue *second) {
-	first->Text = first->Text.get() + " " + second->Text.get();
+	if (second)
+		first->Text = first->Text.get() + " " + second->Text.get();
 }
 
 static void combine_drop(AssDialogue *, AssDialogue *) { }
