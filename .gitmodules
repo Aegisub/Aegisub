@@ -19,11 +19,6 @@
 	url = git://github.com/FFMS/ffms2.git
 	branch = master
 	ignore = dirty
-[submodule "fontconfig"]
-	path = vendor/fontconfig
-	url = git://github.com/tgoyne/fontconfig.git
-	branch = msvc
-	ignore = dirty
 [submodule "libass"]
 	path = vendor/libass
 	url = git://github.com/libass/libass.git
