@@ -98,6 +98,9 @@ void AegisubApp::OnAssertFailure(const wxChar *file, int line, const wxChar *fun
 AegisubApp::AegisubApp() {
 	// http://trac.wxwidgets.org/ticket/14302
 	wxSetEnv("UBUNTU_MENUPROXY", "0");
+	// work around boost bug
+	if (!wxGetenv("LANG"))
+		wxSetEnv("LANG", "en-US.UTF-8");
 }
 
 namespace {
