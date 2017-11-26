@@ -75,11 +75,16 @@ static bool TestTexture(int width, int height, GLint format) {
 	return format != 0;
 }
 
-VideoOutGL::VideoOutGL() { }
+VideoOutGL::VideoOutGL() {
+#ifdef __APPLE__
+	CGDisplayRegisterReconfigurationCallback(VideoOutGL::CapabilitiesChanged, this);
+#endif
+}
 
 /// @brief Runtime detection of required OpenGL capabilities
 void VideoOutGL::DetectOpenGLCapabilities() {
-	if (maxTextureSize != 0) return;
+	if (!needsCapabilityUpdate) return;
+	needsCapabilityUpdate = false;
 
 	// Test for supported internalformats
 	if (TestTexture(64, 64, GL_RGBA8)) internalFormat = GL_RGBA8;
@@ -250,6 +255,15 @@ void VideoOutGL::InitTextures(int width, int height, GLenum format, int bpp, boo
 	}
 }
 
+#ifdef __APPLE__
+void VideoOutGL::CapabilitiesChanged(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
+	if (flags & kCGDisplaySetModeFlag) {
+		VideoOutGL *self = (VideoOutGL*)userInfo;
+		self->needsCapabilityUpdate = true;
+	}
+}
+#endif
+
 void VideoOutGL::UploadFrameData(VideoFrame const& frame) {
 	if (frame.height == 0 || frame.width == 0) return;
 
@@ -280,4 +294,5 @@ VideoOutGL::~VideoOutGL() {
 		glDeleteTextures(textureIdList.size(), &textureIdList[0]);
 		glDeleteLists(dl, 1);
 	}
+	CGDisplayRemoveReconfigurationCallback(VideoOutGL::CapabilitiesChanged, this);
 }
