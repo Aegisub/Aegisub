@@ -38,7 +38,7 @@ def collectlibs(lib, masterlist, targetdir):
 			link_list = []
 			while check:
 				if os.path.isfile(check) and not os.path.islink(check):
-					os.system("cp '%s' '%s'" % (check, targetdir))
+					os.system("rsync --chmod=u=rwX,go=rX --no-owner --no-group '%s' '%s'" % (check, targetdir))
 					print "    FILE %s ... copied to target" % check
 					if link_list:
 						for link in link_list:
