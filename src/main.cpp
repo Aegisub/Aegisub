@@ -274,6 +274,10 @@ bool AegisubApp::OnInit() {
 		// The right thing to do here would be to query CoreFoundation for the user's
 		// locale and add .UTF-8 to that, but :effort:
 		setlocale(LC_CTYPE, "en_US.UTF-8");
+
+		// On macOS, the wx-defualt behavior of exiting when the last window closes does not
+		// match the standard platform behavior, so we override it.
+		SetExitOnFrameDelete(false);
 #endif
 
 		exception_message = _("Oops, Aegisub has crashed!\n\nAn attempt has been made to save a copy of your file to:\n\n%s\n\nAegisub will now close.");
@@ -381,19 +385,32 @@ agi::Context& AegisubApp::NewProjectContext() {
 		}
 
 		frames.erase(remove(begin(frames), end(frames), frame), end(frames));
+#ifndef __APPLE__
 		if (frames.empty()) {
 			ExitMainLoop();
 		}
+#endif
 	});
 	frames.push_back(frame);
 	return *frame->context;
 }
 
-void AegisubApp::CloseAll() {
+agi::Context& AegisubApp::EmptyProjectContext() {
+	for (auto& frame : frames) {
+		if (!frame->context->subsController->HasFilename() &&
+				!frame->context->subsController->IsModified())
+			return *frame->context;
+	}
+
+	return NewProjectContext();
+}
+
+void AegisubApp::Quit() {
 	for (auto frame : frames) {
 		if (!frame->Close())
 			break;
 	}
+	ExitMainLoop();
 }
 
 void AegisubApp::UnhandledException(bool stackWalk) {
@@ -486,5 +503,9 @@ void AegisubApp::OpenFiles(wxArrayStringsAdapter filenames) {
 	for (size_t i = 0; i < filenames.GetCount(); ++i)
 		files.push_back(from_wx(filenames[i]));
 	if (!files.empty())
+#ifdef __APPLE__
+		EmptyProjectContext().project->LoadList(files);
+#else
 		frames[0]->context->project->LoadList(files);
+#endif
 }
