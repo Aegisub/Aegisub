@@ -53,6 +53,17 @@ For personal usage, you can use homebrew to install almost all of Aegisub's depe
 Once the dependencies are installed, build Aegisub with `autoreconf && ./configure && make && make osx-bundle`.
 `autoreconf` should be skipped if you are building from a source tarball rather than `git`.
 
+## Updating Moonscript
+
+From within the Moonscript repository, run `bin/moon bin/splat.moon -l moonscript moonscript/ > bin/moonscript.lua`.
+Open the newly created `bin/moonscript.lua`, and within it make the following changes:
+
+1. Prepend the final line of the file, `package.preload["moonscript"]()`, with a `return`, producing `return package.preload["moonscript"]()`.
+2. Within the function at `package.preload['moonscript.base']`, remove references to `moon_loader`, `insert_loader`, and `remove_loader`. This means removing their declarations, definitions, and entries in the returned table.
+3. Within the function at `package.preload['moonscript']`, remove the line `_with_0.insert_loader()`.
+
+The file is now ready for use, to be placed in `automation/include` within the Aegisub repo.
+
 ## License
 
 All files in this repository are licensed under various GPL-compatible BSD-style licenses; see LICENCE and the individual source files for more information.
