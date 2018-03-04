@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Aegisub 3.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-27 11:18-0700\n"
-"PO-Revision-Date: 2014-06-28 18:37+0800\n"
-"Last-Translator: COMPUTERFAN <diannaomi97@gmail.com>\n"
-"Language-Team: Vmoe字幕组 <diannaomi97@gmail.com>\n"
+"POT-Creation-Date: 2014-07-01 10:53-0700\n"
+"PO-Revision-Date: 2018-03-05 02:00+0800\n"
+"Last-Translator: ComputerFan <diannaomi97@gmail.com>\n"
+"Language-Team: Vmoe Fansub <vmoe@vmoe.info>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -57,99 +57,99 @@ msgstr "从 %d 往后"
 
 #: ../src/dialog_shift_times.cpp:115
 msgid "sel "
-msgstr "所选"
+msgstr "所选 "
 
-#: ../src/dialog_shift_times.cpp:132 ../src/command/time.cpp:153
+#: ../src/dialog_shift_times.cpp:133 ../src/command/time.cpp:153
 msgid "Shift Times"
 msgstr "平移时间"
 
-#: ../src/dialog_shift_times.cpp:141
-msgid "&Time: "
-msgstr "时间(&T)： "
-
 #: ../src/dialog_shift_times.cpp:142
+msgid "&Time: "
+msgstr "时间(&T)："
+
+#: ../src/dialog_shift_times.cpp:143
 msgid "Shift by time"
 msgstr "按照时间平移"
 
-#: ../src/dialog_shift_times.cpp:145
-msgid "&Frames: "
-msgstr "帧数(&F)： "
-
 #: ../src/dialog_shift_times.cpp:146
+msgid "&Frames: "
+msgstr "帧数(&F)："
+
+#: ../src/dialog_shift_times.cpp:147
 msgid "Shift by frames"
-msgstr "平移 (按照帧数)"
+msgstr "平移（按照帧数）"
 
-#: ../src/dialog_shift_times.cpp:150
+#: ../src/dialog_shift_times.cpp:151
 msgid "Enter time in h:mm:ss.cs notation"
-msgstr "以 h:mm:ss.cs 方式输入时间"
+msgstr "以 h:mm:ss.cs 格式输入时间"
 
-#: ../src/dialog_shift_times.cpp:153
+#: ../src/dialog_shift_times.cpp:154
 msgid "Enter number of frames to shift by"
 msgstr "输入平移帧数"
 
-#: ../src/dialog_shift_times.cpp:155
+#: ../src/dialog_shift_times.cpp:156
 msgid "For&ward"
 msgstr "延后(&W)"
 
-#: ../src/dialog_shift_times.cpp:156
+#: ../src/dialog_shift_times.cpp:157
 msgid ""
 "Shifts subs forward, making them appear later. Use if they are appearing too "
 "soon."
 msgstr "延后字幕使其较晚显示。在字幕过早显示时使用。"
 
-#: ../src/dialog_shift_times.cpp:158
+#: ../src/dialog_shift_times.cpp:159
 msgid "&Backward"
 msgstr "提前(&B)"
 
-#: ../src/dialog_shift_times.cpp:159
+#: ../src/dialog_shift_times.cpp:160
 msgid ""
 "Shifts subs backward, making them appear earlier. Use if they are appearing "
 "too late."
-msgstr "提前字幕使其较早显示.在字幕过晚显示时使用。"
+msgstr "提前字幕使其较早显示。在字幕过晚显示时使用。"
 
-#: ../src/dialog_shift_times.cpp:161
+#: ../src/dialog_shift_times.cpp:162
 msgid "&All rows"
 msgstr "所有行(&A)"
 
-#: ../src/dialog_shift_times.cpp:161 ../src/dialog_search_replace.cpp:88
+#: ../src/dialog_shift_times.cpp:162 ../src/dialog_search_replace.cpp:88
 msgid "Selected &rows"
 msgstr "所选行(&R)"
 
-#: ../src/dialog_shift_times.cpp:161
+#: ../src/dialog_shift_times.cpp:162
 msgid "Selection &onward"
 msgstr "所选行及其后续(&O)"
 
-#: ../src/dialog_shift_times.cpp:162
+#: ../src/dialog_shift_times.cpp:163
 msgid "Affect"
 msgstr "应用于"
 
-#: ../src/dialog_shift_times.cpp:164
+#: ../src/dialog_shift_times.cpp:165
 msgid "Start a&nd End times"
 msgstr "开始和结束时间(&N)"
 
-#: ../src/dialog_shift_times.cpp:164
+#: ../src/dialog_shift_times.cpp:165
 msgid "&Start times only"
 msgstr "仅开始时间(&S)"
 
-#: ../src/dialog_shift_times.cpp:164
+#: ../src/dialog_shift_times.cpp:165
 msgid "&End times only"
 msgstr "仅结束时间(&E)"
 
-#: ../src/dialog_shift_times.cpp:165
+#: ../src/dialog_shift_times.cpp:166
 msgid "Times"
 msgstr "时间"
 
-#: ../src/dialog_shift_times.cpp:169
+#: ../src/dialog_shift_times.cpp:170
 msgid "&Clear"
 msgstr "清除(&C)"
 
-#: ../src/dialog_shift_times.cpp:200
+#: ../src/dialog_shift_times.cpp:201
 msgid "Shift by"
 msgstr "平移方式"
 
-#: ../src/dialog_shift_times.cpp:209
+#: ../src/dialog_shift_times.cpp:210
 msgid "Load from history"
-msgstr "从历史打开"
+msgstr "从历史加载"
 
 #: ../src/dialog_shift_times.cpp:405
 msgid "shifting"
@@ -171,7 +171,7 @@ msgstr "放弃所有分割并离开分割模式"
 
 #: ../src/audio_karaoke.cpp:76
 msgid "Commit splits"
-msgstr "提交"
+msgstr "提交分割"
 
 #: ../src/audio_karaoke.cpp:239
 msgid "Karaoke tag"
@@ -265,7 +265,7 @@ msgstr "行超过最大长度：%s"
 
 #: ../src/dialog_video_details.cpp:44
 msgid "Video Details"
-msgstr "视频属性"
+msgstr "视频详情"
 
 #: ../src/dialog_video_details.cpp:58
 msgid "File name:"
@@ -277,11 +277,11 @@ msgstr "帧率："
 
 #: ../src/dialog_video_details.cpp:60
 msgid "Resolution:"
-msgstr "分辨率"
+msgstr "分辨率："
 
 #: ../src/dialog_video_details.cpp:61
 msgid "Length:"
-msgstr "长度"
+msgstr "长度："
 
 #: ../src/dialog_video_details.cpp:61
 #, c-format
@@ -294,7 +294,7 @@ msgid "Decoder:"
 msgstr "解码器："
 
 #: ../src/dialog_video_details.cpp:65 ../src/preferences.cpp:165
-#: ../src/preferences.cpp:414
+#: ../src/preferences.cpp:417
 msgid "Video"
 msgstr "视频"
 
@@ -484,19 +484,19 @@ msgstr "时间处理器"
 
 #: ../src/mkv_wrap.cpp:213
 msgid "Choose which track to read:"
-msgstr "选择文字编码："
+msgstr "选择读取哪个轨道："
 
 #: ../src/mkv_wrap.cpp:213
 msgid "Multiple subtitle tracks found"
-msgstr "仅显示字幕"
+msgstr "发现多个字幕轨道"
 
 #: ../src/mkv_wrap.cpp:251
 msgid "Parsing Matroska"
-msgstr "分析Matroska(MKV)文件"
+msgstr "正在分析Matroska(MKV)文件"
 
 #: ../src/mkv_wrap.cpp:251
 msgid "Reading subtitles from Matroska file."
-msgstr "从Matroska(MKV)文件中读取字幕"
+msgstr "正在从Matroska(MKV)文件中读取字幕。"
 
 #: ../src/dialog_styling_assistant.cpp:55 ../src/command/tool.cpp:123
 msgid "Styling Assistant"
@@ -555,7 +555,7 @@ msgstr "选择样式"
 
 #: ../src/dialog_styling_assistant.cpp:101
 msgid "&Seek video to line start time"
-msgstr "视频跳至开始(&S)"
+msgstr "视频跳至行开始(&S)"
 
 #: ../src/dialog_styling_assistant.cpp:110 ../src/dialog_translation.cpp:129
 msgid "Actions"
@@ -591,33 +591,33 @@ msgstr "时间："
 
 #: ../src/dialog_style_manager.cpp:188
 msgid "Move style up"
-msgstr "样式上移"
+msgstr "上移样式"
 
 #: ../src/dialog_style_manager.cpp:189
 msgid "Move style down"
-msgstr "样式下移"
+msgstr "下移样式"
 
 #: ../src/dialog_style_manager.cpp:190
 msgid "Move style to top"
-msgstr "样式移至顶部"
+msgstr "置顶样式"
 
 #: ../src/dialog_style_manager.cpp:191
 msgid "Move style to bottom"
-msgstr "样式移至底部"
+msgstr "置底样式"
 
 #: ../src/dialog_style_manager.cpp:192
 msgid "Sort styles alphabetically"
 msgstr "按字母表顺序排序样式"
 
-#: ../src/dialog_style_manager.cpp:202 ../src/preferences.cpp:575
+#: ../src/dialog_style_manager.cpp:202 ../src/preferences.cpp:578
 msgid "&New"
 msgstr "新建(&N)"
 
-#: ../src/dialog_style_manager.cpp:203 ../src/preferences.cpp:576
+#: ../src/dialog_style_manager.cpp:203 ../src/preferences.cpp:579
 msgid "&Edit"
 msgstr "编辑(&E)"
 
-#: ../src/dialog_style_manager.cpp:205 ../src/preferences.cpp:577
+#: ../src/dialog_style_manager.cpp:205 ../src/preferences.cpp:580
 #: ../src/dialog_attachments.cpp:79
 msgid "&Delete"
 msgstr "删除(&D)"
@@ -634,7 +634,7 @@ msgstr "%s - 复制 (%d)"
 
 #: ../src/dialog_style_manager.cpp:243
 msgid "Could not parse style"
-msgstr "无法粘贴样式"
+msgstr "无法解析样式"
 
 #: ../src/dialog_style_manager.cpp:248
 #, c-format
@@ -660,7 +660,7 @@ msgstr "删除"
 
 #: ../src/dialog_style_manager.cpp:282
 msgid "Copy to &current script ->"
-msgstr "复制到当前脚本 ->"
+msgstr "复制到当前脚本(&C) ->"
 
 #: ../src/dialog_style_manager.cpp:289
 msgid "Storage"
@@ -668,11 +668,11 @@ msgstr "样式库"
 
 #: ../src/dialog_style_manager.cpp:295
 msgid "&Import from script..."
-msgstr "从脚本中导入..."
+msgstr "从脚本中导入…(&I)"
 
 #: ../src/dialog_style_manager.cpp:296
 msgid "<- Copy to &storage"
-msgstr "<- 复制到样式库"
+msgstr "<- 复制到样式库(&S)"
 
 #: ../src/dialog_style_manager.cpp:307
 msgid "Current script"
@@ -706,7 +706,7 @@ msgid ""
 "The catalog has been renamed to \"%s\"."
 msgstr ""
 "指定目录名包含一个或多个非法字符，它们已经被下划线所替代。\n"
-"该目录被重命名为 \"%s\"。"
+"该目录被重命名为“%s”。"
 
 #: ../src/dialog_style_manager.cpp:477
 msgid "Invalid characters"
@@ -715,7 +715,7 @@ msgstr "无效字符"
 #: ../src/dialog_style_manager.cpp:490
 #, c-format
 msgid "Are you sure you want to delete the storage \"%s\" from the catalog?"
-msgstr "您确定要将样式库 \"%s\" 从目录中删除吗？"
+msgstr "您确定要将样式库“%s”从目录中删除吗？"
 
 #: ../src/dialog_style_manager.cpp:491
 msgid "Confirm delete"
@@ -726,12 +726,12 @@ msgstr "确认删除"
 msgid ""
 "There is already a style with the name \"%s\" in the current storage. "
 "Overwrite?"
-msgstr "当前已储存了相同的样式名 \"%s\"。要覆盖吗？"
+msgstr "当前已储存了相同的样式名“%s”。要覆盖吗？"
 
 #: ../src/dialog_style_manager.cpp:509 ../src/dialog_style_manager.cpp:536
 #: ../src/dialog_style_manager.cpp:714
 msgid "Style name collision"
-msgstr "样式名称"
+msgstr "样式名称冲突"
 
 #: ../src/dialog_style_manager.cpp:536 ../src/dialog_style_manager.cpp:713
 #, c-format
@@ -754,7 +754,7 @@ msgstr "确认从样式库删除"
 
 #: ../src/dialog_style_manager.cpp:659
 msgid "Confirm delete from current"
-msgstr "确认从当前删除"
+msgstr "确认从当前脚本删除"
 
 #: ../src/dialog_style_manager.cpp:663
 msgid "style delete"
@@ -767,7 +767,7 @@ msgstr "打开字幕文件"
 
 #: ../src/dialog_style_manager.cpp:698
 msgid "The selected file has no available styles."
-msgstr "所选文件没有可用样式"
+msgstr "所选文件没有可用样式。"
 
 #: ../src/dialog_style_manager.cpp:698
 msgid "Error Importing Styles"
@@ -815,7 +815,7 @@ msgstr "打开时间码文件…"
 
 #: ../src/command/timecode.cpp:71
 msgid "Open a VFR timecodes v1 or v2 file"
-msgstr "打开一个可变帧时间码(VFR timecode)v1或v2文件"
+msgstr "打开一个可变帧率时间码(VFR timecode)v1或v2文件"
 
 #: ../src/command/timecode.cpp:84
 msgid "Save Timecodes File..."
@@ -827,7 +827,7 @@ msgstr "保存时间码文件"
 
 #: ../src/command/timecode.cpp:86
 msgid "Save a VFR timecodes v2 file"
-msgstr "保存一个可变帧时间码(VFR timecode)v1或v2文件"
+msgstr "保存一个可变帧率时间码(VFR timecode)v1或v2文件"
 
 #: ../src/command/command.cpp:31
 #, c-format
@@ -852,7 +852,7 @@ msgstr "自定义…(&U)"
 
 #: ../src/command/video.cpp:103
 msgid "Custom"
-msgstr "自定义…"
+msgstr "自定义"
 
 #: ../src/command/video.cpp:104
 msgid "Force video to a custom aspect ratio"
@@ -886,7 +886,7 @@ msgstr "默认(&D)"
 
 #: ../src/command/video.cpp:146 ../src/ass_style.cpp:194
 msgid "Default"
-msgstr "默认编码"
+msgstr "默认"
 
 #: ../src/command/video.cpp:147
 msgid "Use video's original aspect ratio"
@@ -966,15 +966,15 @@ msgstr "从主界面分离视频，在一个单独窗口显示"
 
 #: ../src/command/video.cpp:262
 msgid "Show &Video Details"
-msgstr "显示视频属性(&V)"
+msgstr "显示视频详情(&V)"
 
 #: ../src/command/video.cpp:263
 msgid "Show Video Details"
-msgstr "显示视频属性"
+msgstr "显示视频详情"
 
 #: ../src/command/video.cpp:264
 msgid "Show video details"
-msgstr "显示视频属性"
+msgstr "显示视频详情"
 
 #: ../src/command/video.cpp:274 ../src/command/video.cpp:275
 msgid "Toggle video slider focus"
@@ -1117,7 +1117,7 @@ msgstr "打开视频(&O)…"
 
 #: ../src/command/video.cpp:563
 msgid "Open Video"
-msgstr "打开视频…"
+msgstr "打开视频"
 
 #: ../src/command/video.cpp:564
 msgid "Open a video file"
@@ -1133,7 +1133,7 @@ msgstr "打开视频文件"
 
 #: ../src/command/video.cpp:578
 msgid "&Use Dummy Video..."
-msgstr "使用空白视频…(&U)"
+msgstr "使用空白视频(&U)…"
 
 #: ../src/command/video.cpp:579
 msgid "Use Dummy Video"
@@ -1371,7 +1371,7 @@ msgstr "设置字体"
 
 #: ../src/command/edit.cpp:535
 msgid "Find and R&eplace..."
-msgstr "搜索替换(&R)…"
+msgstr "搜索替换(&E)…"
 
 #: ../src/command/edit.cpp:536
 msgid "Find and Replace"
@@ -1395,7 +1395,7 @@ msgstr "复制字幕到剪贴板"
 
 #: ../src/command/edit.cpp:621
 msgid "Cu&t Lines"
-msgstr "剪切行(&C)"
+msgstr "剪切行(&T)"
 
 #: ../src/command/edit.cpp:622
 msgid "Cut Lines"
@@ -1535,7 +1535,7 @@ msgstr "选择性粘贴…"
 
 #: ../src/command/edit.cpp:873
 msgid "Paste subtitles over others"
-msgstr "在选择区域内粘贴字幕"
+msgstr "粘贴字幕至选择字段内"
 
 #: ../src/command/edit.cpp:956
 msgid "Recom&bine Lines"
@@ -1547,11 +1547,11 @@ msgstr "重组行"
 
 #: ../src/command/edit.cpp:958
 msgid "Recombine subtitles which have been split and merged"
-msgstr "重组已被分割及合并的字幕"
+msgstr "重新组合已被分割及合并的字幕"
 
 #: ../src/command/edit.cpp:1028
 msgid "combining"
-msgstr "重组"
+msgstr "组合中"
 
 #: ../src/command/edit.cpp:1034 ../src/command/edit.cpp:1035
 msgid "Split Lines (by karaoke)"
@@ -1622,25 +1622,25 @@ msgstr "重做 %s"
 
 #: ../src/command/edit.cpp:1169
 msgid "Undo last action"
-msgstr "恢复上次操作"
+msgstr "撤销上次操作"
 
 #: ../src/command/edit.cpp:1174
 msgid "Nothing to &undo"
-msgstr "无法恢复(&U)"
+msgstr "无法撤销(&U)"
 
 #: ../src/command/edit.cpp:1175
 #, c-format
 msgid "&Undo %s"
-msgstr "恢复 %s (&U)"
+msgstr "撤销 %s (&U)"
 
 #: ../src/command/edit.cpp:1179
 msgid "Nothing to undo"
-msgstr "无法恢复"
+msgstr "无法撤销"
 
 #: ../src/command/edit.cpp:1180
 #, c-format
 msgid "Undo %s"
-msgstr "恢复 %s"
+msgstr "撤销 %s"
 
 #: ../src/command/edit.cpp:1194 ../src/command/edit.cpp:1195
 msgid "Revert"
@@ -1655,7 +1655,7 @@ msgid "revert line"
 msgstr "还原行"
 
 #: ../src/command/edit.cpp:1207 ../src/command/edit.cpp:1208
-#: ../src/preferences.cpp:386
+#: ../src/preferences.cpp:389
 msgid "Clear"
 msgstr "清除"
 
@@ -1842,7 +1842,7 @@ msgstr "打开一个Aegisub自动保存的旧版本文件"
 
 #: ../src/command/subtitle.cpp:263
 msgid "Open Subtitles with &Charset..."
-msgstr "打开字幕并指定编码(&O)…"
+msgstr "打开字幕并指定编码(&C)…"
 
 #: ../src/command/subtitle.cpp:264
 msgid "Open Subtitles with Charset"
@@ -1935,7 +1935,7 @@ msgstr "选择当前视频帧中可见的所有行"
 
 #: ../src/command/subtitle.cpp:407
 msgid "Spell &Checker..."
-msgstr "拼写检查器(&L)…"
+msgstr "拼写检查器(&C)…"
 
 #: ../src/command/subtitle.cpp:408 ../src/dialog_spellchecker.cpp:103
 msgid "Spell Checker"
@@ -2202,7 +2202,7 @@ msgstr "选择Aegisub界面语言"
 
 #: ../src/command/app.cpp:182
 msgid "&Log window"
-msgstr "日志窗口(&G)"
+msgstr "日志窗口(&L)"
 
 #: ../src/command/app.cpp:183 ../src/dialog_log.cpp:99
 msgid "Log window"
@@ -2495,7 +2495,7 @@ msgstr "重新载入所有自动化脚本"
 
 #: ../src/command/automation.cpp:61
 msgid "R&eload autoload Automation scripts"
-msgstr "重新载入自动加载的自动化脚本(&R)"
+msgstr "重新载入自动加载的自动化脚本(&E)"
 
 #: ../src/command/automation.cpp:62
 msgid "Reload autoload Automation scripts"
@@ -2514,7 +2514,7 @@ msgid "&Automation..."
 msgstr "自动化(&A)…"
 
 #: ../src/command/automation.cpp:75 ../src/command/automation.cpp:87
-#: ../src/preferences.cpp:311
+#: ../src/preferences.cpp:314
 msgid "Automation"
 msgstr "自动化"
 
@@ -2618,7 +2618,7 @@ msgstr "紧贴镜头"
 
 #: ../src/command/time.cpp:238 ../src/command/time.cpp:239
 msgid "Add lead in and out"
-msgstr "结束延后："
+msgstr "添加开始提前及结束延后"
 
 #: ../src/command/time.cpp:240
 msgid "Add both lead in and out to the selected lines"
@@ -2626,19 +2626,19 @@ msgstr "同时开始提前、结束延后所选行"
 
 #: ../src/command/time.cpp:252 ../src/command/time.cpp:253
 msgid "Add lead in"
-msgstr "开始提前："
+msgstr "添加开始提前"
 
 #: ../src/command/time.cpp:254
 msgid "Add the lead in time to the selected lines"
-msgstr "开始提前所选行"
+msgstr "为所选行的开始时间提前指定的时间"
 
 #: ../src/command/time.cpp:264 ../src/command/time.cpp:265
 msgid "Add lead out"
-msgstr "结束延后："
+msgstr "添加结束延后"
 
 #: ../src/command/time.cpp:266
 msgid "Add the lead out time to the selected lines"
-msgstr "结束延后所选行"
+msgstr "为所选行的结束时间延后指定的时间"
 
 #: ../src/command/time.cpp:275 ../src/command/time.cpp:276
 msgid "Increase length"
@@ -2646,16 +2646,16 @@ msgstr "增加长度"
 
 #: ../src/command/time.cpp:277
 msgid "Increase the length of the current timing unit"
-msgstr "增加长度为现在的时间轴"
+msgstr "增加当前时间轴的长度"
 
 #: ../src/command/time.cpp:286 ../src/command/time.cpp:287
 msgid "Increase length and shift"
-msgstr "增加长度与偏移"
+msgstr "增加长度并平移"
 
 #: ../src/command/time.cpp:288
 msgid ""
 "Increase the length of the current timing unit and shift the following items"
-msgstr "增加当前时间轴长度并平移下面的项目"
+msgstr "增加当前时间轴的长度并平移后续项目"
 
 #: ../src/command/time.cpp:297 ../src/command/time.cpp:298
 msgid "Decrease length"
@@ -2663,16 +2663,16 @@ msgstr "减少长度"
 
 #: ../src/command/time.cpp:299
 msgid "Decrease the length of the current timing unit"
-msgstr "减少长度为现在的时间轴"
+msgstr "较少当前时间轴的长度"
 
 #: ../src/command/time.cpp:308 ../src/command/time.cpp:309
 msgid "Decrease length and shift"
-msgstr "减少长度与偏移"
+msgstr "减少长度并偏移"
 
 #: ../src/command/time.cpp:310
 msgid ""
 "Decrease the length of the current timing unit and shift the following items"
-msgstr "减少当前时间轴长度并平移下面的项目"
+msgstr "减少当前时间轴的长度并平移后续项目"
 
 #: ../src/command/time.cpp:319 ../src/command/time.cpp:320
 msgid "Shift start time forward"
@@ -3013,15 +3013,15 @@ msgstr "切换卡拉OK模式"
 
 #: ../src/command/help.cpp:48
 msgid "&Bug Tracker..."
-msgstr "Bug追踪器(&B)…"
+msgstr "Bug跟踪系统(&B)…"
 
 #: ../src/command/help.cpp:49
 msgid "Bug Tracker"
-msgstr "Bug追踪器"
+msgstr "Bug跟踪系统"
 
 #: ../src/command/help.cpp:50
 msgid "Visit Aegisub's bug tracker to report bugs and request new features"
-msgstr "访问Aegisub的bug追踪器来报告bug和要求新增功能"
+msgstr "访问Aegisub的Bug跟踪系统来报告bug和要求新增功能"
 
 #: ../src/command/help.cpp:69
 msgid "&Contents"
@@ -3130,7 +3130,7 @@ msgstr "不选(&N)"
 
 #: ../src/subtitles_provider_libass.cpp:112
 msgid "Updating font index"
-msgstr "更新字体索引"
+msgstr "正在更新字体索引"
 
 #: ../src/subtitles_provider_libass.cpp:113
 msgid "This may take several minutes"
@@ -3178,11 +3178,11 @@ msgstr "从字典移除(&M)"
 
 #: ../src/dialog_spellchecker.cpp:279
 msgid "Aegisub has finished checking spelling of this script."
-msgstr "Aegisub已经检查完该脚本的拼写。"
+msgstr "Aegisub已经检查完该脚本的拼写检查。"
 
 #: ../src/dialog_spellchecker.cpp:279 ../src/dialog_spellchecker.cpp:283
 msgid "Spell checking complete."
-msgstr "拼写检查完成"
+msgstr "拼写检查完成。"
 
 #: ../src/dialog_spellchecker.cpp:283
 msgid "Aegisub has found no spelling mistakes in this script."
@@ -3202,7 +3202,7 @@ msgstr "浏览…"
 
 #: ../src/preferences_base.cpp:244
 msgid "Choose..."
-msgstr "浏览…"
+msgstr "选择…"
 
 #: ../src/preferences_base.cpp:252
 msgid "Font Size"
@@ -3286,8 +3286,8 @@ msgid ""
 "Scale border and shadow together with script/render resolution. If this is "
 "unchecked, relative border and shadow size will depend on renderer."
 msgstr ""
-"随脚本或渲染的分辨率按比例缩放边框和阴影，如果此项不选中,相关的边框和阴影大小"
-"将由渲染器决定。"
+"随脚本或渲染的分辨率按比例缩放边框和阴影，如果此项不选中，相关的边框和阴影大"
+"小将由渲染器决定。"
 
 #: ../src/dialog_properties.cpp:193
 msgid "property changes"
@@ -3295,7 +3295,7 @@ msgstr "配置更改"
 
 #: ../src/dialog_fonts_collector.cpp:107
 msgid "Symlinking fonts to folder...\n"
-msgstr "正在复制字体至文件夹…\n"
+msgstr "正在链接字体至文件夹…\n"
 
 #: ../src/dialog_fonts_collector.cpp:111
 msgid "Copying fonts to folder...\n"
@@ -3328,7 +3328,7 @@ msgstr "* %s 已经存在。\n"
 #: ../src/dialog_fonts_collector.cpp:196
 #, c-format
 msgid "* Symlinked %s.\n"
-msgstr "* 已复制 %s。\n"
+msgstr "* 已链接 %s。\n"
 
 #: ../src/dialog_fonts_collector.cpp:198
 #, c-format
@@ -3355,7 +3355,7 @@ msgstr ""
 
 #: ../src/dialog_fonts_collector.cpp:224
 msgid "Check fonts for availability"
-msgstr "检查已使用的字体"
+msgstr "检查字体可用性"
 
 #: ../src/dialog_fonts_collector.cpp:225
 msgid "Copy fonts to folder"
@@ -3371,7 +3371,7 @@ msgstr "复制字体至压缩文件"
 
 #: ../src/dialog_fonts_collector.cpp:229
 msgid "Symlink fonts to folder"
-msgstr "复制字体至文件夹"
+msgstr "链接字体至文件夹"
 
 #: ../src/dialog_fonts_collector.cpp:232 ../src/dialog_selection.cpp:150
 msgid "Action"
@@ -3398,7 +3398,7 @@ msgid "Invalid destination."
 msgstr "无效目标。"
 
 #: ../src/dialog_fonts_collector.cpp:301 ../src/dialog_fonts_collector.cpp:306
-#: ../src/dialog_fonts_collector.cpp:311 ../src/preferences.cpp:255
+#: ../src/dialog_fonts_collector.cpp:311 ../src/preferences.cpp:257
 #: ../src/dialog_kara_timing_copy.cpp:574
 #: ../src/dialog_kara_timing_copy.cpp:576
 #: ../src/dialog_kara_timing_copy.cpp:626
@@ -3475,9 +3475,9 @@ msgid "Resulting duration: %s"
 msgstr "最终长度： %s"
 
 #: ../src/preferences.cpp:61 ../src/preferences.cpp:63
-#: ../src/preferences.cpp:313 ../src/preferences.cpp:338
+#: ../src/preferences.cpp:316 ../src/preferences.cpp:341
 msgid "General"
-msgstr "一般"
+msgstr "通用"
 
 #: ../src/preferences.cpp:64
 msgid "Check for updates on startup"
@@ -3509,11 +3509,11 @@ msgstr "询问"
 
 #: ../src/preferences.cpp:72
 msgid "Automatically load linked files"
-msgstr "自动载入链接的文件："
+msgstr "自动载入关联的文件"
 
 #: ../src/preferences.cpp:73
 msgid "Undo Levels"
-msgstr "恢复操作的最大数量"
+msgstr "撤销的最大次数"
 
 #: ../src/preferences.cpp:75
 msgid "Recently Used Lists"
@@ -3566,7 +3566,7 @@ msgstr "导入TTXT"
 msgid "Plain text import"
 msgstr "导入纯文本"
 
-#: ../src/preferences.cpp:125 ../src/preferences.cpp:351
+#: ../src/preferences.cpp:125 ../src/preferences.cpp:354
 msgid "Audio"
 msgstr "音频"
 
@@ -3576,27 +3576,27 @@ msgstr "默认使用鼠标滚轮缩放"
 
 #: ../src/preferences.cpp:129
 msgid "Lock scroll on cursor"
-msgstr "锁定光标卷动"
+msgstr "随光标滚动"
 
 #: ../src/preferences.cpp:130
 msgid "Snap markers by default"
-msgstr "默认紧贴标记"
+msgstr "默认吸附标记"
 
 #: ../src/preferences.cpp:131
 msgid "Auto-focus on mouse over"
-msgstr "随鼠标移动自动定位"
+msgstr "鼠标处在音频栏上时自动激活音频栏"
 
 #: ../src/preferences.cpp:132
 msgid "Play audio when stepping in video"
-msgstr "在视频步进时播放的音频"
+msgstr "在视频步进时播放音频"
 
 #: ../src/preferences.cpp:133
 msgid "Left-click-drag moves end marker"
-msgstr "左键点击拖动动作结束标记"
+msgstr "按住并拖动左键可移动结束标记"
 
 #: ../src/preferences.cpp:134
 msgid "Default timing length (ms)"
-msgstr "默认计时长度（毫秒）"
+msgstr "默认时间轴长度（毫秒）"
 
 #: ../src/preferences.cpp:135
 msgid "Default lead-in length (ms)"
@@ -3608,15 +3608,15 @@ msgstr "默认延后结束时间长度（毫秒）"
 
 #: ../src/preferences.cpp:138
 msgid "Marker drag-start sensitivity (px)"
-msgstr "标记拖动开始灵敏度（像素）"
+msgstr "标记拖动灵敏度（像素）"
 
 #: ../src/preferences.cpp:139
 msgid "Line boundary thickness (px)"
-msgstr "边线宽度（像素）"
+msgstr "标记线宽度（像素）"
 
 #: ../src/preferences.cpp:140
 msgid "Maximum snap distance (px)"
-msgstr "最大紧贴标记距离（像素）"
+msgstr "标记会吸附的最大距离（像素）"
 
 #: ../src/preferences.cpp:142
 msgid "Don't show"
@@ -3648,15 +3648,15 @@ msgstr "显示/视觉选项"
 
 #: ../src/preferences.cpp:149
 msgid "Keyframes in dialogue mode"
-msgstr "滑动条上显示关键帧"
+msgstr "对话模式下显示关键帧"
 
 #: ../src/preferences.cpp:150
 msgid "Keyframes in karaoke mode"
-msgstr "在卡拉OK模式显示关键帧"
+msgstr "卡拉OK模式下显示关键帧"
 
 #: ../src/preferences.cpp:151
 msgid "Cursor time"
-msgstr "显示光标所在的时间"
+msgstr "显示光标所指的时间"
 
 #: ../src/preferences.cpp:152
 msgid "Video position"
@@ -3664,7 +3664,7 @@ msgstr "显示视频位置"
 
 #: ../src/preferences.cpp:153 ../src/preferences.cpp:246
 msgid "Seconds boundaries"
-msgstr "辅助边线色"
+msgstr "次要边线"
 
 #: ../src/preferences.cpp:155
 msgid "Waveform Style"
@@ -3672,11 +3672,11 @@ msgstr "波形样式"
 
 #: ../src/preferences.cpp:157
 msgid "Audio labels"
-msgstr "音频标签"
+msgstr "音频栏"
 
 #: ../src/preferences.cpp:168
 msgid "Show keyframes in slider"
-msgstr "在滑动条上显示关键帧"
+msgstr "在进度条上显示关键帧"
 
 #: ../src/preferences.cpp:170
 msgid "Only show visual tools when mouse is over video"
@@ -3696,7 +3696,7 @@ msgstr "默认缩放"
 
 #: ../src/preferences.cpp:181
 msgid "Fast jump step in frames"
-msgstr "快速步进帧数"
+msgstr "快进帧数"
 
 #: ../src/preferences.cpp:185
 msgid "Screenshot save path"
@@ -3728,7 +3728,7 @@ msgstr "重设分辨率"
 
 #: ../src/preferences.cpp:197
 msgid "Match video resolution on open"
-msgstr "在打开时匹配视频分辨率"
+msgstr "在打开视频时匹配分辨率"
 
 #: ../src/preferences.cpp:204
 msgid "Interface"
@@ -3780,15 +3780,15 @@ msgstr "忽略标点符号"
 
 #: ../src/preferences.cpp:221
 msgid "Grid"
-msgstr "编辑框"
+msgstr "字幕栏"
 
 #: ../src/preferences.cpp:222
 msgid "Focus grid on click"
-msgstr "单击激活编辑框"
+msgstr "点击激活字幕栏"
 
 #: ../src/preferences.cpp:223
 msgid "Highlight visible subtitles"
-msgstr "突出可见字幕"
+msgstr "高亮可见字幕"
 
 #: ../src/preferences.cpp:224
 msgid "Hide overrides symbol"
@@ -3800,7 +3800,7 @@ msgstr "颜色"
 
 #: ../src/preferences.cpp:240
 msgid "Audio Display"
-msgstr "音频播放"
+msgstr "音频显示"
 
 #: ../src/preferences.cpp:241
 msgid "Play cursor"
@@ -3808,19 +3808,19 @@ msgstr "播放游标"
 
 #: ../src/preferences.cpp:242
 msgid "Line boundary start"
-msgstr "边线色 - 起始"
+msgstr "起始边线"
 
 #: ../src/preferences.cpp:243
 msgid "Line boundary end"
-msgstr "边线色 - 结束"
+msgstr "结束边线"
 
 #: ../src/preferences.cpp:244
 msgid "Line boundary inactive line"
-msgstr "边线色 - 非活动行"
+msgstr "非活动行边线"
 
 #: ../src/preferences.cpp:245
 msgid "Syllable boundaries"
-msgstr "音节边线色"
+msgstr "音节边线"
 
 #: ../src/preferences.cpp:248
 msgid "Syntax Highlighting"
@@ -3830,212 +3830,224 @@ msgstr "语法高亮"
 msgid "Background"
 msgstr "背景"
 
-#: ../src/preferences.cpp:250 ../src/preferences.cpp:323
+#: ../src/preferences.cpp:250 ../src/preferences.cpp:326
 msgid "Normal"
-msgstr "普通"
+msgstr "普通文本"
 
 #: ../src/preferences.cpp:251
+msgid "Comments"
+msgstr "注释"
+
+#: ../src/preferences.cpp:252
+msgid "Drawings"
+msgstr "绘图代码"
+
+#: ../src/preferences.cpp:253
 msgid "Brackets"
 msgstr "大括号"
 
-#: ../src/preferences.cpp:252
+#: ../src/preferences.cpp:254
 msgid "Slashes and Parentheses"
 msgstr "斜杠和圆括号"
 
-#: ../src/preferences.cpp:253
+#: ../src/preferences.cpp:255
 msgid "Tags"
 msgstr "标签"
 
-#: ../src/preferences.cpp:254
+#: ../src/preferences.cpp:256
 msgid "Parameters"
 msgstr "参数"
 
-#: ../src/preferences.cpp:256
+#: ../src/preferences.cpp:258
 msgid "Error Background"
 msgstr "错误背景"
 
-#: ../src/preferences.cpp:257
+#: ../src/preferences.cpp:259
 msgid "Line Break"
 msgstr "换行符"
 
-#: ../src/preferences.cpp:258
+#: ../src/preferences.cpp:260
 msgid "Karaoke templates"
 msgstr "卡拉OK模版"
 
-#: ../src/preferences.cpp:264
+#: ../src/preferences.cpp:261
+msgid "Karaoke variables"
+msgstr "卡拉OK变量"
+
+#: ../src/preferences.cpp:267
 msgid "Audio Color Schemes"
 msgstr "音频配色方案"
 
-#: ../src/preferences.cpp:266 ../src/preferences.cpp:367
+#: ../src/preferences.cpp:269 ../src/preferences.cpp:370
 msgid "Spectrum"
-msgstr "频谱模式"
+msgstr "频谱"
 
-#: ../src/preferences.cpp:267
+#: ../src/preferences.cpp:270
 msgid "Waveform"
-msgstr "波形模式"
+msgstr "波形"
 
-#: ../src/preferences.cpp:269
+#: ../src/preferences.cpp:272
 msgid "Subtitle Grid"
 msgstr "字幕栏"
 
-#: ../src/preferences.cpp:270
+#: ../src/preferences.cpp:273
 msgid "Standard foreground"
 msgstr "普通行前景色"
 
-#: ../src/preferences.cpp:271
+#: ../src/preferences.cpp:274
 msgid "Standard background"
 msgstr "普通行背景色"
 
-#: ../src/preferences.cpp:272
+#: ../src/preferences.cpp:275
 msgid "Selection foreground"
 msgstr "选取行前景色"
 
-#: ../src/preferences.cpp:273
+#: ../src/preferences.cpp:276
 msgid "Selection background"
 msgstr "选取行背景色"
 
-#: ../src/preferences.cpp:274
+#: ../src/preferences.cpp:277
 msgid "Collision foreground"
 msgstr "冲突行前景色"
 
-#: ../src/preferences.cpp:275
+#: ../src/preferences.cpp:278
 msgid "In frame background"
 msgstr "在当前帧显示的行背景色"
 
-#: ../src/preferences.cpp:276
+#: ../src/preferences.cpp:279
 msgid "Comment background"
 msgstr "注释行背景色"
 
-#: ../src/preferences.cpp:277
+#: ../src/preferences.cpp:280
 msgid "Selected comment background"
 msgstr "选中注释行背景色"
 
-#: ../src/preferences.cpp:278
+#: ../src/preferences.cpp:281
 msgid "Header background"
 msgstr "表头背景色"
 
-#: ../src/preferences.cpp:279
+#: ../src/preferences.cpp:282
 msgid "Left Column"
 msgstr "左边栏颜色"
 
-#: ../src/preferences.cpp:280
+#: ../src/preferences.cpp:283
 msgid "Active Line Border"
 msgstr "活动行边框颜色"
 
-#: ../src/preferences.cpp:281
+#: ../src/preferences.cpp:284
 msgid "Lines"
 msgstr "分隔线颜色"
 
-#: ../src/preferences.cpp:282
+#: ../src/preferences.cpp:285
 msgid "CPS Error"
 msgstr "每秒字符数错误"
 
-#: ../src/preferences.cpp:291
+#: ../src/preferences.cpp:294
 msgid "Backup"
 msgstr "备份"
 
-#: ../src/preferences.cpp:293
+#: ../src/preferences.cpp:296
 msgid "Automatic Save"
 msgstr "自动保存"
 
-#: ../src/preferences.cpp:294 ../src/preferences.cpp:302
+#: ../src/preferences.cpp:297 ../src/preferences.cpp:305
 msgid "Enable"
 msgstr "启用"
 
-#: ../src/preferences.cpp:297
+#: ../src/preferences.cpp:300
 msgid "Interval in seconds"
 msgstr "保存间隔（秒）"
 
-#: ../src/preferences.cpp:298 ../src/preferences.cpp:304
-#: ../src/preferences.cpp:365
+#: ../src/preferences.cpp:301 ../src/preferences.cpp:307
+#: ../src/preferences.cpp:368
 msgid "Path"
-msgstr "保存路径"
+msgstr "路径"
 
-#: ../src/preferences.cpp:299
+#: ../src/preferences.cpp:302
 msgid "Autosave after every change"
 msgstr "每次更改后自动保存"
 
-#: ../src/preferences.cpp:301
+#: ../src/preferences.cpp:304
 msgid "Automatic Backup"
 msgstr "自动备份"
 
-#: ../src/preferences.cpp:315
+#: ../src/preferences.cpp:318
 msgid "Base path"
 msgstr "根路径"
 
-#: ../src/preferences.cpp:316
+#: ../src/preferences.cpp:319
 msgid "Include path"
 msgstr "包含路径"
 
-#: ../src/preferences.cpp:317
+#: ../src/preferences.cpp:320
 msgid "Auto-load path"
 msgstr "自动载入路径"
 
-#: ../src/preferences.cpp:319
+#: ../src/preferences.cpp:322
 msgid "0: Fatal"
-msgstr "0: 致命"
+msgstr "0: 致命错误"
 
-#: ../src/preferences.cpp:319
+#: ../src/preferences.cpp:322
 msgid "1: Error"
 msgstr "1: 错误"
 
-#: ../src/preferences.cpp:319
+#: ../src/preferences.cpp:322
 msgid "2: Warning"
 msgstr "2: 警告"
 
-#: ../src/preferences.cpp:319
+#: ../src/preferences.cpp:322
 msgid "3: Hint"
 msgstr "3: 提示"
 
-#: ../src/preferences.cpp:319
+#: ../src/preferences.cpp:322
 msgid "4: Debug"
 msgstr "4: 调试"
 
-#: ../src/preferences.cpp:319
+#: ../src/preferences.cpp:322
 msgid "5: Trace"
-msgstr "5: 追踪"
+msgstr "5: 跟踪"
 
-#: ../src/preferences.cpp:321
+#: ../src/preferences.cpp:324
 msgid "Trace level"
 msgstr "跟踪等级"
 
-#: ../src/preferences.cpp:323
+#: ../src/preferences.cpp:326
 msgid "Below Normal (recommended)"
 msgstr "低于正常（推荐）"
 
-#: ../src/preferences.cpp:323
+#: ../src/preferences.cpp:326
 msgid "Lowest"
 msgstr "最低"
 
-#: ../src/preferences.cpp:325
+#: ../src/preferences.cpp:328
 msgid "Thread priority"
 msgstr "线程优先级"
 
-#: ../src/preferences.cpp:327
+#: ../src/preferences.cpp:330
 msgid "No scripts"
 msgstr "无脚本"
 
-#: ../src/preferences.cpp:327
+#: ../src/preferences.cpp:330
 msgid "Subtitle-local scripts"
 msgstr "本地字幕脚本"
 
-#: ../src/preferences.cpp:327
+#: ../src/preferences.cpp:330
 msgid "Global autoload scripts"
 msgstr "全局自动载入脚本"
 
-#: ../src/preferences.cpp:327
+#: ../src/preferences.cpp:330
 msgid "All scripts"
 msgstr "所有脚本"
 
-#: ../src/preferences.cpp:329
+#: ../src/preferences.cpp:332
 msgid "Autoreload on Export"
-msgstr "自动重新载入输出"
+msgstr "导出时自动重新载入"
 
-#: ../src/preferences.cpp:336
+#: ../src/preferences.cpp:339
 msgid "Advanced"
 msgstr "高级"
 
-#: ../src/preferences.cpp:340
+#: ../src/preferences.cpp:343
 msgid ""
 "Changing these settings might result in bugs and/or crashes.  Do not touch "
 "these unless you know what you're doing."
@@ -4043,157 +4055,157 @@ msgstr ""
 "修改这些设置可能导致出错，甚至异常崩溃， \n"
 "除非您知道自己在做什么，否则请不要修改这些设置。"
 
-#: ../src/preferences.cpp:353 ../src/preferences.cpp:416
+#: ../src/preferences.cpp:356 ../src/preferences.cpp:419
 msgid "Expert"
 msgstr "专家设置"
 
-#: ../src/preferences.cpp:356
+#: ../src/preferences.cpp:359
 msgid "Audio provider"
 msgstr "音频来自"
 
-#: ../src/preferences.cpp:359
+#: ../src/preferences.cpp:362
 msgid "Audio player"
 msgstr "音频播放器"
 
-#: ../src/preferences.cpp:361
+#: ../src/preferences.cpp:364
 msgid "Cache"
 msgstr "缓存"
 
-#: ../src/preferences.cpp:362
+#: ../src/preferences.cpp:365
 msgid "None (NOT RECOMMENDED)"
-msgstr "无 （不推荐）"
+msgstr "无（不推荐）"
 
-#: ../src/preferences.cpp:362
+#: ../src/preferences.cpp:365
 msgid "RAM"
 msgstr "内存"
 
-#: ../src/preferences.cpp:362
+#: ../src/preferences.cpp:365
 msgid "Hard Disk"
 msgstr "硬盘"
 
-#: ../src/preferences.cpp:364
+#: ../src/preferences.cpp:367
 msgid "Cache type"
 msgstr "缓存类型"
 
-#: ../src/preferences.cpp:369
+#: ../src/preferences.cpp:372
 msgid "Regular quality"
 msgstr "一般质量"
 
-#: ../src/preferences.cpp:369
+#: ../src/preferences.cpp:372
 msgid "Better quality"
 msgstr "较好质量"
 
-#: ../src/preferences.cpp:369
+#: ../src/preferences.cpp:372
 msgid "High quality"
 msgstr "高质量"
 
-#: ../src/preferences.cpp:369
+#: ../src/preferences.cpp:372
 msgid "Insane quality"
 msgstr "极高质量"
 
-#: ../src/preferences.cpp:371
+#: ../src/preferences.cpp:374
 msgid "Quality"
 msgstr "质量"
 
-#: ../src/preferences.cpp:373
+#: ../src/preferences.cpp:376
 msgid "Cache memory max (MB)"
 msgstr "缓存最大容量 (MB)"
 
-#: ../src/preferences.cpp:379
+#: ../src/preferences.cpp:382
 msgid "Avisynth down-mixer"
-msgstr "Avisynth down-mixer"
+msgstr "Avisynth 声道混合"
 
-#: ../src/preferences.cpp:380
+#: ../src/preferences.cpp:383
 msgid "Force sample rate"
-msgstr "强制采样率"
+msgstr "强制转换采样率"
 
-#: ../src/preferences.cpp:386
+#: ../src/preferences.cpp:389
 msgid "Ignore"
 msgstr "忽略"
 
-#: ../src/preferences.cpp:386
+#: ../src/preferences.cpp:389
 msgid "Stop"
 msgstr "停止"
 
-#: ../src/preferences.cpp:386
+#: ../src/preferences.cpp:389
 msgid "Abort"
 msgstr "取消"
 
-#: ../src/preferences.cpp:388
+#: ../src/preferences.cpp:391
 msgid "Audio indexing error handling mode"
 msgstr "音频索引错误处理模式"
 
-#: ../src/preferences.cpp:390
+#: ../src/preferences.cpp:393
 msgid "Always index all audio tracks"
 msgstr "总是索引所有音轨"
 
-#: ../src/preferences.cpp:395
+#: ../src/preferences.cpp:398
 msgid "Portaudio device"
 msgstr "Portaudio 设备"
 
-#: ../src/preferences.cpp:400
+#: ../src/preferences.cpp:403
 msgid "OSS Device"
 msgstr "OSS 设备"
 
-#: ../src/preferences.cpp:405
+#: ../src/preferences.cpp:408
 msgid "Buffer latency"
 msgstr "缓冲延迟"
 
-#: ../src/preferences.cpp:406
+#: ../src/preferences.cpp:409
 msgid "Buffer length"
 msgstr "缓冲长度"
 
-#: ../src/preferences.cpp:419
+#: ../src/preferences.cpp:422
 msgid "Video provider"
 msgstr "视频来自"
 
-#: ../src/preferences.cpp:422
+#: ../src/preferences.cpp:425
 msgid "Subtitles provider"
 msgstr "字幕来自"
 
-#: ../src/preferences.cpp:425
+#: ../src/preferences.cpp:428
 msgid "Force BT.601"
-msgstr "强制 BT.601"
+msgstr "强制使用 BT.601"
 
-#: ../src/preferences.cpp:429
+#: ../src/preferences.cpp:432
 msgid "Allow pre-2.56a Avisynth"
-msgstr "允许 pre-2.56a Avisynth"
+msgstr "允许使用2.56a之前版本的Avisynth"
 
-#: ../src/preferences.cpp:431
+#: ../src/preferences.cpp:434
 msgid "Avisynth memory limit"
 msgstr "Avisynth 内存限额"
 
-#: ../src/preferences.cpp:439
+#: ../src/preferences.cpp:442
 msgid "Debug log verbosity"
 msgstr "Debug日志的详细级别"
 
-#: ../src/preferences.cpp:441
+#: ../src/preferences.cpp:444
 msgid "Decoding threads"
 msgstr "解码线程"
 
-#: ../src/preferences.cpp:442
+#: ../src/preferences.cpp:445
 msgid "Enable unsafe seeking"
 msgstr "允许可能不安全的定位"
 
-#: ../src/preferences.cpp:571
+#: ../src/preferences.cpp:574
 msgid "Hotkeys"
 msgstr "热键"
 
-#: ../src/preferences.cpp:669
+#: ../src/preferences.cpp:672
 msgid ""
 "Are you sure that you want to restore the defaults? All your settings will "
 "be overridden."
 msgstr "您确定要恢复默认吗？您的所有设置都将被覆盖。"
 
-#: ../src/preferences.cpp:669
+#: ../src/preferences.cpp:672
 msgid "Restore defaults?"
 msgstr "恢复默认？"
 
-#: ../src/preferences.cpp:687
+#: ../src/preferences.cpp:690
 msgid "Preferences"
 msgstr "偏好"
 
-#: ../src/preferences.cpp:715
+#: ../src/preferences.cpp:718
 msgid "&Restore Defaults"
 msgstr "恢复默认(&R)"
 
@@ -4308,7 +4320,7 @@ msgstr "指令"
 
 #: ../src/dialog_kara_timing_copy.cpp:487
 msgid "Attempt to &interpolate kanji."
-msgstr "尝试插入汉字。(&I)"
+msgstr "尝试识别汉字(&I)。"
 
 #: ../src/dialog_kara_timing_copy.cpp:494
 msgid ""
@@ -4336,11 +4348,11 @@ msgstr "开始！(&T)"
 
 #: ../src/dialog_kara_timing_copy.cpp:498
 msgid "&Link"
-msgstr "连结(&L)"
+msgstr "链接(&L)"
 
 #: ../src/dialog_kara_timing_copy.cpp:499
 msgid "&Unlink"
-msgstr "解除连结(&U)"
+msgstr "解除链接(&U)"
 
 #: ../src/dialog_kara_timing_copy.cpp:500
 msgid "Skip &Source Line"
@@ -4381,19 +4393,19 @@ msgstr "将所有源文本分类。"
 
 #: ../src/hotkey.cpp:175
 msgid "Invalid command name for hotkey"
-msgstr "快捷键命令无效"
+msgstr "热键命令名称无效"
 
 #: ../src/dialog_paste_over.cpp:55
 msgid "Select Fields to Paste Over"
-msgstr "选择粘贴区域"
+msgstr "选择要粘贴的字段"
 
 #: ../src/dialog_paste_over.cpp:58
 msgid "Fields"
-msgstr "区域"
+msgstr "字段"
 
 #: ../src/dialog_paste_over.cpp:59
 msgid "Please select the fields that you want to paste over:"
-msgstr "请选择想要粘贴至何区域："
+msgstr "请选择想要粘贴的字段："
 
 #: ../src/dialog_paste_over.cpp:63
 msgid "Comment"
@@ -4423,7 +4435,7 @@ msgstr "垂直边距"
 
 #: ../src/dialog_paste_over.cpp:92
 msgid "&Times"
-msgstr "时间(&T)"
+msgstr "时间轴(&T)"
 
 #: ../src/dialog_paste_over.cpp:94
 msgid "T&ext"
@@ -4524,7 +4536,7 @@ msgstr "该行持续时间"
 
 #: ../src/subs_edit_box.cpp:168
 msgid "Left Margin (0 = default from style)"
-msgstr "左边距 (0 = 默认)"
+msgstr "左边距 (0 = 样式默认)"
 
 #: ../src/subs_edit_box.cpp:168
 msgid "left margin change"
@@ -4532,7 +4544,7 @@ msgstr "改变左边距"
 
 #: ../src/subs_edit_box.cpp:169
 msgid "Right Margin (0 = default from style)"
-msgstr "右边距 (0 = 默认)"
+msgstr "右边距 (0 = 样式默认)"
 
 #: ../src/subs_edit_box.cpp:169
 msgid "right margin change"
@@ -4540,7 +4552,7 @@ msgstr "改变右边距"
 
 #: ../src/subs_edit_box.cpp:170
 msgid "Vertical Margin (0 = default from style)"
-msgstr "垂直边距 (0 = 默认)"
+msgstr "垂直边距 (0 = 样式默认)"
 
 #: ../src/subs_edit_box.cpp:170
 msgid "vertical margin change"
@@ -4552,7 +4564,7 @@ msgstr "时间(&I)"
 
 #: ../src/subs_edit_box.cpp:189
 msgid "Time by h:mm:ss.cs"
-msgstr "按照时间 时:分:秒.厘秒"
+msgstr "按照 时:分:秒.厘秒 计时"
 
 #: ../src/subs_edit_box.cpp:190
 msgid "F&rame"
@@ -4560,7 +4572,7 @@ msgstr "帧(&R)"
 
 #: ../src/subs_edit_box.cpp:190
 msgid "Time by frame number"
-msgstr "按照帧数"
+msgstr "按照帧数计时"
 
 #: ../src/subs_edit_box.cpp:193
 msgid "Show Original"
@@ -5085,7 +5097,7 @@ msgstr "查找下一个(&F)"
 
 #: ../src/dialog_search_replace.cpp:94
 msgid "Replace &next"
-msgstr "替换下一个(&R)"
+msgstr "替换下一个(&N)"
 
 #: ../src/dialog_autosave.cpp:66
 msgid "Open autosave file"
@@ -5183,7 +5195,7 @@ msgstr "说话人分隔符："
 
 #: ../src/dialog_text_import.cpp:56
 msgid "Comment starter:"
-msgstr "注释开端："
+msgstr "注释前缀："
 
 #: ../src/dialog_text_import.cpp:61
 msgid "Include blank lines"
@@ -5195,7 +5207,7 @@ msgstr "视频定位"
 
 #: ../src/video_box.cpp:62
 msgid "Current frame time and number"
-msgstr "当前帧时间和编号"
+msgstr "当前帧时间和序号"
 
 #: ../src/video_box.cpp:65
 msgid "Time of this frame relative to start and end of current subs"
@@ -5299,7 +5311,7 @@ msgstr "HSL/明度"
 
 #: ../src/dialog_colorpicker.cpp:560
 msgid "HSV/H"
-msgstr "HSV/彩度"
+msgstr "HSV/色相"
 
 #: ../src/dialog_colorpicker.cpp:567
 msgid "RGB color"
@@ -5335,7 +5347,7 @@ msgstr "透明度："
 
 #: ../src/dialog_colorpicker.cpp:621 ../src/dialog_colorpicker.cpp:624
 msgid "Hue:"
-msgstr "色调："
+msgstr "色相："
 
 #: ../src/dialog_colorpicker.cpp:621 ../src/dialog_colorpicker.cpp:624
 msgid "Sat.:"
@@ -5343,11 +5355,11 @@ msgstr "饱和度："
 
 #: ../src/dialog_colorpicker.cpp:621
 msgid "Lum.:"
-msgstr "明度："
+msgstr "亮度："
 
 #: ../src/dialog_colorpicker.cpp:624
 msgid "Value:"
-msgstr "浓度："
+msgstr "明度："
 
 #: ../src/charset_detect.cpp:80
 msgid ""
@@ -5397,7 +5409,7 @@ msgstr "29.970 FPS (NTSC)"
 
 #: ../src/subtitle_format.cpp:114
 msgid "29.970 FPS (NTSC with SMPTE dropframe)"
-msgstr "29.970 FPS (NTSC 和 SMPTE 帧下调)"
+msgstr "29.970 FPS (NTSC 有 SMPTE 丢帧)"
 
 #: ../src/subtitle_format.cpp:115
 msgid "30.000 FPS"
@@ -5425,11 +5437,11 @@ msgstr "120.000 FPS"
 
 #: ../src/subtitle_format.cpp:124
 msgid "Please choose the appropriate FPS for the subtitles:"
-msgstr "请为字幕选择合适的FPS："
+msgstr "请为字幕选择合适的帧率："
 
 #: ../src/subtitle_format.cpp:124
 msgid "FPS"
-msgstr "FPS"
+msgstr "帧率"
 
 #: ../src/ffmpegsource_common.cpp:94
 msgid "Indexing"
@@ -5437,12 +5449,12 @@ msgstr "索引"
 
 #: ../src/ffmpegsource_common.cpp:95
 msgid "Reading timecodes and frame/sample data"
-msgstr "读取时间码和帧/采样数据"
+msgstr "正在读取时间码和帧/采样数据"
 
 #: ../src/ffmpegsource_common.cpp:141
 #, c-format
 msgid "Track %02d: %s"
-msgstr "追踪 %02d: %s"
+msgstr "轨道 %02d: %s"
 
 #: ../src/ffmpegsource_common.cpp:146
 msgid "Multiple video tracks detected, please choose the one you wish to load:"
@@ -5521,7 +5533,7 @@ msgid ""
 msgstr ""
 "没有可用的音频来源能够将所选文件识别为包含音频的文件。\n"
 "\n"
-"将尝试下列解码器：\n"
+"已尝试下列来源：\n"
 
 #: ../src/project.cpp:266
 msgid ""
@@ -5532,7 +5544,7 @@ msgid ""
 msgstr ""
 "没有可用的音频来源有可用于处理所选文件的解码器。\n"
 "\n"
-"将尝试下列来源：\n"
+"已尝试下列来源：\n"
 
 #: ../src/dialog_style_editor.cpp:127
 msgid "Style Editor"
@@ -5652,7 +5664,7 @@ msgstr "沿 Z 轴旋转角度 (角度)"
 msgid ""
 "Encoding, only useful in unicode if the font doesn't have the proper unicode "
 "mapping"
-msgstr "文字编码，只在unicode中字体没有正确的unicode对应时有用"
+msgstr "文字编码，仅当使用unicode时，字体没有合适的unicode映射时有用"
 
 #: ../src/dialog_style_editor.cpp:232
 msgid "Character spacing, in pixels"
@@ -5730,13 +5742,15 @@ msgstr "想将脚本中所有应用该样式的字幕行的样式名都改为这
 
 #: ../src/dialog_style_editor.cpp:426
 msgid "Update script?"
-msgstr "更新样式？"
+msgstr "更新脚本？"
 
 #: ../src/dialog_export_ebu3264.cpp:84
 msgid ""
 "Time code offset in incorrect format. Ensure it is entered as four groups of "
 "two digits separated by colons."
-msgstr "时间码偏移格式不正确。确保输入为四组数字，每组两个数字用冒号隔开。"
+msgstr ""
+"时间码偏移量格式不正确。确保输入为四组数字，两个数字为一组，组之间用冒号隔"
+"开。"
 
 #: ../src/dialog_export_ebu3264.cpp:84
 msgid "EBU STL export"
@@ -5848,7 +5862,7 @@ msgstr "时间码偏移："
 
 #: ../src/dialog_export_ebu3264.cpp:154
 msgid "Text formatting"
-msgstr "文本格式"
+msgstr "文本格式化"
 
 #: ../src/dialog_export_ebu3264.cpp:159
 msgid "Time codes"
@@ -6033,7 +6047,7 @@ msgstr "适应视频"
 
 #: ../src/dialog_resample.cpp:146
 msgid "Remove borders"
-msgstr "铺满视频"
+msgstr "铺满视屏"
 
 #: ../src/dialog_resample.cpp:146
 msgid "Manual"
@@ -6053,7 +6067,7 @@ msgstr "×"
 
 #: ../src/dialog_resample.cpp:172 ../src/dialog_resample.cpp:186
 msgid "YCbCr Matrix:"
-msgstr "YCbCr 标准："
+msgstr "YCbCr 矩阵："
 
 #: ../src/dialog_resample.cpp:175
 msgid "Source Resolution"
@@ -6061,7 +6075,7 @@ msgstr "原分辨率"
 
 #: ../src/dialog_resample.cpp:189
 msgid "Destination Resolution"
-msgstr "重设分辨率"
+msgstr "目标分辨率"
 
 #: ../src/dialog_version_check.cpp:94
 msgid "Version Checker"
@@ -6112,7 +6126,7 @@ msgstr ""
 "Aegisub检查更新时出错：\n"
 "%s\n"
 "\n"
-"如果其他程序可以正常访问互联网，那么这很可能时我们的临时服务器的问题。"
+"如果其他程序可以正常访问互联网，那么这很可能是我们的服务器的临时问题。"
 
 #: ../src/dialog_version_check.cpp:379
 msgid "An unknown error occurred while checking for updates to Aegisub."
@@ -6120,7 +6134,7 @@ msgstr "Aegisub检查更新时发生未知错误。"
 
 #: default_menu.json:0
 msgid "&Insert (before)"
-msgstr "插入(之前&I)"
+msgstr "插入(之前)(&I)"
 
 #: default_menu.json:0
 msgid "Insert (after)"
@@ -6136,7 +6150,7 @@ msgstr "以视频时间插入(之后)"
 
 #: default_menu.json:0
 msgid "&Join (concatenate)"
-msgstr "合并 (连接&J)"
+msgstr "合并 (连接)(&J)"
 
 #: default_menu.json:0
 msgid "Join (keep first)"
@@ -6148,11 +6162,11 @@ msgstr "合并 (视为卡拉OK)"
 
 #: default_menu.json:0
 msgid "&Make times continuous (change start)"
-msgstr "使时间连续 (更改开始时间&M)"
+msgstr "使时间连续 (更改开始时间)(&M)"
 
 #: default_menu.json:0
 msgid "&Make times continuous (change end)"
-msgstr "使时间连续 (更改结束时间&M)"
+msgstr "使时间连续 (更改结束时间)(&M)"
 
 #: default_menu.json:0
 msgid "&File"
@@ -6240,7 +6254,7 @@ msgstr "Automatic karaoke lead-in"
 
 #: ../automation/autoload/karaoke-auto-leadin.lua:33
 msgid "Join up the ends of selected lines and add \\k tags to shift karaoke"
-msgstr "连接所选行的两端，并添加\\K标签偏移卡拉OK"
+msgstr "连接两相邻的行，并在行首添加一个长度为相对原开始时间的\\k标签"
 
 #: ../automation/autoload/cleantags-autoload.lua:31
 msgid "Clean Tags"
@@ -6254,7 +6268,7 @@ msgstr "通过对行内重新排列ASS标签以及覆盖模块，来清理字幕
 
 #: ../automation/autoload/kara-templater.lua:36
 msgid "Karaoke Templater"
-msgstr "应用卡拉OK模板"
+msgstr "卡拉OK模版执行器"
 
 #: ../automation/autoload/kara-templater.lua:37
 msgid ""
@@ -6339,7 +6353,7 @@ msgid ""
 "warranties of any kind are given either.%n%nSee the Aegisub website for "
 "information on obtaining the source code."
 msgstr ""
-"将会在您的电脑上安装Aegisub {#BUILD_GIT_VERSION_STRING} 。%n%n Aegisub适用于"
+"将会在您的电脑上安装Aegisub {#BUILD_GIT_VERSION_STRING} 。%n%nAegisub适用于"
 "GNU通用公共许可证第二版(GPLv2)，这意味着您可以将该应用程序用于任何目的而不需"
 "要支付费用，但同时也不会得到任何形式的担保。%n%n您可以到Aegisub官网获取源代码"
 "信息。"
