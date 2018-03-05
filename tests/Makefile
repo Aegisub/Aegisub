@@ -9,7 +9,7 @@ run_CPPFLAGS := -I$(TOP)libaegisub/include -I$(TOP) -I$(d)support \
 run_CXXFLAGS := -Wno-unused-value -Wno-sign-compare
 run_LIBS := $(LIBS_BOOST) $(LIBS_ICU) $(LIBS_UCHARDET) $(LIBS_PTHREAD)
 run_OBJ := \
-	$(subst .cpp,.o,$(wildcard $(d)tests/*.cpp)) \
+	$(patsubst %.cpp,%.o,$(wildcard $(d)tests/*.cpp)) \
 	$(d)support/main.o \
 	$(d)support/util.o \
 	$(TOP)lib/libaegisub.a \
