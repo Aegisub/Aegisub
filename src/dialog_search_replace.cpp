@@ -179,7 +179,7 @@ void DialogSearchReplace::UpdateDropDowns() {
 void DialogSearchReplace::Show(agi::Context *context, bool replace) {
 	static DialogSearchReplace *diag = nullptr;
 
-	if (diag && replace != diag->has_replace) {
+	if (diag && (replace != diag->has_replace || diag->c != context)) {
 		// Already opened, but wrong type - destroy and create the right one
 		diag->Destroy();
 		diag = nullptr;
