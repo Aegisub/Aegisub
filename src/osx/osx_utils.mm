@@ -23,6 +23,9 @@
 #include <wx/menu.h>
 #include <wx/osx/core/cfstring.h>
 
+#include <boost/filesystem.hpp>
+#include <libaegisub/fs_fwd.h>
+
 #import <AppKit/AppKit.h>
 
 void AddFullScreenButton(wxWindow *window) {
@@ -66,6 +69,11 @@ void RestartAegisub() {
     if (helperPath)
         [NSTask launchedTaskWithLaunchPath:helperPath
                                  arguments:@[NSBundle.mainBundle.executablePath]];
+}
+
+void SetTitleWithFilename(wxWindow *window, agi::fs::path const& name) {
+    __block NSWindow *nsWindow = [window->GetHandle() window];
+    [nsWindow setTitleWithRepresentedFilename:[NSString stringWithUTF8String:name.c_str()]];
 }
 
 namespace osx {

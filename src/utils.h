@@ -62,6 +62,10 @@ void AddFullScreenButton(wxWindow *window);
 
 void SetFloatOnParent(wxWindow *window);
 
+// Set a title reflecting a file path
+void SetTitleWithFilename(wxWindow *window, agi::fs::path const& name);
+
+
 /// Forward a mouse wheel event to the window under the mouse if needed
 /// @param source The initial target of the wheel event
 /// @param evt The event
