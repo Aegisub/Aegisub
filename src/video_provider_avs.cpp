@@ -191,17 +191,16 @@ void AvisynthVideoProvider::Init(std::string const& colormatrix) {
 		real_colorspace = colorspace = "None";
 	else {
 		/// @todo maybe read ColorMatrix hints for d2v files?
-		AVSValue args[2] = { script, "Rec601" };
-		bool force_bt601 = OPT_GET("Video/Force BT.601")->GetBool() || colormatrix == "TV.601";
+		AVSValue args[2] = { script, "Rec709" };
 		bool bt709 = vi.width > 1024 || vi.height >= 600;
-		if (bt709 && (!force_bt601 || colormatrix == "TV.709")) {
-			args[1] = "Rec709";
-			real_colorspace = colorspace = "TV.709";
+		if (colormatrix == "TV.601") {
+			args[1] = "Rec601";
+			colorspace = "TV.601"
 		}
 		else {
-			colorspace = "TV.601";
-			real_colorspace = bt709 ? "TV.709" : "TV.601";
+			colorspace = "TV.709";
 		}
+		real_colorspace = bt709 ? "TV.709" : "TV.601"
 		const char *argnames[2] = { 0, "matrix" };
 		script = avs.GetEnv()->Invoke("ConvertToRGB32", AVSValue(args, 2), argnames);
 	}

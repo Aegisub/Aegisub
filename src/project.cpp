@@ -58,7 +58,6 @@ Project::Project(agi::Context *c) : context(c) {
 	OPT_SUB("Provider/Video/FFmpegSource/Decoding Threads", &Project::ReloadVideo, this);
 	OPT_SUB("Provider/Video/FFmpegSource/Unsafe Seeking", &Project::ReloadVideo, this);
 	OPT_SUB("Subtitle/Provider", &Project::ReloadVideo, this);
-	OPT_SUB("Video/Force BT.601", &Project::ReloadVideo, this);
 	OPT_SUB("Video/Provider", &Project::ReloadVideo, this);
 }
 

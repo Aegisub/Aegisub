@@ -421,9 +421,6 @@ void Advanced_Video(wxTreebook *book, Preferences *parent) {
 	wxArrayString sp_choice = to_wx(SubtitlesProviderFactory::GetClasses());
 	p->OptionChoice(expert, _("Subtitles provider"), sp_choice, "Subtitle/Provider");
 
-	p->CellSkip(expert);
-	p->OptionAdd(expert, _("Force BT.601"), "Video/Force BT.601");
-
 #ifdef WITH_AVISYNTH
 	auto avisynth = p->PageSizer("Avisynth");
 	p->OptionAdd(avisynth, _("Allow pre-2.56a Avisynth"), "Provider/Avisynth/Allow Ancient");

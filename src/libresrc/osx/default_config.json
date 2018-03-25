@@ -590,7 +590,6 @@
 			},
 			"Pattern" : false
 		},
-		"Force BT.601" : false,
 		"Last Script Resolution Mismatch Choice" : 2,
 		"Open Audio" : true,
 		"Overscan Mask" : false,
