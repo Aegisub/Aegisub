@@ -547,7 +547,7 @@ msgstr "Analisi Matroska"
 
 #: ../src/mkv_wrap.cpp:224
 msgid "Reading subtitles from Matroska file."
-msgstr "Lettura sottotitoli dal file Martoska."
+msgstr "Lettura sottotitoli dal file Matroska."
 
 #: ../src/dialog_styling_assistant.cpp:58
 #: ../src/command/tool.cpp:142
