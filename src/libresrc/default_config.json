@@ -559,7 +559,8 @@
 				"X" : -1,
 				"Y" : -1
 			},
-			"Maximized" : false
+			"Maximized" : false,
+			"Skip Whitespace" : true
 		},
 		"Visual" : {
 			"Autohide": false

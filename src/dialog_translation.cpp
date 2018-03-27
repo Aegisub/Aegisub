@@ -31,6 +31,7 @@
 #include "format.h"
 #include "help_button.h"
 #include "libresrc/libresrc.h"
+#include "options.h"
 #include "persist_location.h"
 #include "project.h"
 #include "subs_edit_ctrl.h"
@@ -57,7 +58,8 @@ static void add_hotkey(wxSizer *sizer, wxWindow *parent, const char *command, wx
 
 // Skip over override blocks, comments, and whitespace between blocks
 static bool bad_block(std::unique_ptr<AssDialogueBlock> &block) {
-	return block->GetType() != AssBlockType::PLAIN || boost::all(block->GetText(), boost::is_space());
+	bool is_whitespace = boost::all(block->GetText(), boost::is_space());
+	return block->GetType() != AssBlockType::PLAIN || (is_whitespace && OPT_GET("Tool/Translation Assistant/Skip Whitespace")->GetBool());
 }
 
 DialogTranslation::DialogTranslation(agi::Context *c)
