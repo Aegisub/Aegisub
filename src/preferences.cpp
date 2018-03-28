@@ -225,6 +225,9 @@ void Interface(wxTreebook *book, Preferences *parent) {
 	p->OptionAdd(grid, _("Hide overrides symbol"), "Subtitle/Grid/Hide Overrides Char");
 	p->OptionFont(grid, "Subtitle/Grid/");
 
+	auto tl_assistant = p->PageSizer(_("Translation Assistant"));
+	p->OptionAdd(tl_assistant, _("Skip over whitespace"), "Tool/Translation Assistant/Skip Whitespace");
+
 	p->SetSizerAndFit(p->sizer);
 }
 
@@ -420,9 +423,6 @@ void Advanced_Video(wxTreebook *book, Preferences *parent) {
 
 	wxArrayString sp_choice = to_wx(SubtitlesProviderFactory::GetClasses());
 	p->OptionChoice(expert, _("Subtitles provider"), sp_choice, "Subtitle/Provider");
-
-	p->CellSkip(expert);
-	p->OptionAdd(expert, _("Force BT.601"), "Video/Force BT.601");
 
 #ifdef WITH_AVISYNTH
 	auto avisynth = p->PageSizer("Avisynth");

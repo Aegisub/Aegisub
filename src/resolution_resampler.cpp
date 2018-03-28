@@ -48,7 +48,7 @@ static const std::string names[] = {
 };
 
 YCbCrMatrix MatrixFromString(std::string const& str) {
-	if (str.empty()) return YCbCrMatrix::tv_601;
+	if (str.empty()) return YCbCrMatrix::tv_709;
 	auto pos = std::find(std::begin(names), std::end(names), str);
 	if (pos == std::end(names))
 		return YCbCrMatrix::rgb;

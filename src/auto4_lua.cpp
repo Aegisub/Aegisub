@@ -44,6 +44,7 @@
 #include "audio_timing.h"
 #include "command/command.h"
 #include "compat.h"
+#include "frame_main.h"
 #include "include/aegisub/context.h"
 #include "options.h"
 #include "project.h"
@@ -270,6 +271,19 @@ namespace {
 		return 2;
 	}
 
+	int lua_set_status_text(lua_State *L)
+	{
+		const agi::Context *c = get_context(L);
+		if (!c || !c->frame) {
+			lua_pushnil(L);
+			return 1;
+		}
+		std::string text = check_string(L, 1);
+		lua_pop(L, 1);
+		c->frame->SetStatusText(text);
+		return 0;
+	}
+
 	int project_properties(lua_State *L)
 	{
 		const agi::Context *c = get_context(L);
@@ -473,6 +487,7 @@ namespace {
 		set_field<get_translation>(L, "gettext");
 		set_field<project_properties>(L, "project_properties");
 		set_field<lua_get_audio_selection>(L, "get_audio_selection");
+		set_field<lua_set_status_text>(L, "set_status_text");
 
 		// store aegisub table to globals
 		lua_settable(L, LUA_GLOBALSINDEX);

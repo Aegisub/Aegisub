@@ -243,9 +243,9 @@ void FFmpegSourceVideoProvider::LoadVideo(agi::fs::path const& filename, std::st
 	RealColorSpace = ColorSpace = colormatrix_description(CS, CR);
 
 #if FFMS_VERSION >= ((2 << 24) | (17 << 16) | (1 << 8) | 0)
-	if (CS != FFMS_CS_RGB && CS != FFMS_CS_BT470BG && ColorSpace != colormatrix && (colormatrix == "TV.601" || OPT_GET("Video/Force BT.601")->GetBool())) {
+	if (CS != FFMS_CS_RGB && CS != FFMS_CS_BT470BG && ColorSpace != colormatrix && colormatrix == "TV.601") {
 		CS = FFMS_CS_BT470BG;
-		ColorSpace = colormatrix_description(FFMS_CS_BT470BG, CR);
+		ColorSpace = colormatrix_description(CS, CR);
 	}
 
 	if (CS != VideoCS) {

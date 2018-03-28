@@ -31,6 +31,8 @@ struct utext_deleter {
 };
 using utext_ptr = std::unique_ptr<UText, utext_deleter>;
 
+UChar32 ass_special_chars[] = {'n', 'N', 'h'};
+
 icu::BreakIterator& get_break_iterator(const char *ptr, size_t len) {
 	static std::unique_ptr<icu::BreakIterator> bi;
 	static std::once_flag token;
@@ -65,8 +67,25 @@ size_t count_in_range(Iterator begin, Iterator end, int mask) {
 			UChar32 c;
 			int i = 0;
 			U8_NEXT_UNSAFE(begin + pos, i, c);
-			if ((U_GET_GC_MASK(c) & mask) == 0)
-				++count;
+			if ((U_GET_GC_MASK(c) & mask) == 0) {
+				if (mask & U_GC_Z_MASK) {
+					UChar32 *result = std::find(std::begin(ass_special_chars), std::end(ass_special_chars), c);
+					if (result != std::end(ass_special_chars)) {
+						UChar32 c2;
+						i = 0;
+						U8_PREV_UNSAFE(begin + pos, i, c2);
+						if (c2 != (UChar32) '\\')
+							++count;
+						else if (!(mask & U_GC_P_MASK))
+							--count;
+					}
+					else
+						++count;
+
+				}
+				else
+					++count;
+			}
 		}
 
 	}

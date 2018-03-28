@@ -40,3 +40,11 @@ Returns: 2 values, all numbers.
   2. End of the selection, in milliseconds.
 
 ---
+
+Setting the main frame's status bar text
+
+function aegisub.set_status_bar_text(text)
+
+Returns: 0 values
+
+---
