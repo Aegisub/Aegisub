@@ -25,6 +25,8 @@
 #include <mutex>
 #include <unicode/brkiter.h>
 
+using namespace icu;
+
 namespace {
 struct utext_deleter {
 	void operator()(UText *ut) { if (ut) utext_close(ut); }
