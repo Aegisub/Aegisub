@@ -481,6 +481,11 @@ button/toggle_tag_hiding_24.png
 button/toggle_tag_hiding_32.png
 button/toggle_tag_hiding_48.png
 button/toggle_tag_hiding_64.png
+button/toggle_video_audio_sync_16.png
+button/toggle_video_audio_sync_24.png
+button/toggle_video_audio_sync_32.png
+button/toggle_video_audio_sync_48.png
+button/toggle_video_audio_sync_64.png
 button/toggle_video_autoscroll_16.png
 button/toggle_video_autoscroll_24.png
 button/toggle_video_autoscroll_32.png

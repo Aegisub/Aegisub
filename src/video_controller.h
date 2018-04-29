@@ -35,6 +35,8 @@
 
 #include <wx/timer.h>
 
+
+class TimeRange;
 class AssDialogue;
 class AsyncVideoProvider;
 struct SubtitlesProviderErrorEvent;
@@ -87,6 +89,15 @@ class VideoController final : public wxEvtHandler {
 	/// which may not be the same thing as the currently displayed frame
 	int frame_n = 0;
 
+	enum PlaybackMode {
+		PM_NotPlaying,
+		PM_Range,
+		PM_PrimaryRange,
+		PM_ToEnd
+	};
+	/// The current playback mode
+	PlaybackMode playback_mode = PM_NotPlaying;
+
 	/// The picture aspect ratio of the video if the aspect ratio has been
 	/// overridden by the user
 	double ar_value = 1.;
@@ -115,6 +126,9 @@ public:
 
 	/// Is the video currently playing?
 	bool IsPlaying() const { return playback.IsRunning(); }
+
+	/// Is video loaded?
+	bool HasVideo() const { return provider != nullptr; }
 
 	/// Get the current frame number
 	int GetFrameN() const { return frame_n; }
@@ -151,6 +165,14 @@ public:
 	void PrevFrame();
 	/// Seek to the beginning of the current line, then play to the end of it
 	void PlayLine();
+	/// Play a time range
+	void PlayRange(const TimeRange &range);
+	/// Play primary range
+	void PlayPrimaryRange(const TimeRange &range);
+	/// Play to end of primary range
+	void PlayToEndOfPrimary(const TimeRange &range);
+	/// Play to end
+	void PlayToEnd(int start_ms);
 	/// Stop playing
 	void Stop();
 

@@ -195,8 +195,12 @@ struct audio_play_current_selection final : public validate_audio_open {
 	STR_HELP("Play the current audio selection, ignoring changes made while playing")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
-		c->audioController->PlayRange(c->audioController->GetPrimaryPlaybackRange());
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayRange(c->audioController->GetPrimaryPlaybackRange());
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayRange(c->audioController->GetPrimaryPlaybackRange());
+		}
 	}
 };
 
@@ -208,10 +212,15 @@ struct audio_play_current_line final : public validate_audio_open {
 	STR_HELP("Play the audio for the current line")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
 		AudioTimingController *tc = c->audioController->GetTimingController();
-		if (tc)
-			c->audioController->PlayRange(tc->GetActiveLineRange());
+		c->videoController->Stop();
+		if(tc) {
+			if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+				c->videoController->PlayRange(tc->GetActiveLineRange());
+			} else {
+				c->audioController->PlayRange(tc->GetActiveLineRange());
+			}
+		}
 	}
 };
 
@@ -223,8 +232,12 @@ struct audio_play_selection final : public validate_audio_open {
 	STR_HELP("Play audio until the end of the selection is reached")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
-		c->audioController->PlayPrimaryRange();
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayRange(c->audioController->GetPrimaryPlaybackRange());
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayPrimaryRange();
+		}
 	}
 };
 
@@ -235,11 +248,20 @@ struct audio_play_toggle final : public validate_audio_open {
 	STR_HELP("Play selection, or stop playback if it's already playing")
 
 	void operator()(agi::Context *c) override {
-		if (c->audioController->IsPlaying())
-			c->audioController->Stop();
-		else {
-			c->videoController->Stop();
-			c->audioController->PlayPrimaryRange();
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			if (c->audioController->IsPlaying() || c->videoController->IsPlaying()) {
+				c->audioController->Stop();
+				c->videoController->Stop();
+			} else {
+				c->videoController->PlayPrimaryRange(c->audioController->GetPrimaryPlaybackRange());
+			}
+		} else {
+			if (c->audioController->IsPlaying())
+				c->audioController->Stop();
+			else {
+				c->videoController->Stop();
+				c->audioController->PlayPrimaryRange();
+			}
 		}
 	}
 };
@@ -270,9 +292,13 @@ struct audio_play_before final : public validate_audio_open {
 	STR_HELP("Play 500 ms before selection")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
 		int begin = c->audioController->GetPrimaryPlaybackRange().begin();
-		c->audioController->PlayRange(TimeRange(begin - 500, begin));
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayRange(TimeRange(begin - 500, begin));
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayRange(TimeRange(begin - 500, begin));
+		}
 	}
 };
 
@@ -284,9 +310,13 @@ struct audio_play_after final : public validate_audio_open {
 	STR_HELP("Play 500 ms after selection")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
 		int end = c->audioController->GetPrimaryPlaybackRange().end();
-		c->audioController->PlayRange(TimeRange(end, end + 500));
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayRange(TimeRange(end, end + 500));
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayRange(TimeRange(end, end + 500));
+		}
 	}
 };
 
@@ -298,9 +328,13 @@ struct audio_play_end final : public validate_audio_open {
 	STR_HELP("Play last 500 ms of selection")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
 		TimeRange times(c->audioController->GetPrimaryPlaybackRange());
-		c->audioController->PlayToEndOfPrimary(times.end() - std::min(500, times.length()));
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayToEndOfPrimary(TimeRange(times.end() - std::min(500, times.length()), c->audioController->GetPrimaryPlaybackRange().end()));
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayToEndOfPrimary(times.end() - std::min(500, times.length()));
+		}
 	}
 };
 
@@ -312,11 +346,17 @@ struct audio_play_begin final : public validate_audio_open {
 	STR_HELP("Play first 500 ms of selection")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
 		TimeRange times(c->audioController->GetPrimaryPlaybackRange());
-		c->audioController->PlayRange(TimeRange(
-			times.begin(),
-			times.begin() + std::min(500, times.length())));
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayRange(TimeRange(
+				times.begin(),
+				times.begin() + std::min(500, times.length())));
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayRange(TimeRange(
+				times.begin(),
+				times.begin() + std::min(500, times.length())));
+		}
 	}
 };
 
@@ -328,8 +368,12 @@ struct audio_play_to_end final : public validate_audio_open {
 	STR_HELP("Play from selection start to end of file")
 
 	void operator()(agi::Context *c) override {
-		c->videoController->Stop();
-		c->audioController->PlayToEnd(c->audioController->GetPrimaryPlaybackRange().begin());
+		if (c->videoController->HasVideo() && OPT_GET("Audio/Sync Video to Audio")->GetBool()) {
+			c->videoController->PlayToEnd(c->audioController->GetPrimaryPlaybackRange().begin());
+		} else {
+			c->videoController->Stop();
+			c->audioController->PlayToEnd(c->audioController->GetPrimaryPlaybackRange().begin());
+		}
 	}
 };
 
@@ -498,6 +542,23 @@ struct audio_toggle_spectrum final : public Command {
 	}
 };
 
+struct audio_toggle_video_audio_sync final : public Command {
+	CMD_NAME("audio/opt/video_audio_sync")
+	CMD_ICON(toggle_video_audio_sync)
+	STR_MENU("Sync video to audio")
+	STR_DISP("Sync video to audio")
+	STR_HELP("Sync video to audio")
+	CMD_TYPE(COMMAND_TOGGLE)
+
+	bool IsActive(const agi::Context *) override {
+		return OPT_GET("Audio/Sync Video to Audio")->GetBool();
+	}
+
+	void operator()(agi::Context *) override {
+		toggle("Audio/Sync Video to Audio");
+	}
+};
+
 struct audio_vertical_link final : public Command {
 	CMD_NAME("audio/opt/vertical_link")
 	CMD_ICON(toggle_audio_link)
@@ -563,6 +624,7 @@ namespace cmd {
 		reg(agi::make_unique<audio_scroll_right>());
 		reg(agi::make_unique<audio_stop>());
 		reg(agi::make_unique<audio_toggle_spectrum>());
+		reg(agi::make_unique<audio_toggle_video_audio_sync>());
 		reg(agi::make_unique<audio_vertical_link>());
 		reg(agi::make_unique<audio_view_spectrum>());
 		reg(agi::make_unique<audio_view_waveform>());

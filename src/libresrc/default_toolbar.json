@@ -23,6 +23,7 @@
         "audio/opt/autoscroll",
         "audio/opt/spectrum",
         "app/toggle/global_hotkeys",
+        "audio/opt/video_audio_sync",
         "",
         "audio/karaoke"
     ],
