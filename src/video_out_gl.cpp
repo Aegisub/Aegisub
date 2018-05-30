@@ -21,6 +21,14 @@
 
 #include <algorithm>
 #include <utility>
+#include <boost/config/suffix.hpp>
+
+#ifndef BOOST_NOINLINE
+#define BOOST_NOINLINE __attribute__ ((noinline))
+#endif
+#ifndef BOOST_UNLIKELY
+#define BOOST_UNLIKELY(x) x
+#endif
 
 #include <libaegisub/log.h>
 
