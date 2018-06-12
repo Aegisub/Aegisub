@@ -123,7 +123,14 @@ AC_SUBST([BUILD_DATE])
 # Check for pthreads and setup variables / compiler
 ###################################################
 AS_IF([test x$build_darwin != xyes], [
-  ACX_PTHREAD([], [AC_MSG_FAILURE([You must have working pthreads.])])
+  AX_PTHREAD([], [AC_MSG_FAILURE([You must have working pthreads.])])
+  AS_IF([test x$build_linux = xyes], [
+    AS_IF([test "x$PTHREAD_LIBS" = "x"], [PTHREAD_LIBS="-lpthread"])
+    LDFLAGS="-pthread $LDFLAGS"
+  ])
+  LIBS="$PTHREAD_LIBS $LIBS"
+  CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+  CXXFLAGS="$PTHREAD_CFLAGS $CXXFLAGS"
   CC="$PTHREAD_CC"
 ])
 
@@ -133,20 +140,24 @@ AS_IF([test x$build_darwin != xyes], [
 AC_ARG_ENABLE(compiler-flags, AS_HELP_STRING([--disable-compiler-flags],[Disable *all* additional compiler flags. [no]]))
 
 AS_IF([test x$enable_compiler_flags != xno], [
-  CFLAGS="$CFLAGS -Wall -Wextra -Wno-unused-parameter -std=gnu99 -pipe -g"
-  CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wno-unused-parameter -fno-strict-aliasing -pipe -g"
+  cflags_bak="$CFLAGS"
+  cxxflags_bak="$CXXFLAGS"
+  CFLAGS="-Wall -Wextra -Wno-unused-parameter -std=gnu99 -pipe"
+  CXXFLAGS="-Wall -Wextra -Wno-unused-parameter -fno-strict-aliasing -pipe"
   AC_CXX_FLAG([-std=c++11])
   AC_CXX_FLAG([-Wno-c++11-narrowing])
   AC_C_FLAG([-Wno-unused-local-typedefs])
   AC_CXX_FLAG([-Wno-unused-local-typedefs])
+  CFLAGS="$CFLAGS $cflags_bak"
+  CXXFLAGS="$CXXFLAGS $cxxflags_bak"
 
   # -O* messes with debugging.
   AS_IF([test x$enable_debug = xyes], [
-    CFLAGS="$CFLAGS -O0"
-    CXXFLAGS="$CXXFLAGS -O0"
+    CFLAGS="$CFLAGS -g -O0"
+    CXXFLAGS="$CXXFLAGS -g -O0"
   ], [
-    CFLAGS="$CFLAGS -O3"
-    CXXFLAGS="$CXXFLAGS -O3"
+    CFLAGS="-O3 $CFLAGS"
+    CXXFLAGS="-O3 $CXXFLAGS"
   ])
 ])
 
