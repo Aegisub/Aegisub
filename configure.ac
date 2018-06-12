@@ -334,9 +334,9 @@ AS_IF([test x$with_openal != xno], [
 #endif
 int main(void) {
   ALCdevice *device = alcOpenDevice(0);
-  if (!device) return 1;
   ALCcontext *context = alcCreateContext(device, 0);
-  if (!context) return 1;
+  alcDestroyContext(context);
+  alcCloseDevice(device);
   return 0;
 } ])
 ])
