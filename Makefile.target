@@ -9,6 +9,7 @@ CFLAGS += -mmacosx-version-min=10.8 -gfull
 CXXFLAGS += -mmacosx-version-min=10.8 -gfull
 LDFLAGS += -mmacosx-version-min=10.8 -Wl,-dead_strip -pagezero_size 10000 -image_base 100000000
 LIB_SHARED_LINK = $(LIB_SHARED_LINK_OSX)
+export MACOSX_DEPLOYMENT_TARGET=10.8
 endif
 
 LIB_TARGETS := $(addprefix $(TOP)lib/,$(LIB:%=lib%.a))
