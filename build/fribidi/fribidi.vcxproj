@@ -35,7 +35,7 @@
     Outputs="$(FribidiSrcDir)nonexistent-file"
     >
     <TarballProject
-      Url="http://fribidi.org/download/fribidi-0.19.6.tar.bz2"
+      Url="https://github.com/fribidi/fribidi/releases/download/0.19.6/fribidi-0.19.6.tar.bz2"
       Hash="cba8b7423c817e5adf50d28ec9079d14eafcec9127b9e8c8f1960c5ad585e17d"
       Root="$(FribidiSrcDir)"
       />
