@@ -150,6 +150,7 @@ public:
 	/// @brief The user pressed the left mouse button on the audio
 	/// @param ms          The time in milliseconds the user clicked
 	/// @param ctrl_down   Is the user currently holding the ctrl key down?
+	/// @param alt_down    Is the user currently holding the alt key down?
 	/// @param sensitivity Distance in milliseconds to consider existing markers
 	/// @param snap_range  Maximum snapping range in milliseconds
 	/// @return All audio markers at the clicked position which are eligible
