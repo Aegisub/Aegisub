@@ -379,7 +379,7 @@ int AudioTimingControllerKaraoke::MoveMarker(KaraokeMarker *marker, int new_posi
 	marker->Move(new_position);
 
 	size_t syl = marker - &markers.front() + 1;
-	kara->SetStartTime(syl, (new_position + 5) / 10 * 10);
+	kara->SetStartTime(syl, new_position);
 
 	labels[syl - 1].range = TimeRange(labels[syl - 1].range.begin(), new_position);
 	labels[syl].range = TimeRange(new_position, labels[syl].range.end());
@@ -406,6 +406,8 @@ void AudioTimingControllerKaraoke::AnnounceChanges(int syl) {
 }
 
 void AudioTimingControllerKaraoke::OnMarkerDrag(std::vector<AudioMarker*> const& m, int new_position, int) {
+	// Fix rounding error
+	new_position = (new_position + 5) / 10 * 10;
 	int old_position = m[0]->GetPosition();
 	int syl = MoveMarker(static_cast<KaraokeMarker *>(m[0]), new_position);
 	if (syl < 0) return;
