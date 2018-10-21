@@ -29,6 +29,7 @@
 
 #include "ass_dialogue.h"
 #include "ass_file.h"
+#include "audio_controller.h"
 #include "audio_marker.h"
 #include "audio_rendering_style.h"
 #include "audio_timing.h"
@@ -327,6 +328,12 @@ class AudioTimingControllerDialogue final : public AudioTimingController {
 	/// The time which was clicked on for alt-dragging mode
 	int clicked_ms;
 
+	/// Index of marker serving as tap marker
+	/// For AudioTimingControllerDialogue:
+	/// - 0 is left marker
+	/// - 1 is right marker
+	size_t tap_marker_idx = 0;
+
 	/// Autocommit option
 	const agi::OptionValue *auto_commit = OPT_GET("Audio/Auto/Commit");
 	const agi::OptionValue *inactive_line_mode = OPT_GET("Audio/Inactive Lines Display Mode");
@@ -384,6 +391,8 @@ class AudioTimingControllerDialogue final : public AudioTimingController {
 public:
 	// AudioMarkerProvider interface
 	void GetMarkers(const TimeRange &range, AudioMarkerVector &out_markers) const override;
+	int GetTapMarkerPosition() const override;
+	size_t GetTapMarkerIndex() const override;
 
 	// AudioTimingController interface
 	void GetRenderingStyles(AudioRenderingStyleRanges &ranges) const override;
@@ -395,9 +404,11 @@ public:
 	void AddLeadOut() override;
 	void ModifyLength(int delta, bool shift_following) override;
 	void ModifyStart(int delta) override;
+	void MoveTapMarker(int ms) override;
+	bool NextTapMarker() override;
 	bool IsNearbyMarker(int ms, int sensitivity, bool alt_down) const override;
 	std::vector<AudioMarker*> OnLeftClick(int ms, bool ctrl_down, bool alt_down, int sensitivity, int snap_range) override;
-	std::vector<AudioMarker*> OnRightClick(int ms, bool, int sensitivity, int snap_range) override;
+	std::vector<AudioMarker*> OnRightClick(int ms, bool ctrl_down, int sensitivity, int snap_range) override;
 	void OnMarkerDrag(std::vector<AudioMarker*> const& markers, int new_position, int snap_range) override;
 
 	// We have no warning messages currently, maybe add the old "Modified" message back later?
@@ -445,6 +456,23 @@ void AudioTimingControllerDialogue::GetMarkers(const TimeRange &range, AudioMark
 
 	keyframes_provider.GetMarkers(range, out_markers);
 	video_position_provider.GetMarkers(range, out_markers);
+}
+
+int AudioTimingControllerDialogue::GetTapMarkerPosition() const
+{
+	assert(tap_marker_idx <= 1);
+
+	if (tap_marker_idx == 0) {
+		return *active_line.GetLeftMarker();
+	} else {
+		return *active_line.GetRightMarker();
+	}
+}
+
+size_t AudioTimingControllerDialogue::GetTapMarkerIndex() const
+{
+	assert(tap_marker_idx <= 1);
+	return tap_marker_idx;
 }
 
 void AudioTimingControllerDialogue::OnSelectedSetChanged()
@@ -526,6 +554,7 @@ void AudioTimingControllerDialogue::DoCommit(bool user_triggered)
 void AudioTimingControllerDialogue::Revert()
 {
 	commit_id = -1;
+	tap_marker_idx = 0;
 
 	if (AssDialogue *line = context->selectionController->GetActiveLine())
 	{
@@ -535,6 +564,7 @@ void AudioTimingControllerDialogue::Revert()
 			AnnounceUpdatedPrimaryRange();
 			if (inactive_line_mode->GetInt() == 0)
 				AnnounceUpdatedStyleRanges();
+			AnnounceUpdatedTapMarker();
 		}
 		else
 		{
@@ -568,6 +598,34 @@ void AudioTimingControllerDialogue::ModifyStart(int delta) {
 	DialogueTimingMarker *m = active_line.GetLeftMarker();
 	SetMarkers({ m },
 		std::min<int>(*m + delta * 10, *active_line.GetRightMarker()), 0);
+}
+
+void AudioTimingControllerDialogue::MoveTapMarker(int ms) {
+	// Fix rounding error
+	ms = (ms + 5) / 10 * 10;
+
+	DialogueTimingMarker *left = active_line.GetLeftMarker();
+	DialogueTimingMarker *right = active_line.GetRightMarker();
+
+	clicked_ms = INT_MIN;
+	if (tap_marker_idx == 0) {
+		// Moving left marker (start time of the line)
+		if (ms > *right) SetMarkers({ right }, ms, 0);
+		SetMarkers({ left }, ms, 0);
+	} else {
+		// Moving right marker (end time of the line)
+		if (ms < *left) SetMarkers({ left }, ms, 0);
+		SetMarkers({ right }, ms, 0);
+	}
+}
+
+bool AudioTimingControllerDialogue::NextTapMarker() {
+	if (tap_marker_idx == 0) {
+		tap_marker_idx = 1;
+		AnnounceUpdatedTapMarker();
+		return true;
+	}
+	return false;
 }
 
 bool AudioTimingControllerDialogue::IsNearbyMarker(int ms, int sensitivity, bool alt_down) const
@@ -609,6 +667,8 @@ std::vector<AudioMarker*> AudioTimingControllerDialogue::OnLeftClick(int ms, boo
 		ret = drag_timing->GetBool() ? GetRightMarkers() : jump;
 		// Get ret before setting as setting may swap left/right
 		SetMarkers(jump, ms, snap_range);
+		// Also change tap marker to left marker
+		tap_marker_idx = 0;
 		return ret;
 	}
 
@@ -627,18 +687,34 @@ std::vector<AudioMarker*> AudioTimingControllerDialogue::OnLeftClick(int ms, boo
 
 	// Left-click within drag range should still move the left marker to the
 	// clicked position, but not the right marker
-	if (clicked == left)
+	if (clicked == left) {
 		SetMarkers(ret, ms, snap_range);
+	}
+
+	// Also change tap marker
+	if (clicked == left) {
+		tap_marker_idx = 0;
+	}
+	else {
+		tap_marker_idx = 1;
+	}
 
 	return ret;
 }
 
-std::vector<AudioMarker*> AudioTimingControllerDialogue::OnRightClick(int ms, bool, int sensitivity, int snap_range)
+std::vector<AudioMarker*> AudioTimingControllerDialogue::OnRightClick(int ms, bool ctrl_down, int sensitivity, int snap_range)
 {
-	clicked_ms = INT_MIN;
-	std::vector<AudioMarker*> ret = GetRightMarkers();
-	SetMarkers(ret, ms, snap_range);
-	return ret;
+	if (ctrl_down) {
+		context->audioController->PlayToEnd(ms);
+		return {};
+
+	} else {
+		clicked_ms = INT_MIN;
+		std::vector<AudioMarker*> ret = GetRightMarkers();
+		SetMarkers(ret, ms, snap_range);
+		tap_marker_idx = 1;
+		return ret;
+	}
 }
 
 void AudioTimingControllerDialogue::OnMarkerDrag(std::vector<AudioMarker*> const& markers, int new_position, int snap_range)

@@ -57,6 +57,9 @@ protected:
 	/// One or more rendering style ranges have changed in the timing controller.
 	agi::signal::Signal<> AnnounceUpdatedStyleRanges;
 
+	/// The tap marker has changed in the timing controller.
+	agi::signal::Signal<> AnnounceUpdatedTapMarker;
+
 public:
 	/// @brief Get any warning message to show in the audio display
 	/// @return The warning message to show, may be empty if there is none
@@ -85,6 +88,12 @@ public:
 	/// @brief Get all rendering style ranges
 	/// @param[out] ranges Rendering ranges will be added to this
 	virtual void GetRenderingStyles(AudioRenderingStyleRanges &ranges) const = 0;
+
+	/// @brief Return the position of the tap marker
+	virtual int GetTapMarkerPosition() const = 0;
+
+	/// @brief Return the index of the tap marker
+	virtual size_t GetTapMarkerIndex() const = 0;
 
 	enum NextMode {
 		/// Advance to the next timing unit, whether it's a line or a sub-part
@@ -138,6 +147,15 @@ public:
 	/// @param delta Amount to add in centiseconds
 	virtual void ModifyStart(int delta) = 0;
 
+	/// Move tap marker position to given position
+	/// @param position to move marker to
+	virtual void MoveTapMarker(int ms) = 0;
+
+	/// Go to next tap marker
+	/// @return True if moved to the next marker, False if tap marker is already
+	///         the last marker of the line
+	virtual bool NextTapMarker() = 0;
+
 	/// @brief Determine if a position is close to a draggable marker
 	/// @param ms          The time in milliseconds to test
 	/// @param sensitivity Distance in milliseconds to consider markers as nearby
@@ -178,6 +196,7 @@ public:
 
 	DEFINE_SIGNAL_ADDERS(AnnounceUpdatedPrimaryRange, AddUpdatedPrimaryRangeListener)
 	DEFINE_SIGNAL_ADDERS(AnnounceUpdatedStyleRanges, AddUpdatedStyleRangesListener)
+	DEFINE_SIGNAL_ADDERS(AnnounceUpdatedTapMarker, AddUpdatedTapMarkerListener)
 };
 
 /// @brief Create a standard dialogue audio timing controller

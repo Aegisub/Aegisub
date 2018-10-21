@@ -169,6 +169,11 @@ class AudioDisplay: public wxWindow {
 	/// @param dir -1 for left, 1 for right
 	void PaintFoot(wxDC &dc, int marker_x, int dir);
 
+	/// Draw an indicator for the tap marker
+	/// @param dc DC to paint to
+	/// @param marker_x Position of the tap marker
+	void PaintTapMarker(wxDC &dc, int marker_x);
+
 	/// Paint the labels in a time range
 	/// @param dc DC to paint to
 	/// @param updtime Time range to repaint
@@ -205,6 +210,7 @@ class AudioDisplay: public wxWindow {
 	void OnStyleRangesChanged();
 	void OnTimingController();
 	void OnMarkerMoved();
+	void OnTapMarkerChanged();
 
 public:
 	AudioDisplay(wxWindow *parent, AudioController *controller, agi::Context *context);

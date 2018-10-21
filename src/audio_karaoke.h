@@ -67,6 +67,7 @@ class AudioKaraoke final : public wxWindow {
 	agi::signal::Connection audio_opened; ///< Audio opened connection
 	agi::signal::Connection audio_closed; ///< Audio closed connection
 	agi::signal::Connection active_line_changed;
+	agi::signal::Connection tap_to_time_toggled;
 
 	/// Currently active dialogue line
 	AssDialogue *active_line = nullptr;
@@ -104,6 +105,9 @@ class AudioKaraoke final : public wxWindow {
 	bool click_will_remove_split = false; ///< If true a click at mouse_pos will remove a split rather than adding one
 
 	wxFont split_font; ///< Font used in the split/join interface
+
+	size_t marked_syl_start = 0;
+	size_t marked_syl_end = 0;
 
 	bool enabled = false; ///< Is karaoke mode enabled?
 
@@ -143,6 +147,7 @@ class AudioKaraoke final : public wxWindow {
 	void OnSize(wxSizeEvent &event);
 	void OnAudioOpened(agi::AudioProvider *provider);
 	void OnScrollTimer(wxTimerEvent &event);
+	void OnTapMarkerChanged();
 
 public:
 	/// Constructor

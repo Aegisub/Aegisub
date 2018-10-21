@@ -32,6 +32,12 @@
 		],
 		"time/start/increase" : [
 			"KP_6"
+		],
+		"time/mark/connect" : [
+			"I"
+		],
+		"time/mark/no_connect" : [
+			"O"
 		]
 	},
 	"Audio" : {

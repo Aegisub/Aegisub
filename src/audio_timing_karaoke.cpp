@@ -81,6 +81,13 @@ class AudioTimingControllerKaraoke final : public AudioTimingController {
 
 	size_t cur_syl = 0; ///< Index of currently selected syllable in the line
 
+	/// Index of marker serving as tap marker
+	/// For AudioControllerTimingKaraoke:
+	/// - 0 is start marker
+	/// - 1 to markers.size() is a regular syllable marker
+	/// - markers.size() + 1 is end marker
+	size_t tap_marker_idx = 0;
+
 	/// Pen used for the mid-syllable markers
 	Pen separator_pen{"Colour/Audio Display/Syllable Boundaries", "Audio/Line Boundaries Thickness", wxPENSTYLE_DOT};
 	/// Pen used for the start-of-line marker
@@ -112,11 +119,16 @@ class AudioTimingControllerKaraoke final : public AudioTimingController {
 	void DoCommit();
 	void ApplyLead(bool announce_primary);
 	int MoveMarker(KaraokeMarker *marker, int new_position);
-	void AnnounceChanges(int syl);
+	void MoveStartMarker(int new_position);
+	void MoveEndMarker(int new_position);
+	void CompressMarkers(size_t from, size_t to, int new_position);
+	void AnnounceChanges(bool announce_primary);
 
 public:
 	// AudioTimingController implementation
 	void GetMarkers(const TimeRange &range, AudioMarkerVector &out_markers) const override;
+	int GetTapMarkerPosition() const override;
+	size_t GetTapMarkerIndex() const override;
 	wxString GetWarningMessage() const override { return ""; }
 	TimeRange GetIdealVisibleTimeRange() const override;
 	void GetRenderingStyles(AudioRenderingStyleRanges &ranges) const override;
@@ -131,9 +143,11 @@ public:
 	void AddLeadOut() override;
 	void ModifyLength(int delta, bool shift_following) override;
 	void ModifyStart(int delta) override;
+	void MoveTapMarker(int ms) override;
+	bool NextTapMarker() override;
 	bool IsNearbyMarker(int ms, int sensitivity, bool) const override;
 	std::vector<AudioMarker*> OnLeftClick(int ms, bool, bool, int sensitivity, int) override;
-	std::vector<AudioMarker*> OnRightClick(int ms, bool, int, int) override;
+	std::vector<AudioMarker*> OnRightClick(int ms, bool ctrl_down, int, int) override;
 	void OnMarkerDrag(std::vector<AudioMarker*> const& marker, int new_position, int) override;
 
 	AudioTimingControllerKaraoke(agi::Context *c, AssKaraoke *kara, agi::signal::Connection& file_changed);
@@ -235,10 +249,29 @@ void AudioTimingControllerKaraoke::GetMarkers(TimeRange const& range, AudioMarke
 	video_position_provider.GetMarkers(range, out);
 }
 
+int AudioTimingControllerKaraoke::GetTapMarkerPosition() const {
+	assert(tap_marker_idx <= markers.size() + 1);
+
+	if (tap_marker_idx == 0) {
+		return start_marker;
+	}
+	else if (tap_marker_idx < markers.size() + 1) {
+		return markers[tap_marker_idx-1];
+	}
+	else {
+		return end_marker;
+	}
+}
+
+size_t AudioTimingControllerKaraoke::GetTapMarkerIndex() const {
+	assert(tap_marker_idx <= markers.size() + 1);
+	return tap_marker_idx;
+}
+
 void AudioTimingControllerKaraoke::DoCommit() {
 	active_line->Text = kara->GetText();
 	file_changed_slot.Block();
-	commit_id = c->ass->Commit(_("karaoke timing"), AssFile::COMMIT_DIAG_TEXT, commit_id, active_line);
+	commit_id = c->ass->Commit(_("karaoke timing"), AssFile::COMMIT_DIAG_TEXT | AssFile::COMMIT_DIAG_TIME, commit_id, active_line);
 	file_changed_slot.Unblock();
 	pending_changes = false;
 }
@@ -254,6 +287,7 @@ void AudioTimingControllerKaraoke::Revert() {
 	cur_syl = 0;
 	commit_id = -1;
 	pending_changes = false;
+	tap_marker_idx = 0;
 
 	start_marker.Move(active_line->Start);
 	end_marker.Move(active_line->End);
@@ -273,6 +307,7 @@ void AudioTimingControllerKaraoke::Revert() {
 	AnnounceUpdatedPrimaryRange();
 	AnnounceUpdatedStyleRanges();
 	AnnounceMarkerMoved();
+	AnnounceUpdatedTapMarker();
 }
 
 void AudioTimingControllerKaraoke::AddLeadIn() {
@@ -293,7 +328,7 @@ void AudioTimingControllerKaraoke::ApplyLead(bool announce_primary) {
 	kara->SetLineTimes(start_marker, end_marker);
 	if (!announce_primary)
 		AnnounceUpdatedStyleRanges();
-	AnnounceChanges(announce_primary ? cur_syl : cur_syl + 2);
+	AnnounceChanges(announce_primary);
 }
 
 void AudioTimingControllerKaraoke::ModifyLength(int delta, bool shift_following) {
@@ -314,13 +349,63 @@ void AudioTimingControllerKaraoke::ModifyLength(int delta, bool shift_following)
 	for (; cur != end; cur += step) {
 		MoveMarker(&markers[cur], markers[cur] + delta * 10);
 	}
-	AnnounceChanges(cur_syl);
+	AnnounceChanges(true);
 }
 
 void AudioTimingControllerKaraoke::ModifyStart(int delta) {
 	if (cur_syl == 0) return;
 	MoveMarker(&markers[cur_syl - 1], markers[cur_syl - 1] + delta * 10);
-	AnnounceChanges(cur_syl);
+	AnnounceChanges(true);
+}
+
+void AudioTimingControllerKaraoke::MoveTapMarker(int ms) {
+	// Fix rounding error
+	ms = (ms + 5) / 10 * 10;
+
+	// Get syllable this time falls within
+	const size_t syl = distance(markers.begin(), lower_bound(markers.begin(), markers.end(), ms));
+
+	// Tapping automatically all of the necessary markers for the tap marker to
+	// land at the current audio position. Intuitively, it "pushes" or
+	// "compresses" all of the markers in front of the tap marker. The
+	// expectation is that the markers will reach their proper position once the
+	// user finishes tapping to the line
+	if (tap_marker_idx == 0) {
+		// Moving the start time of first syllable (i.e. start time of the line)
+		if (ms > end_marker) MoveEndMarker(ms);
+		if (syl > 0) CompressMarkers(syl-1, 0, ms);
+		MoveStartMarker(ms);
+	}
+	else if (tap_marker_idx < markers.size() + 1) {
+		// Moving the end time of a non-end syllable
+		if (ms < start_marker) MoveStartMarker(ms);
+		else if (ms > end_marker) MoveEndMarker(ms);
+		if (syl < tap_marker_idx) {
+			// Moving marker left
+			CompressMarkers(syl, tap_marker_idx-1, ms);
+		}
+		else {
+			// Moving marker right
+			CompressMarkers(syl-1, tap_marker_idx-1, ms);
+		}
+	}
+	else {
+		// Moving the end time of last syllable (i.e. end time of the line)
+		if (ms < start_marker) MoveStartMarker(ms);
+		if (syl < markers.size()) CompressMarkers(0, markers.size()-1, ms);
+		MoveEndMarker(ms);
+	}
+
+	AnnounceChanges(true);
+}
+
+bool AudioTimingControllerKaraoke::NextTapMarker() {
+	if (tap_marker_idx < markers.size() + 1) {
+		++tap_marker_idx;
+		AnnounceUpdatedTapMarker();
+		return true;
+	}
+	return false;
 }
 
 bool AudioTimingControllerKaraoke::IsNearbyMarker(int ms, int sensitivity, bool) const {
@@ -350,18 +435,34 @@ std::vector<AudioMarker*> AudioTimingControllerKaraoke::OnLeftClick(int ms, bool
 
 	cur_syl = syl;
 
+	// Change tap marker
+	// Selecting a syllable moves the marker to the _end_ of that syllable, such
+	// that the next tap determines when that syllable ends. This behavior is
+	// more intuitive when coupled with AudioKaraoke's tap syllable highlight.
+	if (ms < start_marker.GetPosition()) {
+		tap_marker_idx = 0;
+	}
+	else {
+		tap_marker_idx = cur_syl + 1;
+	}
+
 	AnnounceUpdatedPrimaryRange();
 	AnnounceUpdatedStyleRanges();
+	AnnounceUpdatedTapMarker();
 
 	return {};
 }
 
-std::vector<AudioMarker*> AudioTimingControllerKaraoke::OnRightClick(int ms, bool, int, int) {
-	cur_syl = distance(markers.begin(), lower_bound(markers.begin(), markers.end(), ms));
+std::vector<AudioMarker*> AudioTimingControllerKaraoke::OnRightClick(int ms, bool ctrl_down, int, int) {
+	if (ctrl_down) {
+		c->audioController->PlayToEnd(ms);
 
-	AnnounceUpdatedPrimaryRange();
-	AnnounceUpdatedStyleRanges();
-	c->audioController->PlayPrimaryRange();
+	} else {
+		cur_syl = distance(markers.begin(), lower_bound(markers.begin(), markers.end(), ms));
+		AnnounceUpdatedPrimaryRange();
+		AnnounceUpdatedStyleRanges();
+		c->audioController->PlayPrimaryRange();
+	}
 
 	return {};
 }
@@ -387,10 +488,57 @@ int AudioTimingControllerKaraoke::MoveMarker(KaraokeMarker *marker, int new_posi
 	return syl;
 }
 
-void AudioTimingControllerKaraoke::AnnounceChanges(int syl) {
-	if (syl < 0) return;
+void AudioTimingControllerKaraoke::MoveStartMarker(int new_position) {
+	// No rearranging of syllables allowed
+	new_position = mid(
+		0,
+		new_position,
+		markers[0].GetPosition());
 
-	if (syl == cur_syl || syl == cur_syl + 1) {
+	if (new_position == start_marker.GetPosition())
+		return;
+
+	start_marker.Move(new_position);
+
+	active_line->Start = (int)start_marker;
+	kara->SetLineTimes(start_marker, end_marker);
+
+	labels.front().range = TimeRange(start_marker, labels.front().range.end());
+}
+
+void AudioTimingControllerKaraoke::MoveEndMarker(int new_position) {
+	// No rearranging of syllables allowed
+	new_position = mid(
+		markers.back().GetPosition(),
+		new_position,
+		INT_MAX);
+
+	if (new_position == end_marker.GetPosition())
+		return;
+
+	end_marker.Move(new_position);
+
+	active_line->End = (int)end_marker;
+	kara->SetLineTimes(start_marker, end_marker);
+
+	labels.back().range = TimeRange(labels.back().range.begin(), end_marker);
+}
+
+void AudioTimingControllerKaraoke::CompressMarkers(size_t from, size_t to, int new_position) {
+	int incr = (from < to ? 1 : -1);
+	size_t i = from;
+	for (;;) {
+		MoveMarker(&markers[i], new_position);
+		if (i == to) {
+			break;
+		} else {
+			i += incr;
+		}
+	}
+}
+
+void AudioTimingControllerKaraoke::AnnounceChanges(bool announce_primary) {
+	if (announce_primary) {
 		AnnounceUpdatedPrimaryRange();
 		AnnounceUpdatedStyleRanges();
 	}
@@ -412,14 +560,15 @@ void AudioTimingControllerKaraoke::OnMarkerDrag(std::vector<AudioMarker*> const&
 	int syl = MoveMarker(static_cast<KaraokeMarker *>(m[0]), new_position);
 	if (syl < 0) return;
 
+	bool announce_primary = (syl == cur_syl || syl == cur_syl + 1);
 	if (m.size() > 1) {
 		int delta = m[0]->GetPosition() - old_position;
 		for (AudioMarker *marker : m | boost::adaptors::sliced(1, m.size()))
 			MoveMarker(static_cast<KaraokeMarker *>(marker), marker->GetPosition() + delta);
-		syl = cur_syl;
+		announce_primary = true;
 	}
 
-	AnnounceChanges(syl);
+	AnnounceChanges(announce_primary);
 }
 
 void AudioTimingControllerKaraoke::GetLabels(TimeRange const& range, std::vector<AudioLabel> &out) const {

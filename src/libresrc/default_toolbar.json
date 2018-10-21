@@ -15,6 +15,9 @@
         "time/lead/in",
         "time/lead/out",
         "",
+        "time/tap/connect",
+        "time/tap/no_connect",
+        "",
         "audio/commit",
         "audio/go_to",
         "",
@@ -23,6 +26,7 @@
         "audio/opt/autoscroll",
         "audio/opt/spectrum",
         "app/toggle/global_hotkeys",
+        "time/opt/tap_to_time",
         "",
         "audio/karaoke"
     ],

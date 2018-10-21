@@ -39,6 +39,7 @@
 #include "../dialogs.h"
 #include "../include/aegisub/context.h"
 #include "../libresrc/libresrc.h"
+#include "../options.h"
 #include "../project.h"
 #include "../selection_controller.h"
 #include "../video_controller.h"
@@ -49,6 +50,10 @@
 
 namespace {
 using cmd::Command;
+
+static inline void toggle(const char *opt) {
+	OPT_SET(opt)->SetBool(!OPT_GET(opt)->GetBool());
+}
 
 struct validate_video_loaded : public Command {
 	CMD_TYPE(COMMAND_VALIDATE)
@@ -373,6 +378,93 @@ struct time_prev final : public Command {
 			c->audioController->GetTimingController()->Prev();
 	}
 };
+
+struct time_tap_connect final : public Command {
+	CMD_NAME("time/tap/connect")
+	CMD_ICON(time_tap_connect)
+	STR_MENU("Time tap connect")
+	STR_DISP("Time tap connect")
+	STR_HELP("Set tap marker to audio position, connect next line's start")
+	CMD_TYPE(COMMAND_VALIDATE)
+
+	bool Validate(const agi::Context *c) override {
+		return
+			OPT_GET("Timing/Tap To Time")->GetBool() &&
+			c->audioController->IsPlaying();
+	}
+
+	void operator()(agi::Context *c) override {
+		if (c->audioController->IsPlaying()) {
+			AudioTimingController *tc = c->audioController->GetTimingController();
+			if (tc) {
+				int ms = c->audioController->GetPlaybackPosition();
+
+				tc->MoveTapMarker(ms);
+				bool moved_marker = tc->NextTapMarker();
+				if (!moved_marker &&
+						OPT_GET("Audio/Auto/Commit")->GetBool() &&
+						OPT_GET("Audio/Next Line on Commit")->GetBool()) {
+					// go to next line, and then tap again to connect start to the same
+					// time
+					c->selectionController->NextLine();
+					tc->MoveTapMarker(ms);
+					tc->NextTapMarker();
+				}
+			}
+		}
+	}
+};
+
+struct time_tap_no_connect final : public Command {
+	CMD_NAME("time/tap/no_connect")
+	CMD_ICON(time_tap_no_connect)
+	STR_MENU("Tap marker no connect")
+	STR_DISP("Tap marker no connect")
+	STR_HELP("Set tap marker to audio position, do not connect next line's start")
+	CMD_TYPE(COMMAND_VALIDATE)
+
+	bool Validate(const agi::Context *c) override {
+		return
+			OPT_GET("Timing/Tap To Time")->GetBool() &&
+			c->audioController->IsPlaying();
+	}
+
+	void operator()(agi::Context *c) override {
+		if (c->audioController->IsPlaying()) {
+			AudioTimingController *tc = c->audioController->GetTimingController();
+			if (tc) {
+				int ms = c->audioController->GetPlaybackPosition();
+
+				tc->MoveTapMarker(ms);
+				bool moved_marker = tc->NextTapMarker();
+				if (!moved_marker &&
+						OPT_GET("Audio/Auto/Commit")->GetBool() &&
+						OPT_GET("Audio/Next Line on Commit")->GetBool()) {
+					// go to next line, but don't do anything more
+					c->selectionController->NextLine();
+				}
+			}
+		}
+	}
+};
+
+struct time_opt_tap_to_time final : public Command {
+	CMD_NAME("time/opt/tap_to_time")
+	CMD_ICON(time_opt_tap_to_time)
+	STR_MENU("Enable tap-to-time UI")
+	STR_DISP("Enable tap-to-time UI")
+	STR_HELP("Enable tap-to-time UI")
+	CMD_TYPE(COMMAND_TOGGLE)
+
+	bool IsActive(const agi::Context *) override {
+		return OPT_GET("Timing/Tap To Time")->GetBool();
+	}
+
+	void operator()(agi::Context *) override {
+		toggle("Timing/Tap To Time");
+	}
+};
+
 }
 
 namespace cmd {
@@ -387,7 +479,10 @@ namespace cmd {
 		reg(agi::make_unique<time_length_decrease_shift>());
 		reg(agi::make_unique<time_length_increase>());
 		reg(agi::make_unique<time_length_increase_shift>());
+		reg(agi::make_unique<time_tap_connect>());
+		reg(agi::make_unique<time_tap_no_connect>());
 		reg(agi::make_unique<time_next>());
+		reg(agi::make_unique<time_opt_tap_to_time>());
 		reg(agi::make_unique<time_prev>());
 		reg(agi::make_unique<time_shift>());
 		reg(agi::make_unique<time_snap_end_video>());
