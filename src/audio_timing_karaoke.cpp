@@ -365,11 +365,11 @@ void AudioTimingControllerKaraoke::MoveTapMarker(int ms) {
 	// Get syllable this time falls within
 	const size_t syl = distance(markers.begin(), lower_bound(markers.begin(), markers.end(), ms));
 
-	// Tapping automatically all of the necessary markers for the tap marker to
-	// land at the current audio position. Intuitively, it "pushes" or
-	// "compresses" all of the markers in front of the tap marker. The
-	// expectation is that the markers will reach their proper position once the
-	// user finishes tapping to the line
+	// Tapping automatically moves all of the necessary markers for the tap
+	// marker to land at the current audio position. Intuitively, it "pushes" or
+	// "compresses" the markers blocking the tap marker's way so they all end up
+	// in the same position. The expectation is that the markers will reach their
+	// proper position once the user finishes tapping to the line
 	if (tap_marker_idx == 0) {
 		// Moving the start time of first syllable (i.e. start time of the line)
 		if (ms > end_marker) MoveEndMarker(ms);
@@ -381,11 +381,11 @@ void AudioTimingControllerKaraoke::MoveTapMarker(int ms) {
 		if (ms < start_marker) MoveStartMarker(ms);
 		else if (ms > end_marker) MoveEndMarker(ms);
 		if (syl < tap_marker_idx) {
-			// Moving marker left
+			// Moving markers left
 			CompressMarkers(syl, tap_marker_idx-1, ms);
 		}
 		else {
-			// Moving marker right
+			// Moving markers right
 			CompressMarkers(syl-1, tap_marker_idx-1, ms);
 		}
 	}
@@ -455,9 +455,11 @@ std::vector<AudioMarker*> AudioTimingControllerKaraoke::OnLeftClick(int ms, bool
 
 std::vector<AudioMarker*> AudioTimingControllerKaraoke::OnRightClick(int ms, bool ctrl_down, int, int) {
 	if (ctrl_down) {
+		// Ctrl-right-click: play audio
 		c->audioController->PlayToEnd(ms);
-
-	} else {
+	}
+	else {
+		// Normal right-click: select new syllable and play range
 		cur_syl = distance(markers.begin(), lower_bound(markers.begin(), markers.end(), ms));
 		AnnounceUpdatedPrimaryRange();
 		AnnounceUpdatedStyleRanges();
@@ -531,7 +533,8 @@ void AudioTimingControllerKaraoke::CompressMarkers(size_t from, size_t to, int n
 		MoveMarker(&markers[i], new_position);
 		if (i == to) {
 			break;
-		} else {
+		}
+		else {
 			i += incr;
 		}
 	}

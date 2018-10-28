@@ -221,14 +221,15 @@ void AudioKaraoke::RenderText() {
 	// Draw each character in the line
 	int y = (bmp_size.GetHeight() - char_height) / 2;
 	for (size_t i = 0; i < spaced_text.size(); ++i) {
-		if (!(marked_syl_start <= i && i < marked_syl_end)) {
+		if (!(tap_syl_start <= i && i < tap_syl_end)) {
+			// Only draw with normal color if _not_ the tap syllable
 			dc.DrawText(spaced_text[i], char_x[i], y);
 		}
 	}
 
 	// Draw marked syllable
 	dc.SetTextForeground(*wxGREEN);
-	for (size_t i = marked_syl_start; i < marked_syl_end; ++i)
+	for (size_t i = tap_syl_start; i < tap_syl_end; ++i)
 		dc.DrawText(spaced_text[i], char_x[i], y);
 
 	// Draw the lines between each syllable
@@ -340,15 +341,15 @@ void AudioKaraoke::OnScrollTimer(wxTimerEvent &) {
 }
 
 void AudioKaraoke::OnTapMarkerChanged() {
-	marked_syl_start = 0;
-	marked_syl_end = 0;
+	tap_syl_start = 0;
+	tap_syl_end = 0;
 
 	if (OPT_GET("Timing/Tap To Time")->GetBool() && kara->size() > 0) {
 		const AudioTimingController *tc = c->audioController->GetTimingController();
 		const size_t marker_idx = tc->GetTapMarkerIndex();
 		if (marker_idx > 0) {
-			marked_syl_start = syl_start_points[marker_idx - 1];
-			marked_syl_end =
+			tap_syl_start = syl_start_points[marker_idx - 1];
+			tap_syl_end =
 				(marker_idx < syl_start_points.size() ?
 				syl_start_points[marker_idx] :
 				spaced_text.size());

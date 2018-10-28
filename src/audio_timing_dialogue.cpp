@@ -464,7 +464,8 @@ int AudioTimingControllerDialogue::GetTapMarkerPosition() const
 
 	if (tap_marker_idx == 0) {
 		return *active_line.GetLeftMarker();
-	} else {
+	}
+	else {
 		return *active_line.GetRightMarker();
 	}
 }
@@ -612,7 +613,8 @@ void AudioTimingControllerDialogue::MoveTapMarker(int ms) {
 		// Moving left marker (start time of the line)
 		if (ms > *right) SetMarkers({ right }, ms, 0);
 		SetMarkers({ left }, ms, 0);
-	} else {
+	}
+	else {
 		// Moving right marker (end time of the line)
 		if (ms < *left) SetMarkers({ left }, ms, 0);
 		SetMarkers({ right }, ms, 0);
@@ -705,10 +707,12 @@ std::vector<AudioMarker*> AudioTimingControllerDialogue::OnLeftClick(int ms, boo
 std::vector<AudioMarker*> AudioTimingControllerDialogue::OnRightClick(int ms, bool ctrl_down, int sensitivity, int snap_range)
 {
 	if (ctrl_down) {
+		// Ctrl-right-click: play audio
 		context->audioController->PlayToEnd(ms);
 		return {};
-
-	} else {
+	}
+	else {
+		// Normal right-click: move right marker
 		clicked_ms = INT_MIN;
 		std::vector<AudioMarker*> ret = GetRightMarkers();
 		SetMarkers(ret, ms, snap_range);

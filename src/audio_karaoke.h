@@ -106,8 +106,8 @@ class AudioKaraoke final : public wxWindow {
 
 	wxFont split_font; ///< Font used in the split/join interface
 
-	size_t marked_syl_start = 0;
-	size_t marked_syl_end = 0;
+	size_t tap_syl_start = 0; ///< Tap-to-time syllable start character index
+	size_t tap_syl_end = 0;		///< Tap-to-time syllable end character index
 
 	bool enabled = false; ///< Is karaoke mode enabled?
 
