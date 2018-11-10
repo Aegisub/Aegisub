@@ -28,16 +28,14 @@ public:
 	Time(std::string const& text);
 
 	/// Get millisecond, rounded to centisecond precision
-	operator int() const { return time / 10 * 10; }
-
-	int GetTimeHours() const;        ///< Get the hours portion of this time
-	int GetTimeMinutes() const;      ///< Get the minutes portion of this time
-	int GetTimeSeconds() const;      ///< Get the seconds portion of this time
-	int GetTimeMiliseconds() const;  ///< Get the miliseconds portion of this time
-	int GetTimeCentiseconds() const; ///< Get the centiseconds portion of this time
+	// Always round up for 5ms because the range is [start, stop)
+	operator int() const { return (time + 5) - (time + 5) % 10; }
 
 	/// Return the time as a string
 	/// @param ms Use milliseconds precision, for non-ASS formats
 	std::string GetAssFormatted(bool ms=false) const;
+
+	/// Return the time as a string
+	std::string GetSrtFormatted() const;
 };
 }

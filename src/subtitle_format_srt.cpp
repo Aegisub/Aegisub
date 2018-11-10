@@ -279,7 +279,7 @@ public:
 
 std::string WriteSRTTime(agi::Time const& ts)
 {
-	return agi::format("%02d:%02d:%02d,%03d", ts.GetTimeHours(), ts.GetTimeMinutes(), ts.GetTimeSeconds(), ts.GetTimeMiliseconds());
+	return ts.GetSrtFormatted();
 }
 
 }

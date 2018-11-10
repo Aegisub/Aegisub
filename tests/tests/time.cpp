@@ -62,17 +62,9 @@ TEST(lagi_time, extra_garbage_is_ignored) {
 	EXPECT_STREQ("1:23:45.67", Time("1a:b2c3d:e4f5g.!6&7").GetAssFormatted().c_str());
 }
 
-TEST(lagi_time, component_getters) {
-	Time t("1:23:45.67");
-	EXPECT_EQ(1, t.GetTimeHours());
-	EXPECT_EQ(23, t.GetTimeMinutes());
-	EXPECT_EQ(45, t.GetTimeSeconds());
-	EXPECT_EQ(67, t.GetTimeCentiseconds());
-	EXPECT_EQ(670, t.GetTimeMiliseconds());
-}
-
 TEST(lagi_time, srt_time) {
 	EXPECT_STREQ("1:23:45.678", Time("1:23:45,678").GetAssFormatted(true).c_str());
+	EXPECT_STREQ("01:23:45,678", Time("1:23:45,678").GetSrtFormatted().c_str());
 }
 
 TEST(lagi_time, smpte_parse_valid) {

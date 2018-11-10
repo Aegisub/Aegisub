@@ -60,25 +60,35 @@ Time::Time(std::string const& text) {
 }
 
 std::string Time::GetAssFormatted(bool msPrecision) const {
+	int ass_time = msPrecision ? time : int(*this);
 	std::string ret(10 + msPrecision, ':');
-	ret[0] = '0' + GetTimeHours();
-	ret[2] = '0' + (time % (60 * 60 * 1000)) / (60 * 1000 * 10);
-	ret[3] = '0' + (time % (10 * 60 * 1000)) / (60 * 1000);
-	ret[5] = '0' + (time % (60 * 1000)) / (1000 * 10);
-	ret[6] = '0' + (time % (10 * 1000)) / 1000;
+	ret[0] = '0' + ass_time / 3600000;
+	ret[2] = '0' + (ass_time % (60 * 60 * 1000)) / (60 * 1000 * 10);
+	ret[3] = '0' + (ass_time % (10 * 60 * 1000)) / (60 * 1000);
+	ret[5] = '0' + (ass_time % (60 * 1000)) / (1000 * 10);
+	ret[6] = '0' + (ass_time % (10 * 1000)) / 1000;
 	ret[7] = '.';
-	ret[8] = '0' + (time % 1000) / 100;
-	ret[9] = '0' + (time % 100) / 10;
+	ret[8] = '0' + (ass_time % 1000) / 100;
+	ret[9] = '0' + (ass_time % 100) / 10;
 	if (msPrecision)
-		ret[10] = '0' + time % 10;
+		ret[10] = '0' + ass_time % 10;
 	return ret;
 }
 
-int Time::GetTimeHours() const { return time / 3600000; }
-int Time::GetTimeMinutes() const { return (time % 3600000) / 60000; }
-int Time::GetTimeSeconds() const { return (time % 60000) / 1000; }
-int Time::GetTimeMiliseconds() const { return (time % 1000); }
-int Time::GetTimeCentiseconds() const { return (time % 1000) / 10; }
+std::string Time::GetSrtFormatted() const {
+	std::string ret(12, ':');
+	ret[0] = '0';
+	ret[1] = '0' + time / 3600000;
+	ret[3] = '0' + (time % (60 * 60 * 1000)) / (60 * 1000 * 10);
+	ret[4] = '0' + (time % (10 * 60 * 1000)) / (60 * 1000);
+	ret[6] = '0' + (time % (60 * 1000)) / (1000 * 10);
+	ret[7] = '0' + (time % (10 * 1000)) / 1000;
+	ret[8] = ',';
+	ret[9] = '0' + (time % 1000) / 100;
+	ret[10] = '0' + (time % 100) / 10;
+	ret[11] = '0' + time % 10;
+	return ret;
+}
 
 SmpteFormatter::SmpteFormatter(vfr::Framerate fps, char sep)
 : fps(std::move(fps))
