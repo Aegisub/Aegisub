@@ -24,7 +24,7 @@
 #include <algorithm>
 
 namespace agi {
-Time::Time(int time) : time(util::mid(0, time, 10 * 60 * 60 * 1000 - 1)) { }
+Time::Time(int time) : time(util::mid(0, time, 10 * 60 * 60 * 1000 - 6)) { }
 
 Time::Time(std::string const& text) {
 	int after_decimal = -1;
@@ -56,7 +56,7 @@ Time::Time(std::string const& text) {
 		time = (time * 60 + current) * 1000;
 
 	// Limit to the valid range
-	time = util::mid(0, time, 10 * 60 * 60 * 1000 - 1);
+	time = util::mid(0, time, 10 * 60 * 60 * 1000 - 6);
 }
 
 std::string Time::GetAssFormatted(bool msPrecision) const {
