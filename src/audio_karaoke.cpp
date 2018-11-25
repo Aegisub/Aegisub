@@ -64,6 +64,7 @@ AudioKaraoke::AudioKaraoke(wxWindow *parent, agi::Context *c)
 , file_changed(c->ass->AddCommitListener(&AudioKaraoke::OnFileChanged, this))
 , audio_opened(c->project->AddAudioProviderListener(&AudioKaraoke::OnAudioOpened, this))
 , active_line_changed(c->selectionController->AddActiveLineListener(&AudioKaraoke::OnActiveLineChanged, this))
+, tap_to_time_toggled(OPT_SUB("Timing/Tap To Time", &AudioKaraoke::OnTapMarkerChanged, this))
 , kara(agi::make_unique<AssKaraoke>())
 {
 	using std::bind;
@@ -134,6 +135,7 @@ void AudioKaraoke::SetEnabled(bool en) {
 	if (enabled) {
 		LoadFromLine();
 		c->audioController->SetTimingController(CreateKaraokeTimingController(c, kara.get(), file_changed));
+		c->audioController->GetTimingController()->AddUpdatedTapMarkerListener(&AudioKaraoke::OnTapMarkerChanged, this);
 		Refresh(false);
 	}
 	else {
@@ -218,7 +220,16 @@ void AudioKaraoke::RenderText() {
 
 	// Draw each character in the line
 	int y = (bmp_size.GetHeight() - char_height) / 2;
-	for (size_t i = 0; i < spaced_text.size(); ++i)
+	for (size_t i = 0; i < spaced_text.size(); ++i) {
+		if (!(tap_syl_start <= i && i < tap_syl_end)) {
+			// Only draw with normal color if _not_ the tap syllable
+			dc.DrawText(spaced_text[i], char_x[i], y);
+		}
+	}
+
+	// Draw marked syllable
+	dc.SetTextForeground(*wxGREEN);
+	for (size_t i = tap_syl_start; i < tap_syl_end; ++i)
 		dc.DrawText(spaced_text[i], char_x[i], y);
 
 	// Draw the lines between each syllable
@@ -327,6 +338,26 @@ void AudioKaraoke::OnScrollTimer(wxTimerEvent &) {
 	}
 
 	split_area->Refresh(false);
+}
+
+void AudioKaraoke::OnTapMarkerChanged() {
+	tap_syl_start = 0;
+	tap_syl_end = 0;
+
+	if (OPT_GET("Timing/Tap To Time")->GetBool() && kara->size() > 0) {
+		const AudioTimingController *tc = c->audioController->GetTimingController();
+		const size_t marker_idx = tc->GetTapMarkerIndex();
+		if (marker_idx > 0) {
+			tap_syl_start = syl_start_points[marker_idx - 1];
+			tap_syl_end =
+				(marker_idx < syl_start_points.size() ?
+				syl_start_points[marker_idx] :
+				spaced_text.size());
+		}
+	}
+
+	RenderText();
+	Refresh(false);
 }
 
 void AudioKaraoke::LoadFromLine() {

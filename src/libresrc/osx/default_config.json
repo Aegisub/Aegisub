@@ -421,7 +421,8 @@
 	},
 
 	"Timing" : {
-		"Default Duration" : 2000
+		"Default Duration" : 2000,
+		"Tap To Time" : false
 	},
 
 	"Tool" : {

@@ -52,6 +52,12 @@ namespace {
 		{nullptr}
 	};
 
+	const char *added_hotkeys_time_tap[][3] = {
+		{"time/tap/connect", "Audio", "I"},
+		{"time/tap/no_connect", "Audio", "O"},
+		{nullptr}
+	};
+
 	void migrate_hotkeys(const char *added[][3]) {
 		auto hk_map = hotkey::inst->GetHotkeyMap();
 		bool changed = false;
@@ -120,6 +126,11 @@ void init() {
 		migrations.emplace_back("app/minimize");
 	}
 #endif
+
+	if (boost::find(migrations, "time/tap") == end(migrations)) {
+		migrate_hotkeys(added_hotkeys_time_tap);
+		migrations.emplace_back("time/tap");
+	}
 
 	OPT_SET("App/Hotkey Migrations")->SetListString(std::move(migrations));
 }
