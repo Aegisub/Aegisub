@@ -50,9 +50,10 @@ AC_SUBST(AEGISUB_COMMAND)
 AC_DEFINE_UNQUOTED([AEGISUB_COMMAND], ["${AEGISUB_COMMAND}"], [Name of the Aegisub executable])
 
 # Name of gettext catalog.
-AEGISUB_CATALOG="aegisub"
-AC_SUBST(AEGISUB_CATALOG)
-AC_DEFINE_UNQUOTED([AEGISUB_CATALOG], ["${AEGISUB_CATALOG}"], [Name of the Aegisub gettext catalog])
+# See '--enable-appimage'
+#AEGISUB_CATALOG="aegisub"
+#AC_SUBST(AEGISUB_CATALOG)
+#AC_DEFINE_UNQUOTED([AEGISUB_CATALOG], ["${AEGISUB_CATALOG}"], [Name of the Aegisub gettext catalog])
 
 # Handle location of desktop files: http://freedesktop.org/wiki/Specifications/desktop-entry-spec
 AC_ARG_WITH(desktop-dir,
@@ -558,6 +559,32 @@ AC_SUBST(DEFAULT_PLAYER_AUDIO)
 # Set some friendly strings if some of the above aren't detected.
 DEFAULT_PLAYER_AUDIO=${DEFAULT_PLAYER_AUDIO:-NONE}
 
+################
+# AppImage build
+################
+# If enabled, localization and automation data is obtained from the binary's
+# path and never from the system's root. It will also install files that
+# Aegisub will lookup next to the binary, so be careful with "make install".
+AC_ARG_ENABLE(appimage,
+              AS_HELP_STRING([--enable-appimage],
+                             [Enable certain relocation settings useful for building AppImages or generic portable builds [no]]))
+
+P_DATA="$datarootdir/aegisub"
+AEGISUB_CATALOG="aegisub"
+
+AS_IF([test x$enable_appimage = xyes], [
+  AC_DEFINE([APPIMAGE_BUILD], [], [Define to enable AppImage compatible relocations])
+  P_DATA="$bindir"
+  localedir="$bindir/locale"
+  # use a different catalog name
+  AEGISUB_CATALOG="aegisub-appimage"
+])
+
+enable_appimage=${enable_appimage:-no}
+AC_SUBST(P_DATA)
+AC_SUBST(AEGISUB_CATALOG)
+AC_DEFINE_UNQUOTED([AEGISUB_CATALOG], ["${AEGISUB_CATALOG}"], [Name of the Aegisub gettext catalog])
+
 ###############
 # Misc settings
 ###############
@@ -605,12 +632,13 @@ AC_MSG_RESULT([
 Configure settings
   Install prefix:        $prefix
   Revision:              $BUILD_GIT_VERSION_STRING
-  Debug                  $enable_debug
-  CFLAGS                 $CFLAGS
-  CXXFLAGS               $CXXFLAGS
-  CPPFLAGS               $CPPFLAGS
-  LDFLAGS                $LDFLAGS
-  LIBS                   $LIBS
+  Debug:                 $enable_debug
+  AppImage:              $enable_appimage
+  CFLAGS:                $CFLAGS
+  CXXFLAGS:              $CXXFLAGS
+  CPPFLAGS:              $CPPFLAGS
+  LDFLAGS:               $LDFLAGS
+  LIBS:                  $LIBS
 
 Default Settings
   Audio Player:          $DEFAULT_PLAYER_AUDIO

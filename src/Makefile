@@ -202,6 +202,7 @@ $(d)auto4_lua.o_FLAGS                   := $(CFLAGS_LUA)
 $(d)auto4_lua_assfile.o_FLAGS           := $(CFLAGS_LUA)
 $(d)auto4_lua_dialog.o_FLAGS            := $(CFLAGS_LUA)
 $(d)auto4_lua_progresssink.o_FLAGS      := $(CFLAGS_LUA)
+$(d)aegisublocale.o_FLAGS               := -DP_LOCALE=\"$(P_LOCALE)\"
 
 $(src_OBJ): $(d)libresrc/bitmap.h $(d)libresrc/default_config.h
 
