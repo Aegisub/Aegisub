@@ -45,7 +45,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem/path.hpp>
 #include <libaegisub/format.h>
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 DummyVideoProvider::DummyVideoProvider(double fps, int frames, int width, int height, agi::Color colour, bool pattern)
 : framecount(frames)
