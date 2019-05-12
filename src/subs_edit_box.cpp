@@ -192,7 +192,7 @@ SubsEditBox::SubsEditBox(wxWindow *parent, agi::Context *context)
 	middle_right_sizer->Add(split_box, wxSizerFlags().Center().Left());
 
 	prev_box = new wxCheckBox(this,-1,_("Show Prev Line"));
-	prev_box->SetToolTip(_("Show the contents of the subtitle line when it was first selected above the edit box. This is sometimes useful when editing subtitles or translating subtitles into another language."));
+	prev_box->SetToolTip(_("Show previous line. This is sometimes useful when editing bilingual subtitles. "));
 	prev_box->Bind(wxEVT_CHECKBOX, &SubsEditBox::OnPrev, this);
 	middle_right_sizer->Add(prev_box, wxSizerFlags().Center().Left());
 
