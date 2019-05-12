@@ -191,6 +191,11 @@ SubsEditBox::SubsEditBox(wxWindow *parent, agi::Context *context)
 	split_box->Bind(wxEVT_CHECKBOX, &SubsEditBox::OnSplit, this);
 	middle_right_sizer->Add(split_box, wxSizerFlags().Center().Left());
 
+	prev_box = new wxCheckBox(this,-1,_("Show Prev Line"));
+	prev_box->SetToolTip(_("Show the contents of the subtitle line when it was first selected above the edit box. This is sometimes useful when editing subtitles or translating subtitles into another language."));
+	prev_box->Bind(wxEVT_CHECKBOX, &SubsEditBox::OnPrev, this);
+	middle_right_sizer->Add(prev_box, wxSizerFlags().Center().Left());
+
 	// Main sizer
 	wxSizer *main_sizer = new wxBoxSizer(wxVERTICAL);
 	main_sizer->Add(top_sizer,0,wxEXPAND | wxALL,3);
@@ -202,9 +207,14 @@ SubsEditBox::SubsEditBox(wxWindow *parent, agi::Context *context)
 	edit_ctrl->Bind(wxEVT_CHAR_HOOK, &SubsEditBox::OnKeyDown, this);
 
 	secondary_editor = new wxTextCtrl(this, -1, "", wxDefaultPosition, wxSize(300,50), wxBORDER_SUNKEN | wxTE_MULTILINE | wxTE_READONLY);
+	prev_editor = new wxTextCtrl(this, -1, "", wxDefaultPosition, wxSize(300,50), wxBORDER_SUNKEN | wxTE_MULTILINE | wxTE_READONLY);
 
 	main_sizer->Add(secondary_editor,1,wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,3);
+
+	main_sizer->Add(prev_editor,1,wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,3);
 	main_sizer->Add(edit_ctrl,1,wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,3);
+
+	main_sizer->Hide(prev_editor);
 	main_sizer->Hide(secondary_editor);
 
 	bottom_sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -410,6 +420,9 @@ void SubsEditBox::OnSelectedSetChanged() {
 void SubsEditBox::OnLineInitialTextChanged(std::string const& new_text) {
 	if (split_box->IsChecked())
 		secondary_editor->SetValue(to_wx(new_text));
+
+	if (prev_box->IsChecked())
+		prev_editor->SetValue(to_wx(new_text));
 }
 
 void SubsEditBox::UpdateFrameTiming(agi::vfr::Framerate const& fps) {
@@ -585,6 +598,21 @@ void SubsEditBox::OnSplit(wxCommandEvent&) {
 	if (split_box->IsChecked())
 		secondary_editor->SetValue(to_wx(c->initialLineState->GetInitialText()));
 }
+
+void SubsEditBox::OnPrev(wxCommandEvent&) {
+	Freeze();
+	GetSizer()->Show(prev_editor, prev_box->IsChecked());
+	GetSizer()->Show(bottom_sizer, prev_box->IsChecked());
+	Fit();
+	SetMinSize(GetSize());
+	GetParent()->GetSizer()->Layout();
+	Thaw();
+
+	if (prev_box->IsChecked())
+		prev_editor->SetValue(to_wx(c->initialLineState->GetInitialText()));
+}
+
+
 
 void SubsEditBox::OnStyleChange(wxCommandEvent &evt) {
 	SetSelectedRows(&AssDialogue::Style, new_value(style_box, evt), _("style change"), AssFile::COMMIT_DIAG_META);

@@ -86,3 +86,5 @@ vendor/luajit/src/lj_vm.s
 vendor/luajit/src/luajit
 
 .nuget
+out/
+.vscode
