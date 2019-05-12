@@ -354,6 +354,7 @@ void SubsEditBox::UpdateFields(int type, bool repopulate_lists) {
 	}
 
 	if (type & AssFile::COMMIT_DIAG_TEXT) {
+		prev_editor->SetTextTo(prev_line->Text);
 		edit_ctrl->SetTextTo(line->Text);
 		UpdateCharacterCount(line->Text);
 	}
@@ -407,6 +408,9 @@ void SubsEditBox::PopulateList(wxComboBox *combo, boost::flyweight<std::string> 
 
 void SubsEditBox::OnActiveLineChanged(AssDialogue *new_line) {
 	wxEventBlocker blocker(this);
+	if(new_line != line) {
+		prev_line = line;
+	}
 	line = new_line;
 	commit_id = -1;
 

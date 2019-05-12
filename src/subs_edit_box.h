@@ -69,6 +69,9 @@ class SubsEditBox final : public wxPanel {
 
 	std::vector<agi::signal::Connection> connections;
 
+	/// Previous dialogue line
+	AssDialogue *prev_line = nullptr;
+
 	/// Currently active dialogue line
 	AssDialogue *line = nullptr;
 	AssStyle *active_style = nullptr;
