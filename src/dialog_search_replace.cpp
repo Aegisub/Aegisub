@@ -42,6 +42,8 @@
 #include <wx/textctrl.h>
 #include <wx/valgen.h>
 
+static DialogSearchReplace *diag = nullptr;
+
 DialogSearchReplace::DialogSearchReplace(agi::Context* c, bool replace)
 : wxDialog(c->parent, -1, replace ? _("Replace") : _("Find"))
 , c(c)
@@ -129,6 +131,8 @@ DialogSearchReplace::DialogSearchReplace(agi::Context* c, bool replace)
 }
 
 DialogSearchReplace::~DialogSearchReplace() {
+	if (this == diag)
+		diag = nullptr;
 }
 
 void DialogSearchReplace::FindReplace(bool (SearchReplaceEngine::*func)()) {
@@ -177,8 +181,6 @@ void DialogSearchReplace::UpdateDropDowns() {
 }
 
 void DialogSearchReplace::Show(agi::Context *context, bool replace) {
-	static DialogSearchReplace *diag = nullptr;
-
 	if (diag && (replace != diag->has_replace || diag->c != context)) {
 		// Already opened, but wrong type - destroy and create the right one
 		diag->Destroy();
