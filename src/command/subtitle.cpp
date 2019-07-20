@@ -227,7 +227,7 @@ bool is_okay_to_close_subtitles(agi::Context *c) {
 
 void load_subtitles(agi::Context *c, agi::fs::path const& path, std::string const& encoding="") {
 #ifdef __APPLE__
-	wxGetApp().NewProjectContext().project->LoadSubtitles(path, encoding);
+	wxGetApp().EmptyProjectContext().project->LoadSubtitles(path, encoding);
 #else
 	c->project->LoadSubtitles(path, encoding);
 #endif

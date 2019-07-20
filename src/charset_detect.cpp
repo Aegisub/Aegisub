@@ -47,6 +47,8 @@ namespace CharSetDetect {
 
 std::string GetEncoding(agi::fs::path const& filename) {
 	auto encoding = agi::charset::Detect(filename);
+	if (encoding == "ASCII")
+		return "UTF-8";
 	if (!encoding.empty())
 		return encoding;
 
@@ -56,6 +58,8 @@ std::string GetEncoding(agi::fs::path const& filename) {
 		_("Choose character set"),
 		choices);
 	if (choice == -1) throw agi::UserCancelException("Cancelled encoding selection");
+	if (choices[choice] == "ASCII")
+		return "UTF-8";
 	return from_wx(choices[choice]);
 }
 

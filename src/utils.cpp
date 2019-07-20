@@ -55,6 +55,8 @@
 #include <CoreText/CTFont.h>
 #endif
 
+using namespace icu;
+
 /// @brief There shall be no kiB, MiB stuff here Pretty reading of size
 wxString PrettySize(int bytes) {
 	const char *suffix[] = { "", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };

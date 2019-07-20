@@ -46,7 +46,7 @@
 #include <libaegisub/util.h>
 
 #include <atomic>
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <memory>
 #include <mutex>
 

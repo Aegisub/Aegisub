@@ -63,7 +63,8 @@ public:
 	AegisubLocale locale;
 
 	agi::Context& NewProjectContext();
-	void CloseAll();
+	agi::Context& EmptyProjectContext();
+	void Quit();
 
 	// Apple events
 	void MacOpenFiles(wxArrayString const& filenames)

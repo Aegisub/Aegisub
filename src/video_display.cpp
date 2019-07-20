@@ -65,8 +65,22 @@
 #include <GL/gl.h>
 #endif
 
-/// Attribute list for gl canvases; set the canvases to doublebuffered rgba with an 8 bit stencil buffer
-int attribList[] = { WX_GL_RGBA , WX_GL_DOUBLEBUFFER, WX_GL_STENCIL_SIZE, 8, 0 };
+static wxGLAttributes getAttributes()
+{
+	wxGLAttributes attrs;
+#ifdef __APPLE__
+	attrs.AddAttribute(51); // NSOpenGLPFAMinimumPolicy
+	attrs.AddAttribute(73); // NSOpenGLPFAAccelerated
+	attrs.AddAttribute(96); // NSOpenGLPFAAllowOfflineRenderers
+#else
+	attrs.PlatformDefaults();
+#endif
+	attrs.RGBA();
+	attrs.DoubleBuffer();
+	attrs.Stencil(8);
+	attrs.EndList();
+	return attrs;
+}
 
 /// An OpenGL error occurred while uploading or displaying a frame
 class OpenGlException final : public agi::Exception {
@@ -79,7 +93,7 @@ public:
 #define E(cmd) cmd; if (GLenum err = glGetError()) throw OpenGlException(#cmd, err)
 
 VideoDisplay::VideoDisplay(wxToolBar *toolbar, bool freeSize, wxComboBox *zoomBox, wxWindow *parent, agi::Context *c)
-: wxGLCanvas(parent, -1, attribList)
+: wxGLCanvas(parent, getAttributes(), -1)
 , autohideTools(OPT_GET("Tool/Visual/Autohide"))
 , con(c)
 , zoomValue(OPT_GET("Video/Default Zoom")->GetInt() * .125 + .125)

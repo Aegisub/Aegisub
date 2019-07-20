@@ -249,20 +249,24 @@ void FrameMain::SetDisplayMode(int video, int audio) {
 }
 
 void FrameMain::UpdateTitle() {
+#ifndef __WXMAC__
 	wxString newTitle;
 	if (context->subsController->IsModified()) newTitle << "* ";
 	newTitle << context->subsController->Filename().filename().wstring();
 
-#ifndef __WXMAC__
 	newTitle << " - Aegisub " << GetAegisubLongVersionString();
-#endif
 
-#if defined(__WXMAC__)
+	if (GetTitle() != newTitle) SetTitle(newTitle);
+#else
+	agi::fs::path name = context->subsController->Filename();
+	if (name == "untitled")
+		SetTitle(name.wstring());
+	else
+		SetTitleWithFilename(this, context->subsController->Filename());
+
 	// On Mac, set the mark in the close button
 	OSXSetModified(context->subsController->IsModified());
 #endif
-
-	if (GetTitle() != newTitle) SetTitle(newTitle);
 }
 
 void FrameMain::OnVideoOpen(AsyncVideoProvider *provider) {

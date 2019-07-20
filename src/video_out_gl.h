@@ -23,6 +23,10 @@
 
 #include <vector>
 
+#ifdef __APPLE__
+#include <CoreGraphics/CGDisplayConfiguration.h>
+#endif
+
 struct VideoFrame;
 
 /// @class VideoOutGL
@@ -60,6 +64,12 @@ class VideoOutGL {
 
 	void DetectOpenGLCapabilities();
 	void InitTextures(int width, int height, GLenum format, int bpp, bool flipped);
+
+	bool needsCapabilityUpdate = true;
+
+#ifdef __APPLE__
+	static void CapabilitiesChanged(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo);
+#endif
 
 	VideoOutGL(const VideoOutGL &) = delete;
 	VideoOutGL& operator=(const VideoOutGL&) = delete;
