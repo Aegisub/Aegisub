@@ -29,7 +29,7 @@ CXXFLAGS            = @CXXFLAGS@
 CPPFLAGS            = @CPPFLAGS@
 CFLAGS_DEP          = -MMD -MP
 LIBS                = @LIBS@
-LDFLAGS             = @LDFLAGS@
+LDFLAGS             = @LDFLAGS@ -pthread
 INSTALL_FLAGS       = -m 644
 LIB_SHARED_LINK     = -shared -Wl,-soname -Wl,$(LIB_SHARED_FULL)
 LIB_SHARED_LINK_OSX = -dynamiclib -Wl,-undefined -Wl,dynamic_lookup -compatibility_version $(LIB_VERSION) -current_version $(LIB_VERSION) -Wl,-single_module -mmacosx-version-min=10.8 -install_name ${CURDIR}/$(LIB_SHARED_FULL)
