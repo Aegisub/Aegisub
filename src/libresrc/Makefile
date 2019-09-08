@@ -10,7 +10,11 @@ resrc_OBJ := \
 
 $(resrc_OBJ): $(d)default_config.h $(d)bitmap.h $(d)default_config.cpp $(d)bitmap.cpp
 
+ifeq (no, $(SYSTEM_LUAJIT))
 RESPACK := cd $(TOP)src/libresrc; $(BIN_LUA) $(TOP)tools/respack.lua
+else
+RESPACK := cd $(TOP)src/libresrc; luajit $(TOP)tools/respack.lua
+endif
 
 $(d)bitmap.cpp: $(d)bitmap.h
 $(d)default_config.cpp: $(d)default_config.h

@@ -12,6 +12,8 @@ repack-thes-dict_CPPFLAGS := -I$(TOP) -I$(TOP)libaegisub/include $(CFLAGS_ICU)
 
 PROGRAM += $(d)repack-thes-dict
 
+ifeq (no, $(SYSTEM_LUAJIT))
 $(TOP)tools/respack.lua: $(shell command -v "$(BIN_LUA)")
+endif
 
 include $(TOP)Makefile.target

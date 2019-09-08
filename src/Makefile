@@ -198,10 +198,17 @@ $(d)subtitles_provider.o_FLAGS          := $(CFLAGS_LIBASS)
 $(d)subtitles_provider_libass.o_FLAGS   := $(CFLAGS_LIBASS) -Wno-c++11-narrowing
 $(d)text_file_reader.o_FLAGS            := -D_X86_
 $(d)video_provider_manager.o_FLAGS      := $(CFLAGS_FFMS2)
+ifeq (no, $(SYSTEM_LUAJIT))
 $(d)auto4_lua.o_FLAGS                   := $(CFLAGS_LUA)
 $(d)auto4_lua_assfile.o_FLAGS           := $(CFLAGS_LUA)
 $(d)auto4_lua_dialog.o_FLAGS            := $(CFLAGS_LUA)
 $(d)auto4_lua_progresssink.o_FLAGS      := $(CFLAGS_LUA)
+else
+$(d)auto4_lua.o_FLAGS                   := `pkg-config --cflags luajit`
+$(d)auto4_lua_assfile.o_FLAGS           := `pkg-config --cflags luajit`
+$(d)auto4_lua_dialog.o_FLAGS            := `pkg-config --cflags luajit`
+$(d)auto4_lua_progresssink.o_FLAGS      := `pkg-config --cflags luajit`
+endif
 
 $(src_OBJ): $(d)libresrc/bitmap.h $(d)libresrc/default_config.h
 

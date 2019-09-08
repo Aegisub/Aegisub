@@ -9,6 +9,7 @@ HAVE_OPENAL     = @with_openal@
 HAVE_OSS        = @with_oss@
 HAVE_PORTAUDIO  = @with_portaudio@
 HAVE_UCHARDET   = @with_uchardet@
+SYSTEM_LUAJIT   = @with_system_luajit@
 
 ##############
 # BUILD OUTPUT
@@ -79,7 +80,11 @@ CFLAGS_ICONV       = @ICONV_CFLAGS@
 CFLAGS_ICU         = @ICU_I18N_CFLAGS@
 CFLAGS_LIBASS      = @LIBASS_CFLAGS@
 CFLAGS_LIBPULSE    = @LIBPULSE_CFLAGS@
+ifeq (no, $(SYSTEM_LUAJIT))
 CFLAGS_LUA         = @LUAJIT_CFLAGS@
+else
+CFLAGS_LUA         = `pkg-config --cflags luajit`
+endif
 CFLAGS_OPENAL      = @OPENAL_CFLAGS@
 CFLAGS_OSS         = @OSS_CFLAGS@
 CFLAGS_PORTAUDIO   = @PORTAUDIO_CFLAGS@
@@ -97,14 +102,22 @@ LIBS_ICONV         = @ICONV_LIBS@
 LIBS_ICU           = @ICU_UC_LIBS@ @ICU_I18N_LIBS@
 LIBS_LIBASS        = @LIBASS_LIBS@
 LIBS_LIBPULSE      = @LIBPULSE_LIBS@
+ifeq (no, $(SYSTEM_LUAJIT))
 LIBS_LUA           = @LUAJIT_LIBS@
+else
+LIBS_LUA           = `pkg-config --libs luajit`
+endif
 LIBS_OPENAL        = @OPENAL_LIBS@
 LIBS_PORTAUDIO     = @PORTAUDIO_LIBS@
 LIBS_PTHREAD       = @PTHREAD_CFLAGS@ @PTHREAD_LIBS@
 LIBS_UCHARDET      = @UCHARDET_LIBS@
 
 ifeq (yes, $(BUILD_DARWIN))
+ifeq (no, $(SYSTEM_LUAJIT))
 LIBS_LUA           = $(TOP)vendor/luajit/src/libluajit-aegisub.so
+else
+LIBS_LUA           = `pkg-config --libs luajit`
+endif
 endif
 
 FONTCONFIG_CONF_DIR = @FONTCONFIG_CONF_DIR@

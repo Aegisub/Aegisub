@@ -12,9 +12,15 @@ DATA_AUTOMATION_INSTALLED = $(addprefix $(DESTDIR)$(P_DATA)/automation/, $(DATA_
 $(DESTDIR)$(P_DATA)/automation/%: $(d)%
 	$(MKDIR_INSTALL)
 
-aegisub-lua_OBJ := $(d)tests/aegisub.o $(TOP)lib/libaegisub.a $(TOP)lib/libluabins.a $(LIBS_LUA)
+aegisub-lua_OBJ := $(d)tests/aegisub.o $(TOP)lib/libaegisub.a $(TOP)lib/libluabins.a
 aegisub-lua_CPPFLAGS := $(CPPFLAGS_BOOST) $(CFLAGS_LUA) -I$(TOP)libaegisub/include -I$(TOP)src $(CXXFLAGS_WX)
 aegisub-lua_LIBS := $(LIBS_WX) $(LIBS_BOOST) $(LIBS_ICU) $(LIBS_PTHREAD)
+
+ifeq (no, $(SYSTEM_LUAJIT))
+aegisub-lua_OBJ += $(LIBS_LUA)
+else
+aegisub-lua_LIBS += $(LIBS_LUA)
+endif
 
 PROGRAM += $(d)aegisub-lua
 
