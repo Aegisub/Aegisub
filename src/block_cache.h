@@ -150,8 +150,11 @@ public:
 		}
 
 		// Remove old entries until we're under the max size
-		for (auto it = age.rbegin(); size > max_size && it != age.rend(); )
-			KillMacroBlock(**it++);
+		while (size > max_size) {
+			// When size > 0, age should never be empty
+			assert(!age.empty());
+			KillMacroBlock(**age.rbegin());
+		}
 	}
 
 	/// @brief Obtain a data block from the cache
