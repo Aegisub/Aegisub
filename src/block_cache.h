@@ -150,8 +150,8 @@ public:
 		}
 
 		// Remove old entries until we're under the max size
-		for (auto it = age.rbegin(); size > max_size && it != age.rend(); it++)
-			KillMacroBlock(**it);
+		for (auto it = age.rbegin(); size > max_size && it != age.rend(); )
+			KillMacroBlock(**it++);
 	}
 
 	/// @brief Obtain a data block from the cache
