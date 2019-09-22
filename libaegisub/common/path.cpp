@@ -18,6 +18,8 @@
 
 #include "libaegisub/fs.h"
 
+#include <iostream>
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/range/distance.hpp>
 
@@ -58,6 +60,12 @@ Path::Path() {
 	static_assert(sizeof(paths) / sizeof(paths[0]) == sizeof(tokens) / sizeof(tokens[0]),
 		"Token and path arrays need to be the same size");
 	FillPlatformSpecificPaths();
+	std::cout << "Paths:" << std::endl;
+	std::cout << "?user: " << Decode("?user") << std::endl;
+	std::cout << "?local: " << Decode("?local") << std::endl;
+	std::cout << "?data: " << Decode("?data") << std::endl;
+	std::cout << "?dictionary: " << Decode("?dictionary") << std::endl;
+	std::cout << "?temp: " << Decode("?temp") << std::endl;
 }
 
 fs::path Path::Decode(std::string const& path) const {

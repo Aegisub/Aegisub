@@ -68,6 +68,15 @@ AC_ARG_WITH(icon-dir,
 P_ICON=${with_icon_dir:-$datarootdir/icons}
 AC_SUBST(P_ICON)
 
+# Handle location of dictionaries: https://github.com/hunspell/hunspell/blob/v1.7.0/src/tools/hunspell.cxx#L119
+AC_ARG_WITH(dict-dir,
+            AS_HELP_STRING([--with-dict-dir=PATH],[dictionary locations [/usr/share/hunspell]]))
+
+P_DICTIONARY=${with_dict_dir:-/usr/share/hunspell}
+AC_SUBST(P_DICTIONARY)
+
+AC_DEFINE_UNQUOTED([P_DICTIONARY], ["${P_DICTIONARY}"], [Location of dictionaries])
+
 # Install prefix
 # If a user doesn't supply --prefix then it is set to NONE so we
 # set it to $ac_default_prefix if it hasn't been supplied.
@@ -90,6 +99,41 @@ AS_IF([test x$use_build_credit = xyes],
     AC_DEFINE_UNQUOTED([BUILD_CREDIT], ["$with_build_credit"], [Build credit supplied in application title using --with-build-credit=])
   ]),
   [AC_MSG_RESULT([no])])
+
+####################
+# XDG dirs support
+####################
+# If enabled, Aegisub will try to use XDG compatible base directories.
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+# https://developer.gnome.org/basedir-spec/
+xdg_dirs_level_default=3
+
+xdg_dirs_level_default_disabled=0
+xdg_dirs_level_default_enabled=$(( xdg_dirs_level_default > 1 ? xdg_dirs_level_default : 1 ))
+
+AC_ARG_ENABLE(xdg-dirs,
+  [AS_HELP_STRING([--disable-xdg-dirs],[Disable compatibility with XDG dirs.])
+AS_HELP_STRING([--enable-xdg-dirs],[Enable compatibility with XDG dirs.])
+AS_HELP_STRING([--enable-xdg-dirs=LEVEL],[Specify the LEVEL of compatibility with XDG dirs:])
+  AS_HELP_STRING([],[0: none (disabled)])
+  AS_HELP_STRING([],[1: +XDG_CONFIG_HOME])
+  AS_HELP_STRING([],[2: +XDG_DATA_HOME])
+  AS_HELP_STRING([],[3: +XDG_CACHE_HOME])],
+  [case "${enableval}" in
+         no)  xdg_dirs_level=${xdg_dirs_level_default_disabled} ;;
+    [[0-3]])  xdg_dirs_level=${enableval} ;;
+        yes)  xdg_dirs_level=${xdg_dirs_level_default_enabled} ;;
+          *)  AC_MSG_ERROR(Unknown argument to --enable-xdg-dirs: ${enableval}) ;;
+  esac],
+  [xdg_dirs_level=${xdg_dirs_level_default}]
+)
+
+case "${xdg_dirs_level}" in
+    0)  AC_DEFINE([XDG_DIRS], 0, [XDG dirs: none (disabled)]) ;;
+    1)  AC_DEFINE([XDG_DIRS], 1, [XDG dirs: XDG_CONFIG_HOME]) ;;
+    2)  AC_DEFINE([XDG_DIRS], 2, [XDG dirs: XDG_CONFIG_HOME, XDG_DATA_HOME]) ;;
+    3)  AC_DEFINE([XDG_DIRS], 3, [XDG dirs: XDG_CONFIG_HOME, XDG_DATA_HOME, XDG_CACHE_HOME]) ;;
+esac
 
 ####################
 # Check for programs
@@ -605,12 +649,13 @@ AC_MSG_RESULT([
 Configure settings
   Install prefix:        $prefix
   Revision:              $BUILD_GIT_VERSION_STRING
-  Debug                  $enable_debug
-  CFLAGS                 $CFLAGS
-  CXXFLAGS               $CXXFLAGS
-  CPPFLAGS               $CPPFLAGS
-  LDFLAGS                $LDFLAGS
-  LIBS                   $LIBS
+  XDG dirs support:      level ${xdg_dirs_level:-0}
+  Debug:                 $enable_debug
+  CFLAGS:                $CFLAGS
+  CXXFLAGS:              $CXXFLAGS
+  CPPFLAGS:              $CPPFLAGS
+  LDFLAGS:               $LDFLAGS
+  LIBS:                  $LIBS
 
 Default Settings
   Audio Player:          $DEFAULT_PLAYER_AUDIO

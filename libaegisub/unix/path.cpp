@@ -26,14 +26,41 @@ namespace {
 #ifndef __APPLE__
 std::string home_dir() {
 	const char *env = getenv("HOME");
-	if (env) return env;
+	if (env && *env) return env;
 
 	if ((env = getenv("USER")) || (env = getenv("LOGNAME"))) {
-		if (passwd *user_info = getpwnam(env))
-			return user_info->pw_dir;
+		if (passwd *user_info = getpwnam(env)) {
+			const char *pw_dir = user_info->pw_dir;
+			if (pw_dir && *pw_dir)
+				return user_info->pw_dir;
+		}
 	}
 
 	throw agi::EnvironmentError("Could not get home directory. Make sure HOME is set.");
+}
+
+std::string xdg_config_dir() {
+	const char *env = getenv("XDG_CONFIG_HOME");
+	if (env && *env) return env;
+
+	agi::fs::path home = home_dir();
+	return (home/".config").string();
+}
+
+std::string xdg_data_dir() {
+	const char *env = getenv("XDG_DATA_HOME");
+	if (env && *env) return env;
+
+	agi::fs::path home = home_dir();
+	return (home/".local/share").string();
+}
+
+std::string xdg_cache_dir() {
+	const char *env = getenv("XDG_CACHE_HOME");
+	if (env && *env) return env;
+
+	agi::fs::path home = home_dir();
+	return (home/".cache").string();
 }
 #endif
 }
@@ -41,19 +68,43 @@ std::string home_dir() {
 namespace agi {
 void Path::FillPlatformSpecificPaths() {
 #ifndef __APPLE__
-	agi::fs::path home = home_dir();
-	SetToken("?user", home/".aegisub");
-	SetToken("?local", home/".aegisub");
-	SetToken("?data", P_DATA);
-	SetToken("?dictionary", "/usr/share/hunspell");
+	std::string dir = "aegisub";
+#if defined(XDG_DIRS) && XDG_DIRS >= 1
+	agi::fs::path xdg_config = xdg_config_dir();
+	SetToken("?user", xdg_config/dir);
+#if XDG_DIRS >= 2
+	agi::fs::path xdg_data = xdg_data_dir();
+	SetToken("?local", xdg_data/dir);
 #else
-	agi::fs::path app_support = agi::util::GetApplicationSupportDirectory();
-	SetToken("?user", app_support/"Aegisub");
-	SetToken("?local", app_support/"Aegisub");
-	SetToken("?data", agi::util::GetBundleSharedSupportDirectory());
-	SetToken("?dictionary", agi::util::GetBundleSharedSupportDirectory() + "/dictionaries");
+	SetToken("?local", xdg_config/dir);
 #endif
+#else
+    dir = "." + dir;
+	agi::fs::path home = home_dir();
+	SetToken("?user", home/dir);
+	SetToken("?local", home/dir);
+#endif
+	SetToken("?data", P_DATA);
+#ifdef P_DICTIONARY
+	SetToken("?dictionary", P_DICTIONARY);
+#else
+	SetToken("?dictionary", "/usr/share/hunspell");
+#endif
+#else
+	std::string dir = "Aegisub";
+	agi::fs::path app_support = agi::util::GetApplicationSupportDirectory();
+	SetToken("?user", app_support/dir);
+	SetToken("?local", app_support/dir);
+	agi::fs::path shared_support = agi::util::GetBundleSharedSupportDirectory();
+	SetToken("?data", shared_support);
+	SetToken("?dictionary", shared_support/"dictionaries");
+#endif
+#if !defined(__APPLE__) && defined(XDG_DIRS) && XDG_DIRS >= 3
+	agi::fs::path xdg_cache = xdg_cache_dir();
+	SetToken("?temp", xdg_cache);
+#else
 	SetToken("?temp", boost::filesystem::temp_directory_path());
+#endif
 }
 
 }
