@@ -69,6 +69,9 @@ class SubsEditBox final : public wxPanel {
 
 	std::vector<agi::signal::Connection> connections;
 
+	/// Previous dialogue line
+	AssDialogue *prev_line = nullptr;
+
 	/// Currently active dialogue line
 	AssDialogue *line = nullptr;
 	AssStyle *active_style = nullptr;
@@ -97,6 +100,9 @@ class SubsEditBox final : public wxPanel {
 	wxRadioButton *by_frame;
 	wxTextCtrl *char_count;
 	wxCheckBox *split_box;
+	wxCheckBox *prev_box;
+
+
 
 	wxSizer *top_sizer;
 	wxSizer *middle_right_sizer;
@@ -152,6 +158,7 @@ class SubsEditBox final : public wxPanel {
 	void OnEffectChange(wxCommandEvent &);
 	void OnSize(wxSizeEvent &event);
 	void OnSplit(wxCommandEvent&);
+	void OnPrev(wxCommandEvent&);
 
 	void SetPlaceholderCtrl(wxControl *ctrl, wxString const& value);
 
@@ -197,6 +204,7 @@ class SubsEditBox final : public wxPanel {
 
 	SubsTextEditCtrl *edit_ctrl;
 	wxTextCtrl *secondary_editor;
+	wxTextCtrl *prev_editor;
 
 public:
 	/// @brief Constructor

@@ -117,15 +117,15 @@ class BaseGrid final : public wxWindow {
 	int GetRows() const { return index_line_map.size(); }
 	void MakeRowVisible(int row);
 
-	/// @brief Get dialogue by index
-	/// @param n Index to look up
-	/// @return Subtitle dialogue line for index, or 0 if invalid index
-	AssDialogue *GetDialogue(int n) const;
 
 public:
 	BaseGrid(wxWindow* parent, agi::Context *context);
 	~BaseGrid();
 
+	/// @brief Get dialogue by index
+	/// @param n Index to look up
+	/// @return Subtitle dialogue line for index, or 0 if invalid index
+	AssDialogue *GetDialogue(int n) const;
 	void SetByFrame(bool state);
 	void ScrollTo(int y);
 

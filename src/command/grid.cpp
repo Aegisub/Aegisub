@@ -43,6 +43,9 @@
 
 #include <libaegisub/make_unique.h>
 
+#include "../video_controller.h"
+#include "../video_display.h"
+
 namespace {
 	using cmd::Command;
 
@@ -54,6 +57,31 @@ struct grid_line_next final : public Command {
 
 	void operator()(agi::Context *c) override {
 		c->selectionController->NextLine();
+	}
+};
+
+struct grid_line_next_play final : public Command {
+	CMD_NAME("grid/line/next/play")
+	STR_MENU("Next Line")
+	STR_DISP("Next Line")
+	STR_HELP("Move to the next subtitle line and play current line")
+
+	void operator()(agi::Context *c) override {
+		c->selectionController->NextLine();
+		c->videoController->PlayLine();
+	}
+};
+
+struct grid_line_next2_play final : public Command {
+	CMD_NAME("grid/line/next2/play")
+	STR_MENU("Next Line Twice")
+	STR_DISP("Next Line Twice")
+	STR_HELP("Move to the next twice subtitle line and play current line")
+
+	void operator()(agi::Context *c) override {
+		c->selectionController->NextLine();
+		c->selectionController->NextLine();
+		c->videoController->PlayLine();
 	}
 };
 
@@ -424,5 +452,8 @@ namespace cmd {
 		reg(agi::make_unique<grid_tags_hide>());
 		reg(agi::make_unique<grid_tags_show>());
 		reg(agi::make_unique<grid_tags_simplify>());
+		reg(agi::make_unique<grid_line_next_play>());
+		reg(agi::make_unique<grid_line_next2_play>());
+
 	}
 }
