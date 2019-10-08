@@ -54,7 +54,7 @@ static int l_load(lua_State * L)
 }
 
 /* luabins Lua module API */
-static const struct luaL_reg R[] =
+static const struct luaL_Reg R[] =
 {
   { "save", l_save },
   { "load", l_load },

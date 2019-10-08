@@ -6,6 +6,8 @@
 
 package.cpath = "./?.so;"..package.cpath
 
+local pack = pack or table.pack
+local unpack = unpack or table.unpack
 local randomseed = 1235134892
 --local randomseed = os.time()
 
@@ -145,6 +147,7 @@ end
 -- Test helper functions
 -- ----------------------------------------------------------------------------
 
+luabins = require 'luabins'
 local luabins_local = require 'luabins'
 assert(luabins_local == luabins)
 
@@ -281,7 +284,7 @@ check_fail_save(
     "can't save: unsupported type detected",
     coroutine.create(function() end)
   )
-check_fail_save("can't save: unsupported type detected", newproxy())
+check_fail_save("can't save: unsupported type detected", function()end)
 
 print("---> basic table tests")
 

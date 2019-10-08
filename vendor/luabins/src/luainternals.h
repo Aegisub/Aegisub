@@ -7,6 +7,24 @@
 #ifndef LUABINS_LUAINTERNALS_H_INCLUDED_
 #define LUABINS_LUAINTERNALS_H_INCLUDED_
 
+#ifndef LUAI_BITSINT
+/*
+* LUAI_BITSINT defines the number of bits in an int.
+*  CHANGE here if Lua cannot automatically detect the number of bits of
+*  your machine. Probably you do not need to change this.
+*
+* avoid overflows in comparison */
+#if INT_MAX-20 < 32760
+#define LUAI_BITSINT    16
+#elif INT_MAX > 2147483640L
+/* int has at least 32 bits */
+#define LUAI_BITSINT    32
+#else
+#error "you must define LUA_BITSINT with number of bits in an integer"
+#endif
+
+#endif // ifndef LUAI_BITSINT
+
 /*
 * BEGIN COPY-PASTE FROM Lua 5.1.4 luaconf.h
 * WARNING: If your Lua config differs, fix this!
@@ -38,7 +56,6 @@ int luaO_log2 (unsigned int x);
 /*
 ** max size of array part is 2^MAXBITS
 */
-#define LUAI_BITSINT 32
 #if LUAI_BITSINT > 26
 #define MAXBITS		26
 #else

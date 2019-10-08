@@ -4,6 +4,8 @@ luabins — Lua Binary Serialization Library
 Allows to save tuples of primitive Lua types into binary chunks
 and to load saved data back.
 
+NB: You may be better off with luatexts: https://github.com/agladysh/luatexts.
+
 On serialization
 ----------------
 
