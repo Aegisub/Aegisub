@@ -188,14 +188,13 @@ endif
 #####################
 # SOURCE-LEVEL CFLAGS
 #####################
-$(d)MatroskaParser.o_FLAGS              := -Wno-sometimes-uninitialized
 $(d)audio_player.o_FLAGS                := $(CFLAGS_ALSA) $(CFLAGS_PORTAUDIO) $(CFLAGS_LIBPULSE) $(CFLAGS_OPENAL)
 $(d)audio_provider_factory.o_FLAGS      := $(CFLAGS_FFMS2)
 $(d)auto4_base.o_FLAGS                  := $(CFLAGS_FREETYPE)
 $(d)charset_detect.o_FLAGS              := -D_X86_
 $(d)font_file_lister_fontconfig.o_FLAGS := $(CFLAGS_FONTCONFIG)
 $(d)subtitles_provider.o_FLAGS          := $(CFLAGS_LIBASS)
-$(d)subtitles_provider_libass.o_FLAGS   := $(CFLAGS_LIBASS) -Wno-c++11-narrowing
+$(d)subtitles_provider_libass.o_FLAGS   := $(CFLAGS_LIBASS) -Wno-narrowing
 $(d)text_file_reader.o_FLAGS            := -D_X86_
 $(d)video_provider_manager.o_FLAGS      := $(CFLAGS_FFMS2)
 $(d)auto4_lua.o_FLAGS                   := $(CFLAGS_LUA)
