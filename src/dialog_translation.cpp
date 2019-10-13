@@ -246,7 +246,11 @@ void DialogTranslation::UpdateDisplay() {
 			int initial_pos = original_text->GetLength();
 			original_text->AppendTextRaw(block->GetText().c_str());
 			if (i == cur_block) {
+				#if wxCHECK_VERSION(3, 1, 0)
+				original_text->StartStyling(initial_pos);
+				#else
 				original_text->StartStyling(initial_pos, 31);
+				#endif
 				original_text->SetStyling(block->GetText().size(), 1);
 			}
 		}

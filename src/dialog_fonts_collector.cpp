@@ -400,7 +400,11 @@ void DialogFontsCollector::OnAddText(ValueEvent<color_str_pair> &event) {
 	auto const& utf8 = str.second.utf8_str();
 	collection_log->AppendTextRaw(utf8.data(), utf8.length());
 	if (str.first) {
+		#if wxCHECK_VERSION(3, 1, 0)
+		collection_log->StartStyling(pos);
+		#else
 		collection_log->StartStyling(pos, 31);
+		#endif
 		collection_log->SetStyling(utf8.length(), str.first);
 	}
 	collection_log->GotoPos(pos + utf8.length());

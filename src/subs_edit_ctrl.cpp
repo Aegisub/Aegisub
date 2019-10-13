@@ -265,7 +265,11 @@ void SubsTextEditCtrl::UpdateStyle() {
 	cursor_pos = -1;
 	UpdateCallTip();
 
+	#if wxCHECK_VERSION(3, 1, 0)
+	StartStyling(0);
+	#else
 	StartStyling(0,255);
+	#endif
 
 	if (!OPT_GET("Subtitle/Highlight/Syntax")->GetBool()) {
 		SetStyling(line_text.size(), 0);
