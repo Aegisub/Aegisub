@@ -6,7 +6,8 @@ src_CPPFLAGS := -I$(d) -I.. -I$(d)include -I$(TOP)libaegisub/include -I$(TOP)bui
 	$(CFLAGS_PTHREAD) $(CFLAGS_FFTW3) $(CFLAGS_ICU) $(CPPFLAGS_BOOST)
 src_CXXFLAGS := $(CXXFLAGS_WX)
 src_LIBS := $(LIBS_GL) $(LIBS_PTHREAD) $(LIBS_WX) $(LIBS_FREETYPE) \
-	$(LIBS_LIBASS) $(LIBS_FONTCONFIG) $(LIBS_FFTW3)  $(LIBS_BOOST) $(LIBS_ICU)
+	$(LIBS_LIBASS) $(LIBS_FONTCONFIG) $(LIBS_FFTW3)  $(LIBS_BOOST) $(LIBS_ICU) \
+        -latomic
 src_PCH := $(d)agi_pre.h
 src_INSTALLNAME := $(AEGISUB_COMMAND)
 
