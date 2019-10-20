@@ -404,8 +404,8 @@ msgid ""
 "extend or shrink start time of the second line; if totally to right, it will "
 "extend or shrink the end time of the first line."
 msgstr ""
-"设置如何紧贴字幕行，如果设为完全向左，将扩展至次行的开始时间；如果完全向右,将"
-"扩展至首行的结束时间。"
+"设置如何紧贴字幕行，如果设为完全向左，将扩展或收缩次行的开始时间；如果完全向右,将"
+"扩展或收缩首行的结束时间。"
 
 #: ../src/dialog_timing_processor.cpp:204
 msgid "Bias: Start <- "
