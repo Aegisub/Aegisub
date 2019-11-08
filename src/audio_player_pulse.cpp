@@ -86,6 +86,8 @@ public:
 	PulseAudioPlayer(agi::AudioProvider *provider);
 	~PulseAudioPlayer();
 
+	void init();
+	void uninit();
 	void Play(int64_t start,int64_t count);
 	void Stop();
 	bool IsPlaying() { return is_playing; }
@@ -98,39 +100,109 @@ public:
 };
 
 PulseAudioPlayer::PulseAudioPlayer(agi::AudioProvider *provider) : AudioPlayer(provider) {
+	init();
+}
+
+PulseAudioPlayer::~PulseAudioPlayer()
+{
+	uninit();
+}
+
+void PulseAudioPlayer::init()
+{
+	bool locked = false;
+    
 	// Initialise a mainloop
 	mainloop = pa_threaded_mainloop_new();
 	if (!mainloop)
+	{
 		throw AudioPlayerOpenError("Failed to initialise PulseAudio threaded mainloop object");
-
-	pa_threaded_mainloop_start(mainloop);
-
-	// Create context
-	context = pa_context_new(pa_threaded_mainloop_get_api(mainloop), "Aegisub");
-	if (!context) {
-		pa_threaded_mainloop_free(mainloop);
-		throw AudioPlayerOpenError("Failed to create PulseAudio context");
+		uninit();
+		return;
 	}
-	pa_context_set_state_callback(context, (pa_context_notify_cb_t)pa_context_notify, this);
+		
+	if (pa_threaded_mainloop_start(mainloop) < 0)
+	{
+		throw AudioPlayerOpenError("Failed to start PulseAudio threaded mainloop object");
+		uninit();
+		return;
+	}
 
-	// Connect the context
-	pa_context_connect(context, nullptr, PA_CONTEXT_NOAUTOSPAWN, nullptr);
+	pa_threaded_mainloop_lock(mainloop);
+    locked = true;
 
-	// Wait for connection
-	while (true) {
-		context_notify.Wait();
-		if (cstate == PA_CONTEXT_READY) {
-			break;
-		} else if (cstate == PA_CONTEXT_FAILED) {
-			// eww
-			paerror = pa_context_errno(context);
-			pa_context_unref(context);
-			pa_threaded_mainloop_stop(mainloop);
-			pa_threaded_mainloop_free(mainloop);
-			throw AudioPlayerOpenError(std::string("PulseAudio reported error: ") + pa_strerror(paerror));
+	if (!(context = pa_context_new(pa_threaded_mainloop_get_api(mainloop), "Aegisub")))
+    {
+		if (locked)
+			pa_threaded_mainloop_unlock(mainloop);
+
+		if (context) 
+		{
+			pa_threaded_mainloop_lock(mainloop);
+			
+			if (!(pa_context_errno(context) == PA_ERR_CONNECTIONREFUSED))
+				throw AudioPlayerOpenError("PulseAudio init failed");
+			
+			pa_threaded_mainloop_unlock(mainloop);
 		}
-		// otherwise loop once more
+        
+        throw AudioPlayerOpenError("Failed to create PulseAudio context");
+        uninit();
+		return;
+    }
+	
+	pa_context_set_state_callback(context, (pa_context_notify_cb_t)pa_context_notify, this);
+    
+	// Connect the context
+	if (pa_context_connect(context, nullptr, PA_CONTEXT_NOAUTOSPAWN, nullptr) < 0)
+	{
+		if (locked)
+			pa_threaded_mainloop_unlock(mainloop);
+
+		if (context) 
+		{
+			pa_threaded_mainloop_lock(mainloop);
+			
+			if (!(pa_context_errno(context) == PA_ERR_CONNECTIONREFUSED))
+				throw AudioPlayerOpenError("PulseAudio init failed");
+			
+			pa_threaded_mainloop_unlock(mainloop);
+		}
+		
+		throw AudioPlayerOpenError("Failed to connect to PulseAudio context");
+		uninit();
+		return;
 	}
+    
+    while (true) 
+	{   
+        if (cstate == PA_CONTEXT_READY)
+            break;
+        
+        if (!PA_CONTEXT_IS_GOOD(cstate))
+        {
+			if (locked)
+				pa_threaded_mainloop_unlock(mainloop);
+
+			if (context) 
+			{
+				pa_threaded_mainloop_lock(mainloop);
+				
+				if (!(pa_context_errno(context) == PA_ERR_CONNECTIONREFUSED))
+				{
+					throw AudioPlayerOpenError("PulseAudio init failed");
+					uninit();
+					return;
+				}
+				
+				pa_threaded_mainloop_unlock(mainloop);
+			}
+		}
+        
+        pa_threaded_mainloop_wait(mainloop);
+    }
+
+    pa_threaded_mainloop_unlock(mainloop);
 
 	// Set up stream
 	bpf = provider->GetChannels() * provider->GetBytesPerSample();
@@ -171,17 +243,29 @@ PulseAudioPlayer::PulseAudioPlayer(agi::AudioProvider *provider) : AudioPlayer(p
 	}
 }
 
-PulseAudioPlayer::~PulseAudioPlayer()
+void PulseAudioPlayer::uninit()
 {
 	if (is_playing) Stop();
 
-	// Hope for the best and just do things as quickly as possible
-	pa_stream_disconnect(stream);
-	pa_stream_unref(stream);
-	pa_context_disconnect(context);
-	pa_context_unref(context);
-	pa_threaded_mainloop_stop(mainloop);
-	pa_threaded_mainloop_free(mainloop);
+    if (mainloop)
+        pa_threaded_mainloop_stop(mainloop);
+
+    if (stream) {
+        pa_stream_disconnect(stream);
+        pa_stream_unref(stream);
+        stream = nullptr;
+    }
+
+    if (context) {
+        pa_context_disconnect(context);
+        pa_context_unref(context);
+        context = nullptr;
+    }
+
+    if (mainloop) {
+        pa_threaded_mainloop_free(mainloop);
+        mainloop = nullptr;
+    }
 }
 
 void PulseAudioPlayer::Play(int64_t start,int64_t count)
@@ -272,8 +356,14 @@ int64_t PulseAudioPlayer::GetCurrentPosition()
 /// @brief Called by PA to notify about other context-related stuff
 void PulseAudioPlayer::pa_context_notify(pa_context *c, PulseAudioPlayer *thread)
 {
-	thread->cstate = pa_context_get_state(thread->context);
-	thread->context_notify.Post();
+    switch (pa_context_get_state(c)) {
+    case PA_CONTEXT_READY:
+    case PA_CONTEXT_TERMINATED:
+    case PA_CONTEXT_FAILED:
+        pa_threaded_mainloop_signal(thread->mainloop, 0);
+        break;
+    }
+	thread->stream_notify.Post();
 }
 
 /// @brief Called by PA when an operation completes
