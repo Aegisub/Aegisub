@@ -26,6 +26,12 @@ last_svn_hash="16cd907fe7482cb54a7374cd28b8501f138116be"
 
 git_revision=$(expr $last_svn_revision + $(git log --pretty=oneline $last_svn_hash..HEAD 2>/dev/null | wc -l))
 git_version_str=$(git describe --exact-match 2> /dev/null)
+git_version_postfix=0
+if test x$git_version_str = x; then
+  git_version_str=$(git describe --tags $(git rev-list --tags --max-count=1 2> /dev/null) 2> /dev/null)
+  git_version_postfix=1
+fi
+git_version_date=$(git log HEAD -1 --format="%at" 2> /dev/null | xargs -I{} date -d @{} +%Y-%m-%d 2> /dev/null)
 installer_version='0.0.0'
 resource_version='0, 0, 0'
 if test x$git_version_str != x; then
@@ -42,6 +48,11 @@ else
 
   git_version_str="${git_revision}-${git_branch}-${git_hash}"
   tagged_release=0
+fi
+
+
+if test x$git_version_postfix != x0; then
+  git_version_str="${git_version_str}+r${git_revision}"
 fi
 
 
@@ -76,4 +87,15 @@ cat << EOF > build/git_version.xml
     <GitVersionString>${git_version_str}</GitVersionString>
   </PropertyGroup>
 </Project>
+EOF
+
+cat << EOF > build/git_version.json
+{
+  "BUILD_GIT_VERSION_NUMBER": "${git_revision}",
+  "BUILD_GIT_VERSION_STRING": "${git_version_str}",
+  "BUILD_GIT_VERSION_DATE": "${git_version_date}",
+  "TAGGED_RELEASE": "${tagged_release}",
+  "INSTALLER_VERSION": "${installer_version}",
+  "RESOURCE_BASE_VERSION": "${resource_version}"
+}
 EOF
