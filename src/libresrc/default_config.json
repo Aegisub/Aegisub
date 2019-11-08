@@ -64,6 +64,7 @@
 		"Lock Scroll on Cursor" : false,
 		"Medusa Timing Hotkeys" : false,
 		"Next Line on Commit" : true,
+		"Sync Video to Audio" : false,
 		"Player" : "",
 		"Plays When Stepping Video" : false,
 		"Provider" : "ffmpegsource",

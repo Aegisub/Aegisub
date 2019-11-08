@@ -139,6 +139,8 @@ void VideoController::Play() {
 
 	if (!provider) return;
 
+	playback_mode = PM_ToEnd;
+
 	start_ms = TimeAtFrame(frame_n);
 	end_frame = provider->GetFrameCount() - 1;
 
@@ -167,11 +169,83 @@ void VideoController::PlayLine() {
 	playback.Start(10);
 }
 
+void VideoController::PlayRange(const TimeRange &range) {
+	Stop();
+
+	context->audioController->PlayRange(range);
+
+	start_ms = range.begin();
+	// Round-trip conversion to convert start to exact
+	int startFrame = FrameAtTime(range.begin(), agi::vfr::START);
+	end_frame = FrameAtTime(range.end(), agi::vfr::END) + 1;
+
+	playback_mode = PM_Range;
+	JumpToFrame(startFrame);
+
+	playback_start_time = std::chrono::steady_clock::now();
+	playback.Start(10);
+}
+
+void VideoController::PlayPrimaryRange(const TimeRange &range) {
+	Stop();
+
+	context->audioController->PlayPrimaryRange();
+
+	start_ms = range.begin();
+	// Round-trip conversion to convert start to exact
+	int startFrame = FrameAtTime(range.begin(), agi::vfr::START);
+	end_frame = FrameAtTime(range.end(), agi::vfr::END) + 1;
+
+	JumpToFrame(startFrame);
+
+	playback_start_time = std::chrono::steady_clock::now();
+	playback.Start(10);
+
+	playback_mode = PM_PrimaryRange;
+}
+
+void VideoController::PlayToEndOfPrimary(const TimeRange &range) {
+	Stop();
+
+	context->audioController->PlayToEndOfPrimary(range.begin());
+
+	start_ms = range.begin();
+	// Round-trip conversion to convert start to exact
+	int startFrame = FrameAtTime(range.begin(), agi::vfr::START);
+	end_frame = FrameAtTime(range.end(), agi::vfr::END) + 1;
+
+	JumpToFrame(startFrame);
+
+	playback_start_time = std::chrono::steady_clock::now();
+	playback.Start(10);
+
+	playback_mode = PM_PrimaryRange;
+}
+
+
+void VideoController::PlayToEnd(int start_ms) {
+	Stop();
+
+	context->audioController->PlayToEnd(start_ms);
+
+	this->start_ms = start_ms;
+	playback_mode = PM_ToEnd;
+	end_frame = provider->GetFrameCount() - 1;
+
+	int start_frame = FrameAtTime(start_ms);
+
+	JumpToFrame(start_frame);
+
+	playback_start_time = std::chrono::steady_clock::now();
+	playback.Start(10);
+}
+
 void VideoController::Stop() {
 	if (IsPlaying()) {
 		playback.Stop();
 		context->audioController->Stop();
 	}
+	playback_mode = PM_NotPlaying;
 }
 
 void VideoController::OnPlayTimer(wxTimerEvent &) {
@@ -182,9 +256,16 @@ void VideoController::OnPlayTimer(wxTimerEvent &) {
 	if (next_frame >= end_frame)
 		Stop();
 	else {
-		frame_n = next_frame;
-		RequestFrame();
-		Seek(frame_n);
+		if (!IsPlaying() ||
+			(playback_mode != PM_ToEnd && next_frame >= end_frame + 1)) {
+			// The +1 is to allow the player to end the sound output cleanly,
+			// otherwise a popping artifact can sometimes be heard.
+			Stop();
+		} else {
+			frame_n = next_frame;
+			RequestFrame();
+			Seek(frame_n);
+		}
 	}
 }
 
