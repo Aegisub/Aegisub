@@ -81,6 +81,21 @@ wxWidgets is located in vendor/wxWidgets, and can be built like so:
 Once the dependencies are installed, build Aegisub with `autoreconf && ./configure --with-wxdir=/path/to/Aegisub/vendor/wxWidgets && make && make osx-bundle`.
 `autoreconf` should be skipped if you are building from a source tarball rather than `git`.
 
+### Debian/Ubuntu
+1. Thank @wangqr in issue [#121](https://github.com/Aegisub/Aegisub/issues/121#issuecomment-500085028). Upgrading the wxGTK3 to 3.1.3, by following [this guide](https://wiki.codelite.org/pmwiki.php/Main/WxWidgets31Binaries) which is linked from the [wxWidgets download page](https://www.wxwidgets.org/downloads/).
+2. Dependency.
+```
+sudo apt install -y \
+  autoconf libtool automake \
+  libfreetype6-dev libfontconfig1-dev libass-dev \
+  libboost-dev libboost-chrono-dev libboost-filesystem-dev \
+  libboost-locale-dev libboost-regex-dev libboost-thread-dev \
+  libffms2-dev libuchardet-dev libfftw3-dev \
+  libice-dev \
+  luajit ffmpeg intltool
+```
+3. `autoreconf && ./configure && make -j 4 && sudo make install`
+
 ## Updating Moonscript
 
 From within the Moonscript repository, run `bin/moon bin/splat.moon -l moonscript moonscript/ > bin/moonscript.lua`.
