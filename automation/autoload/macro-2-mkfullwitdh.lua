@@ -3,8 +3,8 @@
 
 local tr = aegisub.gettext
 
-script_name = tr("Make text fullwidth")
-script_description = tr("Shows how to use the unicode include to iterate over characters and a lookup table to convert those characters to something else.")
+script_name = tr"Make text fullwidth"
+script_description = tr"Shows how to use the unicode include to iterate over characters and a lookup table to convert those characters to something else."
 script_author = "Niels Martin Hansen"
 script_version = "1"
 
