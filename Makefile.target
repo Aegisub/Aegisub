@@ -112,7 +112,7 @@ POST_FLAGS = $($@_FLAGS) -c -o $@ $<
 # Libraries contain all object files they depend on (but they may depend on other files)
 # Not using libtool on OS X because it has an unsilenceable warning about a
 # compatibility issue with BSD 4.3 (wtf)
-lib%.a: $$($$*_OBJ)
+lib%.a: $$($$(*F)_OBJ)
 	@$(BIN_MKDIR_P) $(dir $@)
 	$(BIN_AR) cru $@ $(filter %.o,$^)
 	$(BIN_RANLIB) $@
