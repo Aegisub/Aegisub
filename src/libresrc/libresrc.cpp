@@ -22,9 +22,17 @@
 
 wxBitmap libresrc_getimage(const unsigned char *buff, size_t size, double scale, int dir) {
 	wxMemoryInputStream mem(buff, size);
+#if wxCHECK_VERSION(3, 1, 0)
+	// Since wxWidgets 3.1.0, there is an undocumented third parameter in the ctor of wxBitmap from wxImage
+	// This "scale" parameter sets the logical scale factor of the created wxBitmap
 	if (dir != wxLayout_RightToLeft)
-		return wxBitmap(wxImage(mem), -1, scale);
-	return wxBitmap(wxImage(mem).Mirror(), -1, scale);
+		return wxBitmap(wxImage(mem), wxBITMAP_SCREEN_DEPTH, scale);
+	return wxBitmap(wxImage(mem).Mirror(), wxBITMAP_SCREEN_DEPTH, scale);
+#else
+	if (dir != wxLayout_RightToLeft)
+		return wxBitmap(wxImage(mem));
+	return wxBitmap(wxImage(mem).Mirror());
+#endif
 }
 
 wxIcon libresrc_geticon(const unsigned char *buff, size_t size) {
