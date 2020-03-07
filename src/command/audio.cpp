@@ -160,6 +160,12 @@ struct audio_view_waveform final : public Command {
 	}
 };
 
+using TimePair = std::pair<agi::Time, agi::Time>;
+
+inline bool operator<(const TimePair &a, const TimePair &b) {
+  return a.first < b.first;
+}
+
 struct audio_save_clip final : public Command {
 	CMD_NAME("audio/save/clip")
 	STR_MENU("Create audio clip")
@@ -175,16 +181,32 @@ struct audio_save_clip final : public Command {
 		auto const& sel = c->selectionController->GetSelectedSet();
 		if (sel.empty()) return;
 
-		auto filename = SaveFileSelector(_("Save audio clip"), "", "", "wav", "", c->parent);
+		auto filename = SaveFileSelector(_("Save audio clip(s)"), "", "", "", "", c->parent);
 		if (filename.empty()) return;
 
-		agi::Time start = INT_MAX, end = 0;
-		for (auto line : sel) {
-			start = std::min(start, line->Start);
-			end = std::max(end, line->End);
-		}
+    std::vector<TimePair> vez;
+    for (auto el : sel)
+      vez.push_back(TimePair(el->Start, el->End));
 
-		agi::SaveAudioClip(*c->project->AudioProvider(), filename, start, end);
+    std::sort(
+      vez.begin(),
+      vez.end()
+    );
+
+    unsigned counter = 0;
+    for (const TimePair& line : vez) {
+      std::string tmp = filename.string();
+
+      tmp += "_";
+      char buff[32];
+      sprintf(buff, "%04u", counter++);
+      tmp += buff;
+      tmp += ".wav";
+
+      std::cout << line.first << std::endl;
+
+      agi::SaveAudioClip(*c->project->AudioProvider(), tmp, line.first, line.second);
+    }
 	}
 };
 

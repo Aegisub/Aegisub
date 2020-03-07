@@ -23,8 +23,8 @@
 wxBitmap libresrc_getimage(const unsigned char *buff, size_t size, double scale, int dir) {
 	wxMemoryInputStream mem(buff, size);
 	if (dir != wxLayout_RightToLeft)
-		return wxBitmap(wxImage(mem), -1, scale);
-	return wxBitmap(wxImage(mem).Mirror(), -1, scale);
+		return wxBitmap(wxImage(mem), -1);
+	return wxBitmap(wxImage(mem).Mirror(), -1);
 }
 
 wxIcon libresrc_geticon(const unsigned char *buff, size_t size) {
