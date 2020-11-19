@@ -456,26 +456,21 @@ function set_ctx_syl(varctx, line, syl)
 	varctx.mid = varctx.smid
 	varctx.si = syl.i
 	varctx.i = varctx.si
-	varctx.sleft = math.floor(line.left + syl.left+0.5)
-	varctx.scenter = math.floor(line.left + syl.center+0.5)
-	varctx.sright = math.floor(line.left + syl.right+0.5)
+	local slack = syl.slack * ({left = 0, center = 0.5, right = 1})[line.halign]
+	varctx.sleft = math.floor(line.left + slack + syl.left + 0.5)
+	varctx.scenter = math.floor(line.left + slack + syl.center + 0.5)
+	varctx.sright = math.floor(line.left + slack + syl.right + 0.5)
 	varctx.swidth = math.floor(syl.width + 0.5)
-	if syl.isfuri then
-		varctx.sbottom = varctx.ltop
-		varctx.stop = math.floor(varctx.ltop - syl.height + 0.5)
-		varctx.smiddle = math.floor(varctx.ltop - syl.height/2 + 0.5)
-	else
-		varctx.stop = varctx.ltop
-		varctx.smiddle = varctx.lmiddle
-		varctx.sbottom = varctx.lbottom
-	end
-	varctx.sheight = syl.height
+	varctx.stop = math.floor(line.top + syl.top + 0.5)
+	varctx.smiddle = math.floor(line.top + syl.middle + 0.5)
+	varctx.sbottom = math.floor(line.top + syl.bottom + 0.5)
+	varctx.sheight = math.floor(syl.height + 0.5)
 	if line.halign == "left" then
-		varctx.sx = math.floor(line.left + syl.left + 0.5)
+		varctx.sx = varctx.sleft
 	elseif line.halign == "center" then
-		varctx.sx = math.floor(line.left + syl.center + 0.5)
+		varctx.sx = varctx.scenter
 	elseif line.halign == "right" then
-		varctx.sx = math.floor(line.left + syl.right + 0.5)
+		varctx.sx = varctx.sright
 	end
 	if line.valign == "top" then
 		varctx.sy = varctx.stop

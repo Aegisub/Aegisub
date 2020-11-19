@@ -119,12 +119,56 @@ function karaskel.collect_head(subs, generate_furigana)
 	return meta, styles
 end
 
+-- Ensure that no "syllable" contains a line break
+function karaskel.preproc_split_linebreaks(syl)
+	local text = syl.text_stripped
+	local lines = {}
+	local text_len = 0
+	local line_start = 1
+	for line_end in text:gmatch("()\n") do
+		local line = text:sub(line_start, line_end - 1)
+		if line == "" then
+			line = "\n"
+		end
+		table.insert(lines, line)
+		text_len = text_len + unicode.len(line)
+		line_start = line_end + 1
+	end
+	local line = text:sub(line_start, #text)
+	table.insert(lines, line)
+	text_len = text_len + unicode.len(line)
+	if text_len == 0 then
+		text_len = 1
+	end
+	local char_duration = syl.duration / text_len
+	local start_time = syl.start_time
+	for i = 1, #lines do
+		local line = lines[i]
+		local end_time = math.floor((start_time + unicode.len(line) * char_duration + 5) / 10) * 10
+		lines[i] = {
+			duration = end_time - start_time,
+			start_time = start_time,
+			end_time = end_time,
+			tag = syl.tag,
+			text = line,
+			text_stripped = line,
+			newline = i ~= 1,
+		}
+		start_time = end_time
+	end
+	return lines
+end
 
 -- Pre-process line, determining stripped text, karaoke data and splitting off furigana data
 -- Modifies the object passed for line
 function karaskel.preproc_line_text(meta, styles, line)
+	line_text = line.text -- keep original text safe
+	line.text = line_text:gsub("\\h",  " ") -- hard space == NBSP
+	                     :gsub("\\n",  " ") -- soft space TODO: line break if WrapStyle is 2
+	                     :gsub("\\N", "\n") -- line break
 	-- Assume line is class=dialogue
 	local kara = aegisub.parse_karaoke_data(line)
+	line.text = line_text -- restore original text
 	line.kara = { n = 0 }
 	line.furi = { n = 0 }
 	
@@ -134,119 +178,119 @@ function karaskel.preproc_line_text(meta, styles, line)
 	local worksyl = { highlights = {n=0}, furi = {n=0} }
 	local cur_inline_fx = ""
 	for i = 0, #kara do
-		local syl = kara[i]
-		
-		-- Detect any inline-fx tags
-		local inline_fx = syl.text:match("%{.*\\%-([^}\\]+)")
-		if inline_fx then
-			cur_inline_fx = inline_fx
-		end
-		
-		-- Strip spaces (only basic ones, no fullwidth etc.)
-		local prespace, syltext, postspace = syl.text_stripped:match("^([ \t]*)(.-)([ \t]*)$")
-		
-		-- See if we've broken a (possible) multi-hl stretch
-		-- If we did it's time for a new worksyl (though never for the zero'th syllable)
-		local prefix = syltext:sub(1,unicode.charwidth(syltext,1))
-		if prefix ~= "#" and prefix ~= "＃" and i > 0 then
-			line.kara[line.kara.n] = worksyl
-			line.kara.n = line.kara.n + 1
-			worksyl = { highlights = {n=0}, furi = {n=0} }
-		end
+		for j, syl in ipairs(karaskel.preproc_split_linebreaks(kara[i])) do
+			-- Detect any inline-fx tags
+			local inline_fx = syl.text:match("%{.*\\%-([^}\\]+)")
+			if inline_fx then
+				cur_inline_fx = inline_fx
+			end
+			
+			-- Strip spaces (only basic ones, no fullwidth etc.)
+			local prespace, syltext, postspace = syl.text_stripped:match("^([ \t]*)(.-)([ \t]*)$")
+			
+			-- See if we've broken a (possible) multi-hl stretch
+			-- If we did it's time for a new worksyl (though never for the zero'th syllable)
+			local prefix = syltext:sub(1,unicode.charwidth(syltext,1))
+			if prefix ~= "#" and prefix ~= "＃" and i > 0 then
+				line.kara[line.kara.n] = worksyl
+				line.kara.n = line.kara.n + 1
+				worksyl = { highlights = {n=0}, furi = {n=0} }
+			end
 
-		-- Add highlight data
-		local hl = {
-			start_time = syl.start_time,
-			end_time = syl.end_time,
-			duration = syl.duration
-		}
-		worksyl.highlights.n = worksyl.highlights.n + 1
-		worksyl.highlights[worksyl.highlights.n] = hl
-		
-		-- Detect furigana (both regular and fullwidth pipes work)
-		-- Furigana is stored independantly from syllables
-		if syltext:find("|") or syltext:find("｜") then
-			-- Replace fullwidth pipes, they aren't regex friendly
-			syltext = syltext:gsub("｜", "|")
-			-- Get before/after pipe text
-			local maintext, furitext = syltext:match("^(.-)|(.-)$")
-			syltext = maintext
+			-- Add highlight data
+			local hl = {
+				start_time = syl.start_time,
+				end_time = syl.end_time,
+				duration = syl.duration
+			}
+			worksyl.highlights.n = worksyl.highlights.n + 1
+			worksyl.highlights[worksyl.highlights.n] = hl
 			
-			local furi = { }
-			furi.syl = worksyl
+			-- Detect furigana (both regular and fullwidth pipes work)
+			-- Furigana is stored independantly from syllables
+			if syltext:find("|") or syltext:find("｜") then
+				-- Replace fullwidth pipes, they aren't regex friendly
+				syltext = syltext:gsub("｜", "|")
+				-- Get before/after pipe text
+				local maintext, furitext = syltext:match("^(.-)|(.-)$")
+				syltext = maintext
+				
+				local furi = { }
+				furi.syl = worksyl
+				
+				-- Magic happens here
+				-- isbreak = Don't join this furi visually with previous furi, even if their main texts are adjacent
+				-- spillback = Allow this furi text to spill over the left edge of the main text
+				-- (Furi is always allowed to spill over the right edge of main text.)
+				local prefix = furitext:sub(1,unicode.charwidth(furitext,1))
+				if prefix == "!" or prefix == "！" then
+					furi.isbreak = true
+					furi.spillback = false
+				elseif prefix == "<" or prefix == "＜" then
+					furi.isbreak = true
+					furi.spillback = true
+				else
+					furi.isbreak = false
+					furi.spillback = false
+				end
+				-- Remove the prefix character from furitext, if there was one
+				if furi.isbreak then
+					furitext = furitext:sub(unicode.charwidth(furitext,1)+1)
+				end
+				
+				-- Some of these may seem superflous, but a furi should ideally have the same "interface" as a syllable
+				furi.start_time = syl.start_time
+				furi.end_time = syl.end_time
+				furi.duration = syl.duration
+				furi.kdur = syl.duration / 10
+				furi.text = furitext
+				furi.text_stripped = furitext
+				furi.text_spacestripped = furitext
+				furi.line = line
+				furi.tag = syl.tag
+				furi.inline_fx = cur_inline_fx
+				furi.i = line.kara.n
+				furi.prespace = ""
+				furi.postspace = ""
+				furi.highlights = { n=1, [1]=hl }
+				furi.isfuri = true
+				
+				line.furi.n = line.furi.n + 1
+				line.furi[line.furi.n] = furi
+				worksyl.furi.n = worksyl.furi.n + 1
+				worksyl.furi[worksyl.furi.n] = furi
+			end
 			
-			-- Magic happens here
-			-- isbreak = Don't join this furi visually with previous furi, even if their main texts are adjacent
-			-- spillback = Allow this furi text to spill over the left edge of the main text
-			-- (Furi is always allowed to spill over the right edge of main text.)
-			local prefix = furitext:sub(1,unicode.charwidth(furitext,1))
-			if prefix == "!" or prefix == "！" then
-				furi.isbreak = true
-				furi.spillback = false
-			elseif prefix == "<" or prefix == "＜" then
-				furi.isbreak = true
-				furi.spillback = true
+			-- Syllables that aren't part of a multi-highlight generate a new output-syllable
+			if not worksyl.text or (prefix ~= "#" and prefix ~= "＃") then
+				-- Update stripped line-text
+				line.text_stripped = line.text_stripped .. prespace .. syltext .. postspace
+				
+				-- Copy data from syl to worksyl
+				worksyl.text = syl.text
+				worksyl.duration = syl.duration
+				worksyl.kdur = syl.duration / 10
+				worksyl.start_time = syl.start_time
+				worksyl.end_time = syl.end_time
+				worksyl.tag = syl.tag
+				worksyl.line = line
+				
+				-- And add new data to worksyl
+				worksyl.i = line.kara.n
+				worksyl.text_stripped = prespace .. syltext .. postspace -- be sure to include the spaces so the original line can be built from text_stripped
+				worksyl.inline_fx = cur_inline_fx
+				worksyl.text_spacestripped = syltext
+				worksyl.prespace = prespace
+				worksyl.postspace = postspace
+				worksyl.newline = syl.newline
 			else
-				furi.isbreak = false
-				furi.spillback = false
+				-- This is just an extra highlight
+				worksyl.duration = worksyl.duration + syl.duration
+				worksyl.kdur = worksyl.kdur + syl.duration / 10
+				worksyl.end_time = syl.end_time
 			end
-			-- Remove the prefix character from furitext, if there was one
-			if furi.isbreak then
-				furitext = furitext:sub(unicode.charwidth(furitext,1)+1)
-			end
-			
-			-- Some of these may seem superflous, but a furi should ideally have the same "interface" as a syllable
-			furi.start_time = syl.start_time
-			furi.end_time = syl.end_time
-			furi.duration = syl.duration
-			furi.kdur = syl.duration / 10
-			furi.text = furitext
-			furi.text_stripped = furitext
-			furi.text_spacestripped = furitext
-			furi.line = line
-			furi.tag = syl.tag
-			furi.inline_fx = cur_inline_fx
-			furi.i = line.kara.n
-			furi.prespace = ""
-			furi.postspace = ""
-			furi.highlights = { n=1, [1]=hl }
-			furi.isfuri = true
-			
-			line.furi.n = line.furi.n + 1
-			line.furi[line.furi.n] = furi
-			worksyl.furi.n = worksyl.furi.n + 1
-			worksyl.furi[worksyl.furi.n] = furi
-		end
-		
-		-- Syllables that aren't part of a multi-highlight generate a new output-syllable
-		if not worksyl.text or (prefix ~= "#" and prefix ~= "＃") then
-			-- Update stripped line-text
-			line.text_stripped = line.text_stripped .. prespace .. syltext .. postspace
-			
-			-- Copy data from syl to worksyl
-			worksyl.text = syl.text
-			worksyl.duration = syl.duration
-			worksyl.kdur = syl.duration / 10
-			worksyl.start_time = syl.start_time
-			worksyl.end_time = syl.end_time
-			worksyl.tag = syl.tag
-			worksyl.line = line
-			
-			-- And add new data to worksyl
-			worksyl.i = line.kara.n
-			worksyl.text_stripped = prespace .. syltext .. postspace -- be sure to include the spaces so the original line can be built from text_stripped
-			worksyl.inline_fx = cur_inline_fx
-			worksyl.text_spacestripped = syltext
-			worksyl.prespace = prespace
-			worksyl.postspace = postspace
-		else
-			-- This is just an extra highlight
-			worksyl.duration = worksyl.duration + syl.duration
-			worksyl.kdur = worksyl.kdur + syl.duration / 10
-			worksyl.end_time = syl.end_time
 		end
 	end
-
 	-- Add the last syllable
 	line.kara[line.kara.n] = worksyl
 	-- But don't increment n here, n should be the highest syllable index! (The zero'th syllable doesn't count.)
@@ -286,7 +330,7 @@ function karaskel.preproc_line_size(meta, styles, line)
 	if styles[line.style .. "-furigana"] then
 		line.furistyle = styles[line.style .. "-furigana"]
 	else
-		aegisub.debug.out(4, "No furigana style defined for style '%s'\n", line.style)
+		aegisub.debug.out(4, "No furigana style defined for style %q\n", line.style)
 		line.furistyle = false
 	end
 	if line.furistyle then
@@ -308,14 +352,6 @@ function karaskel.preproc_line_pos(meta, styles, line)
 	if not line.styleref then
 		karaskel.preproc_line_size(meta, styles, line)
 	end
-	
-	-- Syllable layouting must be done before the rest, since furigana layout may change the total width of the line
-	if line.furistyle then
-		karaskel.do_furigana_layout(meta, styles, line)
-	else
-		karaskel.do_basic_layout(meta, styles, line)
-	end
-
 	-- Effective margins
 	line.margin_v = line.margin_t
 	line.eff_margin_l = ((line.margin_l > 0) and line.margin_l) or line.styleref.margin_l
@@ -323,6 +359,16 @@ function karaskel.preproc_line_pos(meta, styles, line)
 	line.eff_margin_t = ((line.margin_t > 0) and line.margin_t) or line.styleref.margin_t
 	line.eff_margin_b = ((line.margin_b > 0) and line.margin_b) or line.styleref.margin_b
 	line.eff_margin_v = ((line.margin_v > 0) and line.margin_v) or line.styleref.margin_v
+	
+	line.width = meta.res_x - line.eff_margin_l - line.eff_margin_r -- set it to the maximum at first
+	
+	-- Syllable layouting must be done before alignment, since furigana layout may change the total width of the line
+	if line.furistyle then
+		karaskel.do_furigana_layout(meta, styles, line)
+	else
+		karaskel.do_basic_layout(meta, styles, line)
+	end
+
 	-- And positioning
 	if line.styleref.align == 1 or line.styleref.align == 4 or line.styleref.align == 7 then
 		-- Left aligned
@@ -376,13 +422,26 @@ end
 -- Do simple syllable layouting (no furigana)
 function karaskel.do_basic_layout(meta, styles, line)
 	local curx = 0
+	local cury = 0
+	local curh = 0
 	for i = 0, line.kara.n do
 		local syl = line.kara[i]
+		if syl.newline then
+			cury = cury + curh
+			curh = 0
+			curx = 0
+		end
 		syl.left = curx + syl.prespacewidth
 		syl.center = syl.left + syl.width / 2
 		syl.right = syl.left + syl.width
 		curx = curx + syl.prespacewidth + syl.width + syl.postspacewidth
+		syl.top = cury
+		syl.middle = cury + syl.height / 2
+		syl.bottom = cury + syl.height
+		curh = syl.max(curh, syl.height)
 	end
+	cury = cury + curh
+	line.height = cury
 end
 
 
@@ -393,33 +452,43 @@ function karaskel.do_furigana_layout(meta, styles, line)
 	-- A forced split creates a new layout group
 	local lgroups = {}
 	-- Start-sentinel
-	local lgsentinel = {basewidth=0, furiwidth=0, syls={}, furi={}, spillback=false, left=0, right=0}
+	local lgsentinel = {basewidth=0, baseheight=0, furiwidth=0, furiheight=0, syls={}, furi={}, spillback=false, left=0, right=0}
 	table.insert(lgroups, lgsentinel)
 	-- Create groups
+	local furiheight = 0
 	local last_had_furi = false
-	local lg = { basewidth=0, furiwidth=0, syls={}, furi={}, spillback=false }
+	local lg = { basewidth=0, baseheight=0, furiwidth=0, furiheight=0, syls={}, furi={}, spillback=false }
 	for s = 0, line.kara.n do
 		local syl = line.kara[s]
 		-- Furigana-less syllables always generate a new layout group
 		-- So do furigana-endowed syllables that are marked as split
 		-- But if current lg has no width (usually only first) don't create a new
-		aegisub.debug.out(5, "syl.furi.n=%d, isbreak=%s, last_had_furi=%s, lg.basewidth=%d\n", syl.furi.n, syl.furi.n > 0 and syl.furi[1].isbreak and "y" or "n", last_had_furi and "y" or "n", lg.basewidth)
-		if (syl.furi.n == 0 or syl.furi[1].isbreak or not last_had_furi) and lg.basewidth > 0 then
-			aegisub.debug.out(5, "Inserting layout group, basewidth=%d, furiwidth=%d, isbreak=%s\n", lg.basewidth, lg.furiwidth, syl.furi.n > 0 and syl.furi[1].isbreak and "y" or "n")
+		aegisub.debug.out(5, "syl.furi.n=%d, isbreak=%s, last_had_furi=%s, lg.basewidth=%d, lg.baseheight=%d\n", syl.furi.n, syl.furi.n > 0 and syl.furi[1].isbreak and "y" or "n", last_had_furi and "y" or "n", lg.basewidth, lg.baseheight)
+		if (syl.newline or syl.furi.n == 0 or syl.furi[1].isbreak or not last_had_furi) and (lg.basewidth > 0 or lg.baseheight > 0) then
+			aegisub.debug.out(5, "Inserting layout group, basewidth=%d, baseheight=%d, furiwidth=%d, furiheight=%d, isbreak=%s\n", lg.basewidth, lg.baseheight, lg.furiwidth, lg.furiheight, syl.furi.n > 0 and syl.furi[1].isbreak and "y" or "n")
 			table.insert(lgroups, lg)
-			lg = { basewidth=0, furiwidth=0, syls={}, furi={}, spillback=false }
+			if syl.newline then
+				table.insert(lgroups, lgsentinel)
+			end
+			lg = { basewidth=0, baseheight=0, furiwidth=0, furiheight=0, syls={}, furi={}, spillback=false }
 			last_had_furi = false
 		end
 		
 		-- Add this syllable to lg
+		if lg.basewidth == 0 then
+			lg.firstsyl = syl
+		end
 		lg.basewidth = lg.basewidth + syl.prespacewidth + syl.width + syl.postspacewidth
+		lg.baseheight = math.max(lg.baseheight, syl.height)
 		table.insert(lg.syls, syl)
-		aegisub.debug.out(5, "\tAdding syllable to layout group: '%s', width=%d, isbreak=%s\n", syl.text_stripped, syl.width, syl.furi.n > 0 and syl.furi[1].isbreak and "y" or "n")
+		aegisub.debug.out(5, "\tAdding syllable to layout group: %q, width=%d, isbreak=%s\n", syl.text_stripped, syl.width, syl.furi.n > 0 and syl.furi[1].isbreak and "y" or "n")
 		
 		-- Add this syllable's furi to lg
 		for f = 1, syl.furi.n do
 			local furi = syl.furi[f]
 			lg.furiwidth = lg.furiwidth + furi.width
+			lg.furiheight = math.max(lg.furiheight, furi.height)
+			furiheight = math.max(furiheight, furi.height)
 			lg.spillback = lg.spillback or furi.spillback
 			table.insert(lg.furi, furi)
 			aegisub.debug.out(5, "\tAdding furigana to layout group: %s (width=%d)\n", furi.text, furi.width)
@@ -427,79 +496,116 @@ function karaskel.do_furigana_layout(meta, styles, line)
 		end
 	end
 	-- Insert last lg
-	aegisub.debug.out(5, "Inserting layout group, basewidth=%d, furiwidth=%d\n", lg.basewidth, lg.furiwidth)
+	aegisub.debug.out(5, "Inserting layout group, basewidth=%d, baseheight=%d, furiwidth=%d, furiheight=%d\n", lg.basewidth, lg.baseheight, lg.furiwidth, lg.furiheight)
 	table.insert(lgroups, lg)
 	-- And end-sentinel
 	table.insert(lgroups, lgsentinel)
 
 	aegisub.debug.out(5, "\nProducing layout from %d layout groups\n", #lgroups-1)
 	-- Layout the groups at macro-level
-	-- Skip sentinel at ends in loop
+	local current_line = { width = 0 }
+	local lines = { current_line }
 	local curx = 0
+	local cury = furiheight -- leave room for furigana at the top
+	local curh = 0
+	-- Skip sentinel at ends in loop
 	for i = 2, #lgroups-1 do
 		local lg = lgroups[i]
-		local prev = lgroups[i-1]
-		aegisub.debug.out(5, "Layout group, nsyls=%d, nfuri=%d, syl1text='%s', basewidth=%f furiwidth=%f, ", #lg.syls, #lg.furi, lg.syls[1] and lg.syls[1].text or "", lg.basewidth, lg.furiwidth)
-		
-		-- Three cases: No furigana, furigana smaller than base and furigana larger than base
-		if lg.furiwidth == 0 then
-			-- Here wa can basically just place the base text
-			lg.left = curx
-			lg.right = lg.left + lg.basewidth
-			-- If there was any spillover from a previous group, add it to here
-			if prev.rightspill  and prev.rightspill > 0 then
-				aegisub.debug.out(5, "eat rightspill=%f, ", prev.rightspill)
-				lg.leftspill = 0
-				lg.rightspill = prev.rightspill - lg.basewidth
-				prev.rightspill = 0
-			end
-			curx = curx + lg.basewidth
-		elseif lg.furiwidth <= lg.basewidth then
-			-- If there was any rightspill from previous group, we have to stay 100% clear of that
-			if prev.rightspill and prev.rightspill > 0 then
-				aegisub.debug.out(5, "skip rightspill=%f, ", prev.rightspill)
-				curx = curx + prev.rightspill
-				prev.rightspill = 0
-			end
-			lg.left = curx
-			lg.right = lg.left + lg.basewidth
-			curx = curx + lg.basewidth
-			-- Negative spill here
-			lg.leftspill = (lg.furiwidth - lg.basewidth) / 2
-			lg.rightspill = lg.leftspill
-		else
-			-- Furigana is wider than base, we'll have to spill in some direction
-			if prev.rightspill and prev.rightspill > 0 then
-				aegisub.debug.out(5, "skip rightspill=%f, ", prev.rightspill)
-				curx = curx + prev.rightspill
-				prev.rightspill = 0
-			end
-			-- Do we spill only to the right or in both directions?
-			if lg.spillback then
-				-- Both directions
-				lg.leftspill = (lg.furiwidth - lg.basewidth) / 2
-				lg.rightspill = lg.leftspill
-				aegisub.debug.out(5, "spill left=%f right=%f, ", lg.leftspill, lg.rightspill)
-				-- If there was any furigana or spill on previous syllable we can't overlap it
-				if prev.rightspill then
-					lg.left = curx + lg.leftspill
-				else
-					lg.left = curx
+		if lg ~= lgsentinel then
+			local prev = lgroups[i-1]
+			aegisub.debug.out(5, "Layout group, nsyls=%d, nfuri=%d, syl1text=%q, basewidth=%f, baseheight=%f, furiwidth=%f, furiheight=%f, ", #lg.syls, #lg.furi, lg.syls[1] and lg.syls[1].text or "", lg.basewidth, lg.baseheight, lg.furiwidth, lg.furiheight)
+			local retry = true
+			while retry do
+				retry = false
+				if lg.syls[1].newline then
+					current_line = { width = 0 }
+					table.insert(lines, current_line)
+					cury = cury + curh + furiheight
+					curh = 0
+					curx = 0
 				end
-			else
-				-- Only to the right
-				lg.leftspill = 0
-				lg.rightspill = lg.furiwidth - lg.basewidth
-				aegisub.debug.out(5, "spill right=%f, ", lg.rightspill)
-				lg.left = curx
+				
+				-- Three cases: No furigana, furigana smaller than base and furigana larger than base
+				if lg.furiwidth == 0 then
+					-- Here we can basically just place the base text
+					lg.left = curx
+					lg.right = lg.left + lg.basewidth
+					-- If there was any spillover from a previous group, add it to here
+					if prev.rightspill and prev.rightspill > 0 then
+						aegisub.debug.out(5, "eat rightspill=%f, ", prev.rightspill)
+						lg.leftspill = 0
+						lg.rightspill = prev.rightspill - lg.basewidth
+						prev.rightspill = 0
+					end
+					curx = curx + lg.basewidth
+				elseif lg.furiwidth <= lg.basewidth then
+					-- If there was any rightspill from previous group, we have to stay 100% clear of that
+					if prev.rightspill and prev.rightspill > 0 then
+						aegisub.debug.out(5, "skip rightspill=%f, ", prev.rightspill)
+						curx = curx + prev.rightspill
+						prev.rightspill = 0
+					end
+					lg.left = curx
+					lg.right = lg.left + lg.basewidth
+					curx = curx + lg.basewidth
+					-- Negative spill here
+					lg.leftspill = (lg.furiwidth - lg.basewidth) / 2
+					lg.rightspill = lg.leftspill
+				else
+					-- Furigana is wider than base, we'll have to spill in some direction
+					if prev.rightspill and prev.rightspill > 0 then
+						aegisub.debug.out(5, "skip rightspill=%f, ", prev.rightspill)
+						curx = curx + prev.rightspill
+						prev.rightspill = 0
+					end
+					-- Do we spill only to the right or in both directions?
+					if lg.spillback then
+						-- Both directions
+						lg.leftspill = (lg.furiwidth - lg.basewidth) / 2
+						lg.rightspill = lg.leftspill
+						aegisub.debug.out(5, "spill left=%f right=%f, ", lg.leftspill, lg.rightspill)
+						-- If there was any furigana or spill on previous syllable we can't overlap it
+						if prev.rightspill then
+							lg.left = curx + lg.leftspill
+						else
+							lg.left = curx
+						end
+					else
+						-- Only to the right
+						lg.leftspill = 0
+						lg.rightspill = lg.furiwidth - lg.basewidth
+						aegisub.debug.out(5, "spill right=%f, ", lg.rightspill)
+						lg.left = curx
+					end
+					lg.right = lg.left + lg.basewidth
+					curx = lg.right
+				end
+				if curx > line.width and not lg.syls[1].newline then
+					-- overflow, insert linebreak and retry
+					lg.syls[1].newline = true
+					-- eat space
+					lg.basewidth = lg.basewidth - lg.firstsyl.prespacewidth
+					lg.firstsyl.prespacewidth = 0
+					lg.leftspill = nil
+					lg.rightspill = nil
+					prev = lgsentinel
+					retry = true
+					aegisub.debug.out(5, "retrying overflow=%f, ", curx - line.width)
+				end
 			end
-			lg.right = lg.left + lg.basewidth
-			curx = lg.right
+			lg.top = cury
+			lg.bottom = cury + lg.baseheight
+			curh = math.max(curh, lg.baseheight)
+			current_line.width = math.max(current_line.width, curx)
+			table.insert(current_line, lg)
+			aegisub.debug.out(5, "left=%f, right=%f, top=%f, bottom=%f\n", lg.left, lg.right, lg.top, lg.bottom)
 		end
-		aegisub.debug.out(5, "left=%f, right=%f\n", lg.left, lg.right)
 	end
+	cury = cury + curh
+	line.height = cury
 	
 	-- Now the groups are layouted, so place the individual syllables/furigana
+	line.width = 0 -- we'll find the true width during placement
 	for i, lg in ipairs(lgroups) do
 		local basecenter = (lg.left + lg.right) / 2 -- centered furi is centered over this
 		local curx = lg.left -- base text is placed from here on
@@ -509,6 +615,9 @@ function karaskel.do_furigana_layout(meta, styles, line)
 			syl.center = syl.left + syl.width/2
 			syl.right = syl.left + syl.width
 			curx = syl.right + syl.postspacewidth
+			syl.top = lg.top
+			syl.middle = (lg.top + lg.bottom) / 2
+			syl.bottom = lg.bottom
 		end
 		if curx > line.width then line.width = curx end
 		-- Place furigana
@@ -524,6 +633,22 @@ function karaskel.do_furigana_layout(meta, styles, line)
 			furi.center = furi.left + furi.width/2
 			furi.right = furi.left + furi.width
 			curx = furi.right
+			furi.top = lg.top - furi.height
+			furi.middle = lg.top - furi.height/2
+			furi.bottom = lg.top
+		end
+	end
+
+	-- Find out how much slack there is in each line
+	for i, current_line in ipairs(lines) do
+		local slack = line.width - current_line.width
+		for j, lg in ipairs(current_line) do
+			for s, syl in ipairs(lg.syls) do
+				syl.slack = slack
+			end
+			for f, furi in ipairs(lg.furi) do
+				furi.slack = slack
+			end
 		end
 	end
 end
