@@ -603,6 +603,17 @@ struct video_opt_autoscroll final : public Command {
 	}
 };
 
+struct video_pan_reset final : public validator_video_loaded {
+	CMD_NAME("video/pan_reset")
+	STR_MENU("Reset video pan")
+	STR_DISP("Reset video pan")
+	STR_HELP("Reset the video pan to the original value")
+
+	void operator()(agi::Context *c) override {
+		c->videoDisplay->ResetPan();
+	}
+};
+
 struct video_play final : public validator_video_loaded {
 	CMD_NAME("video/play")
 	CMD_ICON(button_play)
@@ -767,6 +778,7 @@ namespace cmd {
 		reg(agi::make_unique<video_open>());
 		reg(agi::make_unique<video_open_dummy>());
 		reg(agi::make_unique<video_opt_autoscroll>());
+		reg(agi::make_unique<video_pan_reset>());
 		reg(agi::make_unique<video_play>());
 		reg(agi::make_unique<video_play_line>());
 		reg(agi::make_unique<video_show_overscan>());

@@ -169,6 +169,9 @@ public:
 	/// @brief Get the current zoom level
 	double GetZoom() const { return zoomValue; }
 
+	/// @brief Reset the video pan
+	void ResetPan();
+
 	/// Get the last seen position of the mouse in script coordinates
 	Vector2D GetMousePosition() const;
 

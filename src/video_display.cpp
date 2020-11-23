@@ -398,6 +398,11 @@ void VideoDisplay::OnKeyDown(wxKeyEvent &event) {
 	hotkey::check("Video", con, event);
 }
 
+void VideoDisplay::ResetPan() {
+	pan_x = pan_y = 0;
+	PositionVideo();
+}
+
 void VideoDisplay::SetZoom(double value) {
 	if (value == 0) return;
 	zoomValue = std::max(value, .125);
