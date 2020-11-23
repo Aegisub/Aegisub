@@ -113,6 +113,8 @@ VideoDisplay::VideoDisplay(wxToolBar *toolbar, bool freeSize, wxComboBox *zoomBo
 	Bind(wxEVT_LEFT_DCLICK, &VideoDisplay::OnMouseEvent, this);
 	Bind(wxEVT_LEFT_DOWN, &VideoDisplay::OnMouseEvent, this);
 	Bind(wxEVT_LEFT_UP, &VideoDisplay::OnMouseEvent, this);
+	Bind(wxEVT_MIDDLE_DOWN, &VideoDisplay::OnMouseEvent, this);
+	Bind(wxEVT_MIDDLE_UP, &VideoDisplay::OnMouseEvent, this);
 	Bind(wxEVT_MOTION, &VideoDisplay::OnMouseEvent, this);
 	Bind(wxEVT_MOUSEWHEEL, &VideoDisplay::OnMouseWheel, this);
 
@@ -191,7 +193,7 @@ void VideoDisplay::Render() try {
 		PositionVideo();
 
 	videoOut->Render(viewport_left, viewport_bottom, viewport_width, viewport_height);
-	E(glViewport(0, std::min(viewport_bottom, 0), videoSize.GetWidth(), videoSize.GetHeight()));
+	E(glViewport(0, viewport_bottom, videoSize.GetWidth(), videoSize.GetHeight()));
 
 	E(glMatrixMode(GL_PROJECTION));
 	E(glLoadIdentity());
@@ -296,6 +298,9 @@ void VideoDisplay::PositionVideo() {
 		}
 	}
 
+	viewport_left += pan_x;
+	viewport_bottom -= pan_y;
+
 	if (tool)
 		tool->SetDisplayArea(viewport_left / scale_factor, viewport_top / scale_factor,
 		                     viewport_width / scale_factor, viewport_height / scale_factor);
@@ -351,8 +356,23 @@ void VideoDisplay::OnMouseEvent(wxMouseEvent& event) {
 
 	last_mouse_pos = mouse_pos = event.GetPosition();
 
-	if (tool)
+	if (event.GetButton() == wxMOUSE_BTN_MIDDLE) {
+		if ((panning = event.ButtonDown()))
+			pan_last_pos = event.GetPosition();
+	}
+	if (panning && event.Dragging()) {
+		pan_x += event.GetX() - pan_last_pos.X();
+		pan_y += event.GetY() - pan_last_pos.Y();
+		pan_last_pos = event.GetPosition();
+
+		PositionVideo();
+	}
+
+	if (tool) {
+		if (pan_y)
+			event.SetPosition(wxPoint(event.GetX(), event.GetY() - pan_y));
 		tool->OnMouseEvent(event);
+	}
 }
 
 void VideoDisplay::OnMouseLeave(wxMouseEvent& event) {
