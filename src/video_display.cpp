@@ -408,6 +408,8 @@ void VideoDisplay::ResetPan() {
 
 void VideoDisplay::SetZoom(double value) {
 	if (value == 0) return;
+	pan_x *= value / zoomValue;
+	pan_y *= value / zoomValue;
 	zoomValue = std::max(value, .125);
 	size_t selIndex = zoomValue / .125 - 1;
 	if (selIndex < zoomBox->GetCount())
