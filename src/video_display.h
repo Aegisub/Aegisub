@@ -79,6 +79,8 @@ class VideoDisplay final : public wxGLCanvas {
 	int viewport_width = 0;
 	/// Screen pixels between the bottom of the canvas and the bottom of the video; used for glViewport
 	int viewport_bottom = 0;
+	/// The REAL bottom of the viewport; used only for glViewport
+	int viewport_bottom_end = 0;
 	/// Screen pixels between the bottom of the canvas and the top of the video; used for coordinate space conversion
 	int viewport_top = 0;
 	/// The height of the video in screen pixels

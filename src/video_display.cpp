@@ -193,7 +193,7 @@ void VideoDisplay::Render() try {
 		PositionVideo();
 
 	videoOut->Render(viewport_left, viewport_bottom, viewport_width, viewport_height);
-	E(glViewport(0, viewport_bottom, videoSize.GetWidth(), videoSize.GetHeight()));
+	E(glViewport(0, viewport_bottom_end, videoSize.GetWidth(), videoSize.GetHeight()));
 
 	E(glMatrixMode(GL_PROJECTION));
 	E(glLoadIdentity());
@@ -270,8 +270,11 @@ void VideoDisplay::PositionVideo() {
 	auto provider = con->project->VideoProvider();
 	if (!provider || !IsShownOnScreen()) return;
 
+	int client_w, client_h;
+	GetClientSize(&client_w, &client_h);
+
 	viewport_left = 0;
-	viewport_bottom = GetClientSize().GetHeight() * scale_factor - videoSize.GetHeight();
+	viewport_bottom_end = viewport_bottom = client_h * scale_factor - videoSize.GetHeight();
 	viewport_top = 0;
 	viewport_width = videoSize.GetWidth();
 	viewport_height = videoSize.GetHeight();
@@ -299,12 +302,15 @@ void VideoDisplay::PositionVideo() {
 	}
 
 	viewport_left += pan_x;
+	viewport_top += pan_y;
 	viewport_bottom -= pan_y;
+	viewport_bottom_end = std::min(viewport_bottom_end, 0);
 
-	if (tool)
+	if (tool) {
+		tool->SetClientSize(viewport_width, viewport_height);
 		tool->SetDisplayArea(viewport_left / scale_factor, viewport_top / scale_factor,
 		                     viewport_width / scale_factor, viewport_height / scale_factor);
-
+	}
 	Render();
 }
 
@@ -368,11 +374,8 @@ void VideoDisplay::OnMouseEvent(wxMouseEvent& event) {
 		PositionVideo();
 	}
 
-	if (tool) {
-		if (pan_y)
-			event.SetPosition(wxPoint(event.GetX(), event.GetY() - pan_y));
+	if (tool)
 		tool->OnMouseEvent(event);
-	}
 }
 
 void VideoDisplay::OnMouseLeave(wxMouseEvent& event) {

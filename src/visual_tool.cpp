@@ -132,6 +132,10 @@ AssDialogue* VisualToolBase::GetActiveDialogueLine() {
 	return nullptr;
 }
 
+void VisualToolBase::SetClientSize(int w, int h) {
+	client_size = Vector2D(w, h);
+}
+
 void VisualToolBase::SetDisplayArea(int x, int y, int w, int h) {
 	if (x == video_pos.X() && y == video_pos.Y() && w == video_res.X() && h == video_res.Y()) return;
 
