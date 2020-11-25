@@ -87,12 +87,12 @@ void VisualToolCross::Draw() {
 	// Place the text in the corner of the cross closest to the center of the video
 	int dx = mouse_pos.X();
 	int dy = mouse_pos.Y();
-	if (dx > video_res.X() / 2)
+	if (dx > client_size.X() / 2)
 		dx -= tw + 4;
 	else
 		dx += 4;
 
-	if (dy < video_res.Y() / 2)
+	if (dy < client_size.Y() / 2)
 		dy += 3;
 	else
 		dy -= th + 3;

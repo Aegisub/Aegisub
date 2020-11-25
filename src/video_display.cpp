@@ -307,7 +307,7 @@ void VideoDisplay::PositionVideo() {
 	viewport_bottom_end = std::min(viewport_bottom_end, 0);
 
 	if (tool) {
-		tool->SetClientSize(viewport_width, viewport_height);
+		tool->SetClientSize(client_w * scale_factor, client_h * scale_factor);
 		tool->SetDisplayArea(viewport_left / scale_factor, viewport_top / scale_factor,
 		                     viewport_width / scale_factor, viewport_height / scale_factor);
 	}
