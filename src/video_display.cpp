@@ -299,7 +299,8 @@ void VideoDisplay::PositionVideo() {
 		// Video is wider than window, blackbox top/bottom
 		else if (videoAr - displayAr > 0.01) {
 			int delta = client_h - client_w / videoAr;
-			viewport_top = viewport_bottom = delta / 2;
+			viewport_top += delta / 2;
+			viewport_bottom += delta / 2;
 			viewport_height -= delta;
 			viewport_width = viewport_height * videoAr;
 		}
@@ -436,10 +437,27 @@ void VideoDisplay::SetWindowZoom(double value) {
 void VideoDisplay::SetVideoZoom(double value) {
 	if (value == 0) return;
 	value = std::max(value, .125);
-	Vector2D mp = tool->FromScriptCoords(GetMousePosition());
+
+	// With the current blackbox algorithm in PositionVideo(), viewport_{width,height} could go negative. Stop that here
 	wxSize cs = GetClientSize();
-	pan_x *= value / videoZoomValue;
-	pan_y *= value / videoZoomValue;
+	wxSize videoNewSize = videoSize * (value / videoZoomValue);
+	float windowAR = (float)cs.GetWidth() / cs.GetHeight();
+	float videoAR = (float)videoNewSize.GetWidth() / videoNewSize.GetHeight();
+	if (windowAR < videoAR) {
+		float delta = cs.GetHeight() - cs.GetWidth() / videoAR;
+		if (videoNewSize.GetHeight() - delta < 0)
+			return;
+	}
+
+	// Mouse coordinates, relative to the video, at the current zoom level
+	Vector2D mp = GetMousePosition() * videoZoomValue * windowZoomValue;
+
+	// The video size will change by this many pixels
+	int pixelChangeW = videoSize.GetWidth() * (value / videoZoomValue - 1);
+	int pixelChangeH = videoSize.GetHeight() * (value / videoZoomValue - 1);
+
+	pan_x -= pixelChangeW * (mp.X() / videoSize.GetWidth());
+	pan_y -= pixelChangeH * (mp.Y() / videoSize.GetHeight());
 
 	videoZoomValue = value;
 	UpdateSize();
