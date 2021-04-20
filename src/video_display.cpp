@@ -330,11 +330,12 @@ void VideoDisplay::UpdateSize() {
 		wxWindow *top = GetParent();
 		while (!top->IsTopLevel()) top = top->GetParent();
 
-		wxSize cs = GetClientSize();
-		float csAr = (float)cs.GetWidth() / (float)cs.GetHeight();
+		wxSize oldClientSize = GetClientSize();
+		double csAr = (double)oldClientSize.GetWidth() / (double)oldClientSize.GetHeight();
+		wxSize newClientSize = wxSize(std::lround(provider->GetHeight() * csAr), provider->GetHeight()) * windowZoomValue / scale_factor;
 		wxSize oldSize = top->GetSize();
-		top->SetSize(top->GetSize() + wxSize(provider->GetHeight() * csAr, provider->GetHeight()) * windowZoomValue / scale_factor - cs);
-		SetClientSize(cs + top->GetSize() - oldSize);
+		top->SetSize(oldSize + (newClientSize - oldClientSize));
+		SetClientSize(oldClientSize + (top->GetSize() - oldSize));
 	}
 	else {
 		wxSize newSize = wxSize(provider->GetWidth(), provider->GetHeight()) * windowZoomValue / scale_factor;
