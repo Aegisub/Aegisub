@@ -399,7 +399,7 @@ void VideoDisplay::OnMouseWheel(wxMouseEvent& event) {
 			if (event.ControlDown())
 				SetWindowZoom(windowZoomValue + .125 * (wheel / event.GetWheelDelta()));
 			else
-				SetVideoZoom(videoZoomValue + .125 * (wheel / event.GetWheelDelta()));
+				SetVideoZoom(wheel / event.GetWheelDelta());
 	}
 }
 
@@ -434,17 +434,19 @@ void VideoDisplay::SetWindowZoom(double value) {
 	UpdateSize();
 }
 
-void VideoDisplay::SetVideoZoom(double value) {
-	if (value == 0) return;
-	value = std::max(value, .125);
+void VideoDisplay::SetVideoZoom(int step) {
+	if (step == 0) return;
+	double newVideoZoom = videoZoomValue + (.125 * step) * videoZoomValue;
+	if (newVideoZoom < 0.125 || newVideoZoom > 10.0)
+		return;
 
 	// With the current blackbox algorithm in PositionVideo(), viewport_{width,height} could go negative. Stop that here
 	wxSize cs = GetClientSize();
-	wxSize videoNewSize = videoSize * (value / videoZoomValue);
+	wxSize videoNewSize = videoSize * (newVideoZoom / videoZoomValue);
 	float windowAR = (float)cs.GetWidth() / cs.GetHeight();
 	float videoAR = (float)videoNewSize.GetWidth() / videoNewSize.GetHeight();
 	if (windowAR < videoAR) {
-		float delta = cs.GetHeight() - cs.GetWidth() / videoAR;
+		int delta = cs.GetHeight() - cs.GetWidth() / videoAR;
 		if (videoNewSize.GetHeight() - delta < 0)
 			return;
 	}
@@ -453,13 +455,13 @@ void VideoDisplay::SetVideoZoom(double value) {
 	Vector2D mp = GetMousePosition() * videoZoomValue * windowZoomValue;
 
 	// The video size will change by this many pixels
-	int pixelChangeW = videoSize.GetWidth() * (value / videoZoomValue - 1);
-	int pixelChangeH = videoSize.GetHeight() * (value / videoZoomValue - 1);
+	int pixelChangeW = std::lround(videoSize.GetWidth() * (newVideoZoom / videoZoomValue - 1.0));
+	int pixelChangeH = std::lround(videoSize.GetHeight() * (newVideoZoom / videoZoomValue - 1.0));
 
 	pan_x -= pixelChangeW * (mp.X() / videoSize.GetWidth());
 	pan_y -= pixelChangeH * (mp.Y() / videoSize.GetHeight());
 
-	videoZoomValue = value;
+	videoZoomValue = newVideoZoom;
 	UpdateSize();
 }
 
