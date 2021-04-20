@@ -669,7 +669,7 @@ public:
 
 	void operator()(agi::Context *c) override {
 		c->videoController->Stop();
-		c->videoDisplay->SetZoom(1.);
+		c->videoDisplay->SetWindowZoom(1.);
 	}
 };
 
@@ -700,7 +700,7 @@ public:
 
 	void operator()(agi::Context *c) override {
 		c->videoController->Stop();
-		c->videoDisplay->SetZoom(2.);
+		c->videoDisplay->SetWindowZoom(2.);
 	}
 };
 
@@ -718,7 +718,7 @@ public:
 
 	void operator()(agi::Context *c) override {
 		c->videoController->Stop();
-		c->videoDisplay->SetZoom(.5);
+		c->videoDisplay->SetWindowZoom(.5);
 	}
 };
 
@@ -730,7 +730,7 @@ struct video_zoom_in final : public validator_video_attached {
 	STR_HELP("Zoom video in")
 
 	void operator()(agi::Context *c) override {
-		c->videoDisplay->SetZoom(c->videoDisplay->GetZoom() + .125);
+		c->videoDisplay->SetWindowZoom(c->videoDisplay->GetZoom() + .125);
 	}
 };
 
@@ -742,7 +742,7 @@ struct video_zoom_out final : public validator_video_attached {
 	STR_HELP("Zoom video out")
 
 	void operator()(agi::Context *c) override {
-		c->videoDisplay->SetZoom(c->videoDisplay->GetZoom() - .125);
+		c->videoDisplay->SetWindowZoom(c->videoDisplay->GetZoom() - .125);
 	}
 };
 }

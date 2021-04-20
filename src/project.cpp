@@ -220,7 +220,7 @@ void Project::LoadUnloadFiles(ProjectProperties properties) {
 				vc->SetAspectRatio(properties.ar_value);
 			else
 				vc->SetAspectRatio(ar_mode);
-			context->videoDisplay->SetZoom(properties.video_zoom);
+			context->videoDisplay->SetWindowZoom(properties.video_zoom);
 		}
 	}
 

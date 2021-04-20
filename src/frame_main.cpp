@@ -276,9 +276,9 @@ void FrameMain::OnVideoOpen(AsyncVideoProvider *provider) {
 	double zoom = context->videoDisplay->GetZoom();
 	wxSize windowSize = GetSize();
 	if (vidx*3*zoom > windowSize.GetX()*4 || vidy*4*zoom > windowSize.GetY()*6)
-		context->videoDisplay->SetZoom(zoom * .25);
+		context->videoDisplay->SetWindowZoom(zoom * .25);
 	else if (vidx*3*zoom > windowSize.GetX()*2 || vidy*4*zoom > windowSize.GetY()*3)
-		context->videoDisplay->SetZoom(zoom * .5);
+		context->videoDisplay->SetWindowZoom(zoom * .5);
 
 	SetDisplayMode(1,-1);
 

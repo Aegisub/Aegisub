@@ -79,15 +79,15 @@ class VideoDisplay final : public wxGLCanvas {
 	int viewport_width = 0;
 	/// Screen pixels between the bottom of the canvas and the bottom of the video; used for glViewport
 	int viewport_bottom = 0;
-	/// The REAL bottom of the viewport; used only for glViewport
-	int viewport_bottom_end = 0;
 	/// Screen pixels between the bottom of the canvas and the top of the video; used for coordinate space conversion
 	int viewport_top = 0;
 	/// The height of the video in screen pixels
 	int viewport_height = 0;
 
-	/// The current zoom level, where 1.0 = 100%
-	double zoomValue;
+	/// The current window zoom level, where 1.0 = 100%
+	double windowZoomValue;
+	/// The current video zoom level, where 1.0 = 100% relative to the display window size
+	double videoZoomValue;
 
 	/// The last position of the mouse, when dragging
 	Vector2D pan_last_pos;
@@ -167,9 +167,10 @@ public:
 
 	/// @brief Set the zoom level
 	/// @param value The new zoom level
-	void SetZoom(double value);
+	void SetWindowZoom(double value);
+	void SetVideoZoom(double value);
 	/// @brief Get the current zoom level
-	double GetZoom() const { return zoomValue; }
+	double GetZoom() const { return windowZoomValue; }
 
 	/// @brief Reset the video pan
 	void ResetPan();
