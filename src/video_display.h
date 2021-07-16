@@ -84,8 +84,19 @@ class VideoDisplay final : public wxGLCanvas {
 	/// The height of the video in screen pixels
 	int viewport_height = 0;
 
-	/// The current zoom level, where 1.0 = 100%
-	double zoomValue;
+	/// The current window zoom level, where 1.0 = 100%
+	double windowZoomValue;
+	/// The current video zoom level, where 1.0 = 100% relative to the display window size
+	double videoZoomValue;
+
+	/// The last position of the mouse, when dragging
+	Vector2D pan_last_pos;
+	/// True if middle mouse button is down, and we should update pan_{x,y}
+	bool panning = false;
+	/// The current video pan offset width
+	int pan_x = 0;
+	/// The current video pan offset height
+	int pan_y = 0;
 
 	/// The video renderer
 	std::unique_ptr<VideoOutGL> videoOut;
@@ -156,9 +167,13 @@ public:
 
 	/// @brief Set the zoom level
 	/// @param value The new zoom level
-	void SetZoom(double value);
+	void SetWindowZoom(double value);
+	void SetVideoZoom(int step);
 	/// @brief Get the current zoom level
-	double GetZoom() const { return zoomValue; }
+	double GetZoom() const { return windowZoomValue; }
+
+	/// @brief Reset the video pan
+	void ResetPan();
 
 	/// Get the last seen position of the mouse in script coordinates
 	Vector2D GetMousePosition() const;

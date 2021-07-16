@@ -157,6 +157,7 @@
         { "submenu" : "main/video/set zoom", "text" : "Set &Zoom" },
         { "submenu" : "main/video/override ar", "text" : "Override &AR" },
         { "command" : "video/show_overscan" },
+        { "command" : "video/pan_reset" },
         {},
         { "command" : "video/jump" },
         { "command" : "video/jump/start" },

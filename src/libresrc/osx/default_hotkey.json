@@ -347,6 +347,9 @@
 		"video/frame/prev/large" : [
 			"Alt-Left"
 		],
+		"video/pan_reset" : [
+			"Ctrl-R"
+		],
 		"video/tool/clip" : [
 			"H"
 		],
