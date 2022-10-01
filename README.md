@@ -90,6 +90,8 @@ wxWidgets is located in vendor/wxWidgets, and can be built like so:
 Once the dependencies are installed, build Aegisub with `autoreconf -ivf && ./configure --with-wxdir="$PWD/vendor/wxWidgets" --with-boost="$(brew --prefix)/opt/boost" && make -j$(sysctl -n hw.ncpu) && make osx-bundle && ln -sf $PWD/src/aegisub Aegisub.app/Contents/MacOS/aegisub`.
 `autoreconf` should be skipped if you are building from a source tarball rather than `git`.
 
+After the first build, you can just run `make -j[cores]` again.
+
 ## Updating Moonscript
 
 From within the Moonscript repository, run `bin/moon bin/splat.moon -l moonscript moonscript/ > bin/moonscript.lua`.
