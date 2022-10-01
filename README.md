@@ -48,9 +48,9 @@ For personal usage, you can use homebrew to install almost all of Aegisub's depe
 	brew install autoconf automake ffmpeg ffms2 fftw freetype fribidi gettext icu4c libass m4 pkg-config boost
 	brew install luajit --HEAD
 	brew link --force gettext
-	export LDFLAGS="-L$(brew --prefix)/opt/icu4c/lib"
-	export CPPFLAGS="-I$(brew --prefix)/opt/icu4c/include"
-	export PKG_CONFIG_PATH="$(brew --prefix)/opt/icu4c/lib/pkgconfig"
+	export LDFLAGS="-L$(brew --prefix)/lib -L$(brew --prefix)/opt/icu4c/lib $LDFLAGS"
+	export CPPFLAGS="-I$(brew --prefix)/include -I$(brew --prefix)/opt/icu4c/include $CPPFLAGS"
+	export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig:$(brew --prefix)/opt/icu4c/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 wxWidgets is located in vendor/wxWidgets, and can be built like so:
 
