@@ -4,9 +4,9 @@
 # Niels Martin Hansen <nielsm@aegisub.org>, 2005-2014.
 # 
 # Translators:
-# Translators:
 # Yakauleu Uladzislau <wiedymi0@gmail.com>, 2019
 # Viktar Lieškievič <vityay.leshkevich@yandex.ru>, 2019
+# Plistačka <plistachka@proton.me>, 2023
 # 
 msgid ""
 msgstr ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-01 10:53-0700\n"
 "PO-Revision-Date: 2018-09-26 07:39+0000\n"
-"Last-Translator: Viktar Lieškievič <vityay.leshkevich@yandex.ru>, 2019\n"
+"Last-Translator: Plistačka <plistachka@proton.me>, 2023\n"
 "Language-Team: Belarusian (https://www.transifex.com/byplay/teams/91944/be/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -101,7 +101,7 @@ msgid ""
 "Shifts subs forward, making them appear later. Use if they are appearing too"
 " soon."
 msgstr ""
-"Зрух субтытраў наперад. Выкарыстоўвайце, калі яны паяўляюцца надта рана. "
+"Зрух субцітраў наперад. Выкарыстоўвайце, калі яны паяўляюцца надта рана. "
 
 #: ../src/dialog_shift_times.cpp:159
 msgid "&Backward"
@@ -112,7 +112,7 @@ msgid ""
 "Shifts subs backward, making them appear earlier. Use if they are appearing "
 "too late."
 msgstr ""
-"Зрух субтытраў назад. Выкарыстоўвайце, калі яны паяўляюцца надта позна. "
+"Зрух субцітраў назад. Выкарыстоўвайце, калі яны паяўляюцца надта позна. "
 
 #: ../src/dialog_shift_times.cpp:162
 msgid "&All rows"
@@ -248,8 +248,8 @@ msgstr "замяніць"
 msgid "One match was replaced."
 msgid_plural "%d matches were replaced."
 msgstr[0] "Адно супадзенне заменена."
-msgstr[1] "%dсупадзенні заменена."
-msgstr[2] "%dсупадзенняў заменена."
+msgstr[1] "%d супадзенні заменена."
+msgstr[2] "%d супадзенняў заменена."
 msgstr[3] "%d супадзенняў заменена."
 
 #: ../src/search_replace_engine.cpp:335
@@ -379,7 +379,7 @@ msgstr "Канчатак у мілісекундах"
 
 #: ../src/dialog_timing_processor.cpp:189
 msgid "Make adjacent subtitles continuous"
-msgstr "Зрабіць прылеглыя субтытры бесперапынымі"
+msgstr "Зрабіць прылеглыя субцітры бесперапынымі"
 
 #: ../src/dialog_timing_processor.cpp:190
 msgid "&Enable"
@@ -390,7 +390,7 @@ msgid ""
 "Enable snapping of subtitles together if they are within a certain distance "
 "of each other"
 msgstr ""
-"Уключыць прывязванне субтытраў адзін да аднаго, калі яны ў межах пэўнай "
+"Уключыць прывязванне субцітраў адзін да аднаго, калі яны ў межах пэўнай "
 "адлегласці."
 
 #: ../src/dialog_timing_processor.cpp:195
@@ -402,7 +402,7 @@ msgid ""
 "Maximum difference between start and end time for two subtitles to be made "
 "continuous, in milliseconds"
 msgstr ""
-"Максімальная розніца паміж пачаткам і канцом двух субтытраў, якія будуць "
+"Максімальная розніца паміж пачаткам і канцом двух субцітраў, якія будуць "
 "ісці бесперапынна, у мілісекундах"
 
 #: ../src/dialog_timing_processor.cpp:197
@@ -414,7 +414,7 @@ msgid ""
 "Maximum overlap between the end and start time for two subtitles to be made "
 "continuous, in milliseconds"
 msgstr ""
-"Максімальнае накладанне паміж канцом і пачаткам двух субтытраў, якія будуць "
+"Максімальнае накладанне паміж канцом і пачаткам двух субцітраў, якія будуць "
 "ісці бесперапынна, у мілісекундах"
 
 #: ../src/dialog_timing_processor.cpp:201
@@ -449,7 +449,7 @@ msgid ""
 "Enable snapping of subtitles to nearest keyframe, if distance is within "
 "threshold"
 msgstr ""
-"Уключыць прывязванне субтытраў да бліжэйшага ключкадра, калі адлегасць менш "
+"Уключыць прывязванне субцітраў да бліжэйшага ключкадра, калі адлегасць менш "
 "за парогаваю"
 
 #: ../src/dialog_timing_processor.cpp:229
@@ -461,8 +461,8 @@ msgid ""
 "Threshold for 'before start' distance, that is, how many milliseconds a "
 "subtitle must start before a keyframe to snap to it"
 msgstr ""
-"Парогавая колькасць кадраў паміж пачаткам субтытра і найбліжэйшым ключкадрам"
-" злева, пры якім час пачатку субтытра будзе ссунуты да гэтага ключкадра."
+"Парогавая колькасць кадраў паміж пачаткам субцітра і найбліжэйшым ключкадрам"
+" злева, пры якім час пачатку субцітра будзе ссунуты да гэтага ключкадра."
 
 #: ../src/dialog_timing_processor.cpp:232
 msgid "Starts after thres.:"
@@ -473,8 +473,8 @@ msgid ""
 "Threshold for 'after start' distance, that is, how many milliseconds a "
 "subtitle must start after a keyframe to snap to it"
 msgstr ""
-"Парогавая колькасць кадраў паміж пачаткам субтытра і найбліжэйшым ключкадрам"
-" справа, пры якім час пачатку субтытра будзе ссунуты да гэтага ключкадра."
+"Парогавая колькасць кадраў паміж пачаткам субцітра і найбліжэйшым ключкадрам"
+" справа, пры якім час пачатку субцітра будзе ссунуты да гэтага ключкадра."
 
 #: ../src/dialog_timing_processor.cpp:237
 msgid "Ends before thres.:"
@@ -485,8 +485,8 @@ msgid ""
 "Threshold for 'before end' distance, that is, how many milliseconds a "
 "subtitle must end before a keyframe to snap to it"
 msgstr ""
-"Парогавая колькасць кадраў паміж канцом субтытра і найбліжэйшым ключкадрам "
-"справа, пры якім час канца субтытра будзе ссунуты да гэтага ключкадра"
+"Парогавая колькасць кадраў паміж канцом субцітра і найбліжэйшым ключкадрам "
+"справа, пры якім час канца субцітра будзе ссунуты да гэтага ключкадра"
 
 #: ../src/dialog_timing_processor.cpp:240
 msgid "Ends after thres.:"
@@ -497,8 +497,8 @@ msgid ""
 "Threshold for 'after end' distance, that is, how many milliseconds a "
 "subtitle must end after a keyframe to snap to it"
 msgstr ""
-"Парогавая колькасць кадраў паміж канцом субтытра і найбліжэйшым ключкадрам "
-"злева, пры якім час канца субтытра будзе ссунуты да гэтага ключкадра"
+"Парогавая колькасць кадраў паміж канцом субцітра і найбліжэйшым ключкадрам "
+"злева, пры якім час канца субцітра будзе ссунуты да гэтага ключкадра"
 
 #: ../src/dialog_timing_processor.cpp:349
 #, c-format
@@ -527,7 +527,7 @@ msgstr "Аналіз Matroska"
 
 #: ../src/mkv_wrap.cpp:251
 msgid "Reading subtitles from Matroska file."
-msgstr "Счытванне субтытраў з файла Matroska. "
+msgstr "Счытванне субцітраў з файла Matroska. "
 
 #: ../src/dialog_styling_assistant.cpp:55 ../src/command/tool.cpp:123
 msgid "Styling Assistant"
@@ -694,7 +694,7 @@ msgstr "Выдаліць"
 
 #: ../src/dialog_style_manager.cpp:282
 msgid "Copy to &current script ->"
-msgstr "Капіяваць у &бягучы скрыпт субтытраў ->"
+msgstr "Капіяваць у &бягучы скрыпт субцітраў ->"
 
 #: ../src/dialog_style_manager.cpp:289
 msgid "Storage"
@@ -772,7 +772,7 @@ msgid ""
 "There is already a style with the name \"%s\" in the current script. "
 "Overwrite?"
 msgstr ""
-"У гэтым скрыпце субтытраў ужо існуе стыль пад назвай «%s». Абнавіць яго?"
+"У гэтым скрыпце субцітраў ужо існуе стыль пад назвай «%s». Абнавіць яго?"
 
 #: ../src/dialog_style_manager.cpp:547
 msgid "style copy"
@@ -788,7 +788,7 @@ msgstr "Пацвярджэнне выдалення са сховішча"
 
 #: ../src/dialog_style_manager.cpp:659
 msgid "Confirm delete from current"
-msgstr "Пацвярджэнне выдалення з бягучага файла субтытраў"
+msgstr "Пацвярджэнне выдалення з бягучага файла субцітраў"
 
 #: ../src/dialog_style_manager.cpp:663
 msgid "style delete"
@@ -797,7 +797,7 @@ msgstr "выдаленне стылю"
 #: ../src/dialog_style_manager.cpp:668 ../src/command/subtitle.cpp:240
 #: ../src/command/subtitle.cpp:270
 msgid "Open subtitles file"
-msgstr "Адкрыць файл субтытраў"
+msgstr "Адкрыць файл субцітраў"
 
 #: ../src/dialog_style_manager.cpp:698
 msgid "The selected file has no available styles."
@@ -984,7 +984,7 @@ msgstr "Цыклічна пераключацца паміж даступным�
 #: ../src/command/video.cpp:235
 #, c-format
 msgid "Subtitles provider set to %s"
-msgstr "Зададзены правайдар субтытраў %s"
+msgstr "Зададзены правайдар субцітраў %s"
 
 #: ../src/command/video.cpp:242
 msgid "&Detach Video"
@@ -1031,12 +1031,12 @@ msgstr "Скапіяваць бягучы кадр у буфер абмену"
 
 #: ../src/command/video.cpp:308 ../src/command/video.cpp:309
 msgid "Copy image to Clipboard (no subtitles)"
-msgstr "Капіяваць кадр у буфер абмену (без субтытраў)"
+msgstr "Капіяваць кадр у буфер абмену (без субцітраў)"
 
 #: ../src/command/video.cpp:310
 msgid ""
 "Copy the currently displayed frame to the clipboard, without the subtitles"
-msgstr "Капіяваць бягучы кадр, які паказваецца без субтытраў у буфер абмену"
+msgstr "Капіяваць бягучы кадр, які паказваецца без субцітраў у буфер абмену"
 
 #: ../src/command/video.cpp:319 ../src/command/video.cpp:320
 msgid "Next Frame"
@@ -1052,7 +1052,7 @@ msgstr "Наступная мяжа"
 
 #: ../src/command/video.cpp:332
 msgid "Seek to the next beginning or end of a subtitle"
-msgstr "Перайсці да наступнага пачатку або канца субтытраў"
+msgstr "Перайсці да наступнага пачатку або канца субцітраў"
 
 #: ../src/command/video.cpp:359 ../src/command/video.cpp:360
 msgid "Next Keyframe"
@@ -1081,7 +1081,7 @@ msgstr "Папярэдняя мяжа"
 
 #: ../src/command/video.cpp:399
 msgid "Seek to the previous beginning or end of a subtitle"
-msgstr "Перайсці да папярэдняга пачатку або канца субтытраў"
+msgstr "Перайсці да папярэдняга пачатку або канца субцітраў"
 
 #: ../src/command/video.cpp:426 ../src/command/video.cpp:427
 msgid "Previous Keyframe"
@@ -1107,13 +1107,13 @@ msgstr "Захаваць бягучы кадр ў PNG-файл у папку з 
 
 #: ../src/command/video.cpp:510 ../src/command/video.cpp:511
 msgid "Save PNG snapshot (no subtitles)"
-msgstr "Захаваць PNG-здымак (без субтытраў)"
+msgstr "Захаваць PNG-здымак (без субцітраў)"
 
 #: ../src/command/video.cpp:512
 msgid ""
 "Save the currently displayed frame without the subtitles to a PNG file in "
 "the video's directory"
-msgstr "Захаваць бягучы кадр без субтытраў ў PNG-файл у папцы з відэа"
+msgstr "Захаваць бягучы кадр без субцітраў ў PNG-файл у папцы з відэа"
 
 #: ../src/command/video.cpp:522
 msgid "&Jump to..."
@@ -1430,7 +1430,7 @@ msgstr "Знайсці і замяніць"
 
 #: ../src/command/edit.cpp:537
 msgid "Find and replace words in subtitles"
-msgstr "Знайсці і замяніць словы ў субтытрах"
+msgstr "Знайсці і замяніць словы ў субцітрах"
 
 #: ../src/command/edit.cpp:598
 msgid "&Copy Lines"
@@ -1442,7 +1442,7 @@ msgstr "Капіяваць радкі"
 
 #: ../src/command/edit.cpp:600
 msgid "Copy subtitles to the clipboard"
-msgstr "Капіяваць субтытры ў буфер абмену"
+msgstr "Капіяваць субцітры ў буфер абмену"
 
 #: ../src/command/edit.cpp:621
 msgid "Cu&t Lines"
@@ -1454,7 +1454,7 @@ msgstr "Выразаць радкі"
 
 #: ../src/command/edit.cpp:623
 msgid "Cut subtitles"
-msgstr "Выразаць субтытры"
+msgstr "Выразаць субцітры"
 
 #: ../src/command/edit.cpp:630
 msgid "cut lines"
@@ -1578,7 +1578,7 @@ msgstr "Уставіць радкі"
 
 #: ../src/command/edit.cpp:842
 msgid "Paste subtitles"
-msgstr "Устаўляе субтытры"
+msgstr "Устаўляе субцітры"
 
 #: ../src/command/edit.cpp:871
 msgid "Paste Lines &Over..."
@@ -1590,7 +1590,7 @@ msgstr "Уставіць паверх радкоў"
 
 #: ../src/command/edit.cpp:873
 msgid "Paste subtitles over others"
-msgstr "Устаўляе субтытры паверх іншых"
+msgstr "Устаўляе субцітры паверх іншых"
 
 #: ../src/command/edit.cpp:956
 msgid "Recom&bine Lines"
@@ -1602,7 +1602,7 @@ msgstr "Рэкамбінаваць радкі"
 
 #: ../src/command/edit.cpp:958
 msgid "Recombine subtitles which have been split and merged"
-msgstr "Рэкамбінаваць субтытры, якія былі разбіты і аб'яднаны"
+msgstr "Рэкамбінаваць субцітры, якія былі разбіты і аб'яднаны"
 
 #: ../src/command/edit.cpp:1028
 msgid "combining"
@@ -1770,7 +1770,7 @@ msgstr "Адкрыць нядаўнія ключкадры"
 
 #: ../src/command/recent.cpp:45 ../src/command/recent.cpp:75
 msgid "Open recent subtitles"
-msgstr "Адкрыць нядаўнія субтытры"
+msgstr "Адкрыць нядаўнія субцітры"
 
 #: ../src/command/recent.cpp:46 ../src/command/recent.cpp:87
 msgid "Open recent timecodes"
@@ -1806,7 +1806,7 @@ msgstr "Знайсці"
 
 #: ../src/command/subtitle.cpp:93
 msgid "Search for text in the subtitles"
-msgstr "Пошук тэксту ў субтытрах"
+msgstr "Пошук тэксту ў субцітрах"
 
 #: ../src/command/subtitle.cpp:104
 msgid "Find &Next"
@@ -1867,35 +1867,35 @@ msgstr "Уставіць радок перад бягучым па часу ві
 
 #: ../src/command/subtitle.cpp:221
 msgid "&New Subtitles"
-msgstr "&Новыя субтытры"
+msgstr "&Новыя субцітры"
 
 #: ../src/command/subtitle.cpp:222
 msgid "New Subtitles"
-msgstr "Новыя субтытры"
+msgstr "Новыя субцітры"
 
 #: ../src/command/subtitle.cpp:223
 msgid "New subtitles"
-msgstr "Новыя субтытры"
+msgstr "Новыя субцітры"
 
 #: ../src/command/subtitle.cpp:234
 msgid "&Open Subtitles..."
-msgstr "&Адкрыць субтытры..."
+msgstr "&Адкрыць субцітры..."
 
 #: ../src/command/subtitle.cpp:235
 msgid "Open Subtitles"
-msgstr "Адкрыць субтытры"
+msgstr "Адкрыць субцітры"
 
 #: ../src/command/subtitle.cpp:236
 msgid "Open a subtitles file"
-msgstr "Адкрыць файл субтытраў"
+msgstr "Адкрыць файл субцітраў"
 
 #: ../src/command/subtitle.cpp:248
 msgid "Open A&utosaved Subtitles..."
-msgstr "Адкрыць аўтазахаваныя субтытры..."
+msgstr "Адкрыць аўтазахаваныя субцітры..."
 
 #: ../src/command/subtitle.cpp:249
 msgid "Open Autosaved Subtitles"
-msgstr "Адкрыць аўтазахаваныя субтытры"
+msgstr "Адкрыць аўтазахаваныя субцітры"
 
 #: ../src/command/subtitle.cpp:250
 msgid "Open a previous version of a file which was autosaved by Aegisub"
@@ -1903,15 +1903,15 @@ msgstr "Адкрыць аўтазахаваную папярэднюю верс�
 
 #: ../src/command/subtitle.cpp:263
 msgid "Open Subtitles with &Charset..."
-msgstr "Адкрыць файл субтытраў у &кадзіроўцы..."
+msgstr "Адкрыць файл субцітраў у &кадзіроўцы..."
 
 #: ../src/command/subtitle.cpp:264
 msgid "Open Subtitles with Charset"
-msgstr "Адкрыць файл субтытраў у кадзіроўцы"
+msgstr "Адкрыць файл субцітраў у кадзіроўцы"
 
 #: ../src/command/subtitle.cpp:265
 msgid "Open a subtitles file with a specific file encoding"
-msgstr "Адкрыць файл субтытраў у зададзенай кадзіроўцы"
+msgstr "Адкрыць файл субцітраў у зададзенай кадзіроўцы"
 
 #: ../src/command/subtitle.cpp:273
 msgid "Choose charset code:"
@@ -1923,15 +1923,15 @@ msgstr "Кадзіроўка"
 
 #: ../src/command/subtitle.cpp:282
 msgid "Open Subtitles from &Video"
-msgstr "Адкрыць субтытры з &відэа"
+msgstr "Адкрыць субцітры з &відэа"
 
 #: ../src/command/subtitle.cpp:283
 msgid "Open Subtitles from Video"
-msgstr "Адкрыць субтытры з відэа"
+msgstr "Адкрыць субцітры з відэа"
 
 #: ../src/command/subtitle.cpp:284
 msgid "Open the subtitles from the current video file"
-msgstr "Адкрыць субтытры з бягучага відэафайла"
+msgstr "Адкрыць субцітры з бягучага відэафайла"
 
 #: ../src/command/subtitle.cpp:300
 msgid "&Properties..."
@@ -1947,31 +1947,31 @@ msgstr "Адкрыць акно ўласцівасцяў скрыпта"
 
 #: ../src/command/subtitle.cpp:313
 msgid "Save subtitles file"
-msgstr "Захаваць файл субтытраў"
+msgstr "Захаваць файл субцітраў"
 
 #: ../src/command/subtitle.cpp:333
 msgid "&Save Subtitles"
-msgstr "&Захаваць субтытры"
+msgstr "&Захаваць субцітры"
 
 #: ../src/command/subtitle.cpp:334
 msgid "Save Subtitles"
-msgstr "Захаваць субтытры"
+msgstr "Захаваць субцітры"
 
 #: ../src/command/subtitle.cpp:335
 msgid "Save the current subtitles"
-msgstr "Захаваць бягучыя субтытры"
+msgstr "Захаваць бягучыя субцітры"
 
 #: ../src/command/subtitle.cpp:350
 msgid "Save Subtitles &as..."
-msgstr "Захаваць субтытры &як..."
+msgstr "Захаваць субцітры &як..."
 
 #: ../src/command/subtitle.cpp:351
 msgid "Save Subtitles as"
-msgstr "Захаваць субтытры як"
+msgstr "Захаваць субцітры як"
 
 #: ../src/command/subtitle.cpp:352
 msgid "Save subtitles with another name"
-msgstr "Захаваць субтытры пад іншай назвай"
+msgstr "Захаваць субцітры пад іншай назвай"
 
 #: ../src/command/subtitle.cpp:361 ../src/dialog_selected_choices.cpp:26
 #: ../src/subs_edit_ctrl.cpp:369 ../src/dialog_export.cpp:125
@@ -2020,18 +2020,18 @@ msgstr "Адкрыць ASSDraw3 - праграму для вектарнага �
 
 #: ../src/command/tool.cpp:70
 msgid "&Export Subtitles..."
-msgstr "&Экспартаваць субтытры..."
+msgstr "&Экспартаваць субцітры..."
 
 #: ../src/command/tool.cpp:71
 msgid "Export Subtitles"
-msgstr "Экспартаваць субтытры"
+msgstr "Экспартаваць субцітры"
 
 #: ../src/command/tool.cpp:72
 msgid ""
 "Save a copy of subtitles in a different format or with processing applied to"
 " it"
 msgstr ""
-"Захаваць копію субтытраў, перад гэтым апрацаваўшы або канвертаваўшы іх у "
+"Захаваць копію субцітраў, перад гэтым апрацаваўшы або канвертаваўшы іх у "
 "іншы фармат"
 
 #: ../src/command/tool.cpp:83
@@ -2071,7 +2071,7 @@ msgid ""
 "Resample subtitles to maintain their current appearance at a different "
 "script resolution"
 msgstr ""
-"Пералічыць скрыпт субтытраў для падтрымкі бягучага знешняга выгляду ў іншым "
+"Пералічыць скрыпт субцітраў для падтрымкі бягучага знешняга выгляду ў іншым "
 "разрозненні"
 
 #: ../src/command/tool.cpp:122
@@ -2127,7 +2127,7 @@ msgid ""
 "Post-process the subtitle timing to add lead-ins and lead-outs, snap timing "
 "to scene changes, etc."
 msgstr ""
-"Пост-апрацоўка таймінгу субтытраў: даданне ўступаў і канчаткаў, прывязванне "
+"Пост-апрацоўка таймінгу субцітраў: даданне ўступаў і канчаткаў, прывязванне "
 "таймінгу да змен сцэны і г.д."
 
 #: ../src/command/tool.cpp:200
@@ -2205,7 +2205,7 @@ msgstr "Паказваць аўдыя і субцітры"
 
 #: ../src/command/app.cpp:71
 msgid "Display audio and the subtitles grid only"
-msgstr "Паказваць толькі аўдыя і сетку субтытраў"
+msgstr "Паказваць толькі аўдыя і сетку субцітраў"
 
 #: ../src/command/app.cpp:89
 msgid "&Full view"
@@ -2217,7 +2217,7 @@ msgstr "Паказваць усё"
 
 #: ../src/command/app.cpp:91
 msgid "Display audio, video and then subtitles grid"
-msgstr "Паказваць аўдыя, відэа і сетку субтытраў"
+msgstr "Паказваць аўдыя, відэа і сетку субцітраў"
 
 #: ../src/command/app.cpp:109
 msgid "S&ubs Only View"
@@ -2229,7 +2229,7 @@ msgstr "Паказваць толькі субцітры"
 
 #: ../src/command/app.cpp:111
 msgid "Display the subtitles grid only"
-msgstr "Паказваць толькі сетку субтытраў"
+msgstr "Паказваць толькі сетку субцітраў"
 
 #: ../src/command/app.cpp:125
 msgid "&Video+Subs View"
@@ -2241,7 +2241,7 @@ msgstr "Паказваць відэа і субцітры"
 
 #: ../src/command/app.cpp:127
 msgid "Display video and the subtitles grid only"
-msgstr "Паказваць толькі відэа і сетку субтытраў"
+msgstr "Паказваць толькі відэа і сетку субцітраў"
 
 #: ../src/command/app.cpp:145
 msgid "E&xit"
@@ -2333,11 +2333,11 @@ msgstr "Праверыць, ці даступна новая версія Aegisu
 
 #: ../src/command/grid.cpp:53
 msgid "Move to the next subtitle line"
-msgstr "Перайсці да наступнага радка субтытраў"
+msgstr "Перайсці да наступнага радка субцітраў"
 
 #: ../src/command/grid.cpp:65
 msgid "Move to the next subtitle line, creating a new one if needed"
-msgstr "Перайсці да наступнага радка субтытраў, калі яго няма — стварыць новы"
+msgstr "Перайсці да наступнага радка субцітраў, калі яго няма — стварыць новы"
 
 #: ../src/command/grid.cpp:92
 msgid "Move to the previous line"
@@ -2353,7 +2353,7 @@ msgstr "Акцёр"
 
 #: ../src/command/grid.cpp:103
 msgid "Sort all subtitles by their actor names"
-msgstr "Сартаваць усе субтытры па імёнах акцёраў"
+msgstr "Сартаваць усе субцітры па імёнах акцёраў"
 
 #: ../src/command/grid.cpp:107 ../src/command/grid.cpp:127
 #: ../src/command/grid.cpp:139 ../src/command/grid.cpp:151
@@ -2366,7 +2366,7 @@ msgstr "сартаваць"
 
 #: ../src/command/grid.cpp:123
 msgid "Sort selected subtitles by their actor names"
-msgstr "Сартаваць вылучаныя субтытры па імёнах акцёраў"
+msgstr "Сартаваць вылучаныя субцітры па імёнах акцёраў"
 
 #: ../src/command/grid.cpp:133 ../src/command/grid.cpp:145
 #: ../src/dialog_search_replace.cpp:87
@@ -2381,11 +2381,11 @@ msgstr "Эфект"
 
 #: ../src/command/grid.cpp:135
 msgid "Sort all subtitles by their effects"
-msgstr "Сартаваць усе субтытры па эфектах"
+msgstr "Сартаваць усе субцітры па эфектах"
 
 #: ../src/command/grid.cpp:147
 msgid "Sort selected subtitles by their effects"
-msgstr "Сартаваць вылучаныя субтытры па эфектах"
+msgstr "Сартаваць вылучаныя субцітры па эфектах"
 
 #: ../src/command/grid.cpp:157 ../src/command/grid.cpp:169
 msgid "&End Time"
@@ -2398,11 +2398,11 @@ msgstr "Час канчатка"
 
 #: ../src/command/grid.cpp:159
 msgid "Sort all subtitles by their end times"
-msgstr "Сартаваць усе субтытры па часу заканчэння"
+msgstr "Сартаваць усе субцітры па часу заканчэння"
 
 #: ../src/command/grid.cpp:171
 msgid "Sort selected subtitles by their end times"
-msgstr "Сартаваць вылучаныя субтытры па канчатковаму часу"
+msgstr "Сартаваць вылучаныя субцітры па канчатковаму часу"
 
 #: ../src/command/grid.cpp:181 ../src/command/grid.cpp:193
 msgid "&Layer"
@@ -2415,11 +2415,11 @@ msgstr "Слой"
 
 #: ../src/command/grid.cpp:183
 msgid "Sort all subtitles by their layer number"
-msgstr "Сартаваць усе субтытры па нумару слоя"
+msgstr "Сартаваць усе субцітры па нумару слоя"
 
 #: ../src/command/grid.cpp:195
 msgid "Sort selected subtitles by their layer number"
-msgstr "Сартаваць вылучаныя субтытры па нумару слоя"
+msgstr "Сартаваць вылучаныя субцітры па нумару слоя"
 
 #: ../src/command/grid.cpp:205 ../src/command/grid.cpp:217
 msgid "&Start Time"
@@ -2432,11 +2432,11 @@ msgstr "Час пачатка"
 
 #: ../src/command/grid.cpp:207
 msgid "Sort all subtitles by their start times"
-msgstr "Сартаваць усе субтытры па часу пачатку"
+msgstr "Сартаваць усе субцітры па часу пачатку"
 
 #: ../src/command/grid.cpp:219
 msgid "Sort selected subtitles by their start times"
-msgstr "Сартаваць вылучаныя субтытры па пачатковаму часу"
+msgstr "Сартаваць вылучаныя субцітры па пачатковаму часу"
 
 #: ../src/command/grid.cpp:229 ../src/command/grid.cpp:241
 msgid "St&yle Name"
@@ -2449,11 +2449,11 @@ msgstr "Стыль"
 
 #: ../src/command/grid.cpp:231
 msgid "Sort all subtitles by their style names"
-msgstr "Сартаваць усе субтытры па назвах стыляў"
+msgstr "Сартаваць усе субцітры па назвах стыляў"
 
 #: ../src/command/grid.cpp:243
 msgid "Sort selected subtitles by their style names"
-msgstr "Сартаваць вылучаныя субтытры па назвам стыляў"
+msgstr "Сартаваць вылучаныя субцітры па назвам стыляў"
 
 #: ../src/command/grid.cpp:254 ../src/command/grid.cpp:255
 msgid "Cycle Tag Hiding Mode"
@@ -2485,7 +2485,7 @@ msgstr "Хаваць тэгі"
 
 #: ../src/command/grid.cpp:280
 msgid "Hide override tags in the subtitle grid"
-msgstr "Не паказваць тэгі ў сетцы субтытраў"
+msgstr "Не паказваць тэгі ў сетцы субцітраў"
 
 #: ../src/command/grid.cpp:294
 msgid "Sh&ow Tags"
@@ -2497,7 +2497,7 @@ msgstr "Паказваць тэгі"
 
 #: ../src/command/grid.cpp:296
 msgid "Show full override tags in the subtitle grid"
-msgstr "Паказваць поўныя тэгі ў сетцы субтытраў"
+msgstr "Паказваць поўныя тэгі ў сетцы субцітраў"
 
 #: ../src/command/grid.cpp:310
 msgid "S&implify Tags"
@@ -2510,7 +2510,7 @@ msgstr "Спрашчаць тэгі"
 #: ../src/command/grid.cpp:312
 msgid ""
 "Replace override tags in the subtitle grid with a simplified placeholder"
-msgstr "Замяняць поўныя тэгі ў сетцы субтытраў на спецыяльныя сімвалы"
+msgstr "Замяняць поўныя тэгі ў сетцы субцітраў на спецыяльныя сімвалы"
 
 #: ../src/command/grid.cpp:348 ../src/command/grid.cpp:349
 msgid "Move line up"
@@ -2650,7 +2650,7 @@ msgstr "З&рух па часу..."
 
 #: ../src/command/time.cpp:154
 msgid "Shift subtitles by time or frames"
-msgstr "Зрух субтытраў па часу або кадрах"
+msgstr "Зрух субцітраў па часу або кадрах"
 
 #: ../src/command/time.cpp:175 ../src/audio_timing_dialogue.cpp:512
 #: ../src/audio_timing_dialogue.cpp:518
@@ -2667,7 +2667,7 @@ msgstr "Прывязванне канца па відэа"
 
 #: ../src/command/time.cpp:183
 msgid "Set end of selected subtitles to current video frame"
-msgstr "Задаць канец вылучаных субтытраў на бягучы кадр відэа"
+msgstr "Задаць канец вылучаных субцітраў на бягучы кадр відэа"
 
 #: ../src/command/time.cpp:193
 msgid "Snap to S&cene"
@@ -2681,7 +2681,7 @@ msgstr "Прывязванне да сцэны"
 msgid ""
 "Set start and end of subtitles to the keyframes around current video frame"
 msgstr ""
-"Задаць пачатак і канец субтытраў на ключкадры па абодва бакі ад бягучага "
+"Задаць пачатак і канец субцітраў на ключкадры па абодва бакі ад бягучага "
 "кадра відэа"
 
 #: ../src/command/time.cpp:232
@@ -2774,7 +2774,7 @@ msgstr "Прывязванне пачатку па відэа"
 
 #: ../src/command/time.cpp:344
 msgid "Set start of selected subtitles to current video frame"
-msgstr "Задаць пачатак вылучаных субтытраў на бягучы кадр відэа"
+msgstr "Задаць пачатак вылучаных субцітраў на бягучы кадр відэа"
 
 #: ../src/command/time.cpp:356
 msgid "Next line or syllable"
@@ -2799,7 +2799,7 @@ msgstr "Перамясціць"
 
 #: ../src/command/vis_tool.cpp:66
 msgid "Drag subtitles"
-msgstr "Перамясціць субтытры"
+msgstr "Перамясціць субцітры"
 
 #: ../src/command/vis_tool.cpp:72 ../src/command/vis_tool.cpp:73
 msgid "Rotate Z"
@@ -2807,7 +2807,7 @@ msgstr "Паварот па вось Z"
 
 #: ../src/command/vis_tool.cpp:74
 msgid "Rotate subtitles on their Z axis"
-msgstr "Павярнуць субтытры па восі Z"
+msgstr "Павярнуць субцітры па восі Z"
 
 #: ../src/command/vis_tool.cpp:80 ../src/command/vis_tool.cpp:81
 msgid "Rotate XY"
@@ -2815,7 +2815,7 @@ msgstr "Паварот па восях X і Y"
 
 #: ../src/command/vis_tool.cpp:82
 msgid "Rotate subtitles on their X and Y axes"
-msgstr "Павярнуць субтытры па восях X і Y"
+msgstr "Павярнуць субцітры па восях X і Y"
 
 #: ../src/command/vis_tool.cpp:88 ../src/command/vis_tool.cpp:89
 msgid "Scale"
@@ -2823,7 +2823,7 @@ msgstr "Маштаб"
 
 #: ../src/command/vis_tool.cpp:90
 msgid "Scale subtitles on X and Y axes"
-msgstr "Маштаб субтытраў па восях X і Y"
+msgstr "Маштаб субцітраў па восях X і Y"
 
 #: ../src/command/vis_tool.cpp:96 ../src/command/vis_tool.cpp:97
 msgid "Clip"
@@ -2831,7 +2831,7 @@ msgstr "Абрэзка"
 
 #: ../src/command/vis_tool.cpp:98
 msgid "Clip subtitles to a rectangle"
-msgstr "Абрэзаць субтытры прамавугольнай вобласцю"
+msgstr "Абрэзаць субцітры прамавугольнай вобласцю"
 
 #: ../src/command/vis_tool.cpp:104 ../src/command/vis_tool.cpp:105
 msgid "Vector Clip"
@@ -2839,7 +2839,7 @@ msgstr "Вектарная абрэзка"
 
 #: ../src/command/vis_tool.cpp:106
 msgid "Clip subtitles to a vectorial area"
-msgstr "Абрэзаць субтытры вектарнай вобласцю"
+msgstr "Абрэзаць субцітры вектарнай вобласцю"
 
 #: ../src/command/audio.cpp:65
 msgid "&Close Audio"
@@ -3445,7 +3445,7 @@ msgstr "Капіяваць шрыфты ў папку"
 
 #: ../src/dialog_fonts_collector.cpp:226
 msgid "Copy fonts to subtitle file's folder"
-msgstr "Капіяваць шрыфты ў папку з субтытрам"
+msgstr "Капіяваць шрыфты ў папку з субцітрам"
 
 #: ../src/dialog_fonts_collector.cpp:227
 msgid "Copy fonts to zipped archive"
@@ -3573,7 +3573,7 @@ msgstr "Паказаць галоўную панэль інструментаў"
 
 #: ../src/preferences.cpp:66
 msgid "Save UI state in subtitles files"
-msgstr "Захоўваць стан інтэрфейсу ў файлах субтытраў"
+msgstr "Захоўваць стан інтэрфейсу ў файлах субцітраў"
 
 #: ../src/preferences.cpp:69
 msgid "Toolbar Icon Size"
@@ -3872,7 +3872,7 @@ msgstr "Пераключыць фокус на сетку пры націска�
 
 #: ../src/preferences.cpp:223
 msgid "Highlight visible subtitles"
-msgstr "Падсвечваць бачныя субтытры"
+msgstr "Падсвечваць бачныя субцітры"
 
 #: ../src/preferences.cpp:224
 msgid "Hide overrides symbol"
@@ -3972,7 +3972,7 @@ msgstr "Асцылаграма"
 
 #: ../src/preferences.cpp:272
 msgid "Subtitle Grid"
-msgstr "Табліца субтытраў"
+msgstr "Табліца субцітраў"
 
 #: ../src/preferences.cpp:273
 msgid "Standard foreground"
@@ -4245,7 +4245,7 @@ msgstr "Правайдар відэа"
 
 #: ../src/preferences.cpp:425
 msgid "Subtitles provider"
-msgstr "Правайдар субтытраў"
+msgstr "Правайдар субцітраў"
 
 #: ../src/preferences.cpp:428
 msgid "Force BT.601"
@@ -4602,7 +4602,7 @@ msgstr ""
 
 #: ../src/subs_edit_box.cpp:151
 msgid "Number of characters in the longest line of this subtitle."
-msgstr "Колькасць сімвалаў у найдаўжэйшым радку гэтых субтытраў."
+msgstr "Колькасць сімвалаў у найдаўжэйшым радку гэтых субцітраў."
 
 #: ../src/subs_edit_box.cpp:158
 msgid "Layer number"
@@ -4671,7 +4671,7 @@ msgid ""
 "subtitles into another language."
 msgstr ""
 "Паказаць першапачатковае змесціва радка. Часам гэта карысна пры рэдагаванні "
-"субтытраў або перакладзе на іншую мову."
+"субцітраў або перакладзе на іншую мову."
 
 #: ../src/subs_edit_box.cpp:441
 msgid "modify text"
@@ -4925,10 +4925,10 @@ msgid ""
 "This is useful for converting regular time subtitles to VFRaC time subtitles for hardsubbing.\n"
 "It can also be used to convert subtitles to a different speed video, such as NTSC to PAL speedup."
 msgstr ""
-"Канвертаваць таймінг субтытраў і гэтаў з уваходнай частаты кадраў у выхадную частату.\n"
+"Канвертаваць таймінг субцітраў і гэтаў з уваходнай частаты кадраў у выхадную частату.\n"
 "\n"
 "Гэта карысна для канвертавання звычайнага таймінга ў таймінг VFRaC для хардсаба.\n"
-"Можна выкарыстоўваць для канвертавання субтытраў пад іншую хуткасць відэа, напрыклад, паскарэнні відэа пры канвертаванні з NTSC у PAL."
+"Можна выкарыстоўваць для канвертавання субцітраў пад іншую хуткасць відэа, напрыклад, паскарэнні відэа пры канвертаванні з NTSC у PAL."
 
 #: ../src/export_framerate.cpp:92
 msgid "V&ariable"
@@ -5155,7 +5155,7 @@ msgstr "Экспарт..."
 
 #: ../src/dialog_export.cpp:189
 msgid "Export subtitles file"
-msgstr "Экспарт файла субтытраў"
+msgstr "Экспарт файла субцітраў"
 
 #: ../src/dialog_search_replace.cpp:46
 msgid "Replace"
@@ -5539,7 +5539,7 @@ msgstr "120.000 кадр/сек"
 
 #: ../src/subtitle_format.cpp:124
 msgid "Please choose the appropriate FPS for the subtitles:"
-msgstr "Выбраць частату кадраў для субтытраў:"
+msgstr "Выбраць частату кадраў для субцітраў:"
 
 #: ../src/subtitle_format.cpp:124
 msgid "FPS"
@@ -5946,7 +5946,7 @@ msgstr "Выраўноўванне перакладу"
 
 #: ../src/dialog_export_ebu3264.cpp:139
 msgid "Open subtitles"
-msgstr "Адкрыць субтытры"
+msgstr "Адкрыць субцітры"
 
 #: ../src/dialog_export_ebu3264.cpp:140
 msgid "Level-1 teletext"
@@ -6012,12 +6012,12 @@ msgid ""
 "\n"
 "Change subtitles resolution to match video?"
 msgstr ""
-"Разрозненне загружанага відэа і разрозненне субтытраў не супадаюць.\n"
+"Разрозненне загружанага відэа і разрозненне субцітраў не супадаюць.\n"
 "\n"
 "Разрозненне відэа:\t%d x %d\n"
-"Разрозненне субтытраў :\t%d x %d\n"
+"Разрозненне субцітраў :\t%d x %d\n"
 "\n"
-"Змяніць разрозненне субтытраў на разрозненне відэа?"
+"Змяніць разрозненне субцітраў на разрозненне відэа?"
 
 #: ../src/dialog_video_properties.cpp:54 ../src/dialog_video_properties.cpp:63
 msgid "Set to video resolution"
@@ -6276,7 +6276,7 @@ msgstr "&Файл"
 
 #: default_menu.json:0
 msgid "&Subtitle"
-msgstr "&Субтытры"
+msgstr "&субцітры"
 
 #: default_menu.json:0
 msgid "&Timing"
@@ -6336,7 +6336,7 @@ msgstr "&Экспартаваць як..."
 
 #: default_hotkey.json:602:
 msgid "Subtitle Edit Box"
-msgstr "Поле рэдагавання субтытраў"
+msgstr "Поле рэдагавання субцітраў"
 
 #: ../automation/autoload/macro-1-edgeblur.lua:6
 msgid "Add edgeblur"
@@ -6369,7 +6369,7 @@ msgid ""
 "Clean subtitle lines by re-arranging ASS tags and override blocks within the"
 " lines"
 msgstr ""
-"Ачысціць радкі субтытраў перастаноўкай ASS-тэгаў і блокаў перавызначэння "
+"Ачысціць радкі субцітраў перастаноўкай ASS-тэгаў і блокаў перавызначэння "
 "ўнутры радкоў"
 
 #: ../automation/autoload/kara-templater.lua:36
@@ -6401,7 +6401,7 @@ msgid ""
 "\n"
 "See the help file for information on how to use this."
 msgstr ""
-"Дастасоўвае шаблоны эфектаў караоке да субтытраў.\n"
+"Дастасоўвае шаблоны эфектаў караоке да субцітраў.\n"
 "\n"
 "Гл. файл дапамогі для звестак пра выкарыстанне."
 
@@ -6431,11 +6431,11 @@ msgstr "Aegisub"
 
 #: aegisub.desktop:5
 msgid "Subtitle Editor"
-msgstr "Рэдактар субтытраў"
+msgstr "Рэдактар субцітраў"
 
 #: aegisub.desktop:6
 msgid "Create and edit subtitles for film and videos."
-msgstr "Стварыць і рэдагаваць субтытры для фільмаў і відэа."
+msgstr "Стварыць і рэдагаваць субцітры для фільмаў і відэа."
 
 #: packages/win_installer/fragment_strings.iss:1
 msgid "Installing runtime libraries..."
