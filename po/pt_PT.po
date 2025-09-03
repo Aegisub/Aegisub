@@ -4,8 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-05-15 10:05-0700\n"
 "PO-Revision-Date: 2014-05-19 22:58-0000\n"
-"Last-Translator: Daniel Mota <1060446@isep.ipp.pt>\n"
-"Language-Team: Leinad4Mind <1060446@isep.ipp.pt> & RiCON <wiiaboo@gmail."
+"Language-Team: Leinad4Mind <leinad4mind@proton.me> & RiCON <wiiaboo@gmail."
 "com>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -6604,10 +6603,10 @@ msgstr ""
 #~ msgstr "Barra de procura"
 
 #~ msgid "Play selection (%KEY%/%KEY%)"
-#~ msgstr "Tocar a selecção (%KEY%/%KEY%)"
+#~ msgstr "Reproduzir a selecção (%KEY%/%KEY%)"
 
 #~ msgid "Play current line (%KEY%)"
-#~ msgstr "Tocar linha actual (%KEY%)"
+#~ msgstr "Reproduzir linha actual (%KEY%)"
 
 #~ msgid "Stop (%KEY%)"
 #~ msgstr "Parar (%KEY%)"
@@ -6686,7 +6685,7 @@ msgstr ""
 #~ msgstr "Rastrear: "
 
 #~ msgid "Executing "
-#~ msgstr "Executando "
+#~ msgstr "A Executar "
 
 #~ msgid "Perl script"
 #~ msgstr "Script de Perl"
@@ -6996,7 +6995,7 @@ msgstr ""
 
 #~ msgid ""
 #~ "You can easily translate subtitle files using the translation assistant."
-#~ msgstr "Pode facilmente traduzir legendas usando o Assistente de Tradução."
+#~ msgstr "Pode facilmente traduzir legendas fazendo uso do Assistente de Tradução."
 
 #~ msgid ""
 #~ "Styles can be stored in different storages, so that you can keep your "
@@ -7046,7 +7045,7 @@ msgstr ""
 #~ "each actor has a different style assigned to it."
 #~ msgstr ""
 #~ "O assistente de estilos é uma maneira prática de definir estilos para "
-#~ "cada linha, quando cada actor usa um estilo diferente."
+#~ "cada linha, qu cada actor usa um estilo diferente."
 
 #~ msgid ""
 #~ "The fonts collector is one of the most useful features, which resumes the "
@@ -7059,7 +7058,7 @@ msgstr ""
 #~ "When you are done with your subtitles and ready to distribute them, "
 #~ "remember: say no to MP4, OGM or AVI. Matroska is your friend."
 #~ msgstr ""
-#~ "Quando tiver terminado as suas legendas e estiver pronto para distribuí-"
+#~ "Qu tiver terminado as suas legendas e estiver pronto para distribuí-"
 #~ "las, lembre-se: diga não a MP4, OGM e AVI. Matroska é seu amigo."
 
 #~ msgid ""
@@ -7096,7 +7095,7 @@ msgstr ""
 #~ "subtitles. Timing with only audio open is often much easier. You can "
 #~ "always adjust the subtitles to match the video later on."
 #~ msgstr ""
-#~ "Ter o vídeo aberto é mais vezes uma distracção do que ajuda quando está a "
+#~ "Ter o vídeo aberto é mais vezes uma distracção do que ajuda qu está a "
 #~ "fazer temporização de legendas. Temporização com apenas o áudio aberto é "
 #~ "muito mais fácil. Pode sempre ajustar as legendas para baterem com o "
 #~ "vídeo mais tarde."
@@ -7260,7 +7259,7 @@ msgstr ""
 #~ msgstr "Vídeo global dar foco à barra de procura"
 
 #~ msgid "Video global play"
-#~ msgstr "Vídeo tocar (global)"
+#~ msgstr "Vídeo Reproduzir (global)"
 
 #~ msgid "Grid global prev line"
 #~ msgstr "Grade global linha anterior"
@@ -7314,16 +7313,16 @@ msgstr ""
 #~ msgstr "Áudio próxima linha (alternativo)"
 
 #~ msgid "Audio Play"
-#~ msgstr "Áudio tocar"
+#~ msgstr "Reproduzir Áudio"
 
 #~ msgid "Audio Play Alt"
-#~ msgstr "Áudio tocar (alternativo)"
+#~ msgstr "Reproduzir Áudio (alternativo)"
 
 #~ msgid "Audio Play or Stop"
-#~ msgstr "Áudio tocar/parar"
+#~ msgstr "Reproduzir ou Parar Áudio"
 
 #~ msgid "Audio Stop"
-#~ msgstr "Áudio Parar"
+#~ msgstr "Parar Áudio"
 
 #~ msgid "Audio Karaoke Increase Len"
 #~ msgstr "Áudio Karaoke aumentar duração"
@@ -7332,28 +7331,28 @@ msgstr ""
 #~ msgstr "Áudio Karaoke diminuir duração"
 
 #~ msgid "Audio Karaoke Increase Len Shift"
-#~ msgstr "Áudio Karaoke aumentar duração deslocando"
+#~ msgstr "Áudio Karaoke aumentar duração da deslocação"
 
 #~ msgid "Audio Karaoke Decrease Len Shift"
-#~ msgstr "Áudio Karaoke diminuir duração deslocando"
+#~ msgstr "Áudio Karaoke diminuir duração da deslocação"
 
 #~ msgid "Audio Play First 500ms"
-#~ msgstr "Áudio tocar os primeiros 500 ms"
+#~ msgstr "Áudio reproduzir os primeiros 500 ms"
 
 #~ msgid "Audio Play Last 500ms"
-#~ msgstr "Áudio tocar os últimos 500 ms"
+#~ msgstr "Áudio reproduzir os últimos 500 ms"
 
 #~ msgid "Audio Play 500ms Before"
-#~ msgstr "Áudio tocar 500 ms antes"
+#~ msgstr "Áudio reproduzir 500 ms antes"
 
 #~ msgid "Audio Play 500ms After"
-#~ msgstr "Áudio tocar 500 ms após"
+#~ msgstr "Áudio reproduzir 500 ms após"
 
 #~ msgid "Audio Play To End"
-#~ msgstr "Áudio tocar até ao fim"
+#~ msgstr "Áudio reproduzir até ao fim"
 
 #~ msgid "Audio Play Original Line"
-#~ msgstr "Áudio tocar linha original"
+#~ msgstr "Áudio reproduzir linha original"
 
 #~ msgid "Audio Add Lead In"
 #~ msgstr "Áudio adicionar tempo de entrada"
@@ -7365,7 +7364,7 @@ msgstr ""
 #~ msgstr "Áudio Medusa Ligar/Desligar"
 
 #~ msgid "Audio Medusa Play"
-#~ msgstr "Áudio Medusa Tocar"
+#~ msgstr "Áudio Medusa Reproduzir"
 
 #~ msgid "Audio Medusa Stop"
 #~ msgstr "Áudio Medusa Parar"
@@ -7383,10 +7382,10 @@ msgstr ""
 #~ msgstr "Áudio Medusa Deslocar Fim para Frente"
 
 #~ msgid "Audio Medusa Play Before"
-#~ msgstr "Áudio Medusa Tocar Anterior"
+#~ msgstr "Áudio Medusa Reproduzir Anterior"
 
 #~ msgid "Audio Medusa Play After"
-#~ msgstr "Áudio Medusa Tocar Após"
+#~ msgstr "Áudio Medusa Reproduzir Após"
 
 #~ msgid "Audio Medusa Next"
 #~ msgstr "Áudio Medusa Próxima"
@@ -7398,10 +7397,10 @@ msgstr ""
 #~ msgstr "Áudio Medusa Aceitar"
 
 #~ msgid "Translation Assistant Play Audio"
-#~ msgstr "Assistente de Tradução Tocar Áudio"
+#~ msgstr "Assistente de Tradução Reproduzir Áudio"
 
 #~ msgid "Translation Assistant Play Video"
-#~ msgstr "Assistente de Tradução Tocar Vídeo"
+#~ msgstr "Assistente de Tradução Reproduzir Vídeo"
 
 #~ msgid "Translation Assistant Next"
 #~ msgstr "Assistente de tradução próxima"
@@ -7419,10 +7418,10 @@ msgstr ""
 #~ msgstr "Assistente de Tradução inserir original"
 
 #~ msgid "Styling Assistant Play Audio"
-#~ msgstr "Assistente de Estilos Tocar Áudio"
+#~ msgstr "Assistente de Estilos Reproduzir Áudio"
 
 #~ msgid "Styling Assistant Play Video"
-#~ msgstr "Assistente de Estilos Tocar Vídeo"
+#~ msgstr "Assistente de Estilos Reproduzir Vídeo"
 
 #~ msgid "Styling Assistant Next"
 #~ msgstr "Assistente de Estilos próxima"
@@ -7539,7 +7538,7 @@ msgstr ""
 
 #~ msgid "Could not open Internet File system. Aborting.\n"
 #~ msgstr ""
-#~ "Não foi possível abrir o sistema de arquivos de Internet. Abortando.\n"
+#~ "Não foi possível abrir o sistema de ficheiros de Internet. Abortando.\n"
 
 #~ msgid "Attempting to open \"%s\"..."
 #~ msgstr "Tentando abrir \"%s\"..."
@@ -7614,7 +7613,7 @@ msgstr ""
 #~ msgstr "Mostrar Dica do Dia"
 
 #~ msgid "Save config.dat locally"
-#~ msgstr "Salvar config.dat localmente"
+#~ msgstr "Guardar config.dat localmente"
 
 #~ msgid "Avisynth renders its own subs"
 #~ msgstr "Avisynth renderiza suas próprias legendas"
@@ -7633,8 +7632,8 @@ msgstr ""
 #~ "which has unreliable seeking. Frame numbers might not match the real "
 #~ "number. PROCEED AT YOUR OWN RISK!"
 #~ msgstr ""
-#~ "Aviso! O arquivo está sendo aberto com o DirectShowSource do Avisynth, "
-#~ "que possui busca imprecisa. O número dos quadros podem não corresponder "
+#~ "Aviso! O ficheiro está a ser aberto com o DirectShowSource do Avisynth, "
+#~ "que possui uma pesquisa imprecisa. O número das frames podem não corresponder "
 #~ "ao número real. PROSSIGA A SEU PRÓPRIO RISCO!"
 
 #~ msgid "DirectShow"
@@ -7799,16 +7798,16 @@ msgstr ""
 #~ msgstr "Partir linha para finalizar movimento"
 
 #~ msgid "Link movement file"
-#~ msgstr "Conectar arquivo de movimento"
+#~ msgstr "Conectar ficheiro de movimento"
 
 #~ msgid "Link name:"
 #~ msgstr "Nome do elo:"
 
 #~ msgid "Link line to movement file"
-#~ msgstr "Conectar linha ao arquivo de movimento"
+#~ msgstr "Conectar linha ao ficheiro de movimento"
 
 #~ msgid "Invalid folder"
-#~ msgstr "Diretório inválido"
+#~ msgstr "Pasta inválida"
 
 #~ msgid "&Undo\t"
 #~ msgstr "&Desfazer\t"
@@ -7844,7 +7843,7 @@ msgstr ""
 #~ msgstr "Fe&rramentas"
 
 #~ msgid "Save file"
-#~ msgstr "Salvar arquivo"
+#~ msgstr "Guardar ficheiro"
 
 #~ msgid "Recombine (1, 1+2) into (1, 2)"
 #~ msgstr "Recombinar (1, 1+2) em (1, 2)"
